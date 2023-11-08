@@ -29,6 +29,12 @@ public class UserController {
         return userReadService.login(cmd);
     }
 
+
+    @GetMapping("/{id}")
+    public UserDto getUser(@PathVariable Long id) {
+        return userReadService.getUser(id);
+    }
+
     @GetMapping("/{email}/logout")
     // TODO: log out to move sessionController using DELETE Method
     // TODO: check token or session when moving sessionController

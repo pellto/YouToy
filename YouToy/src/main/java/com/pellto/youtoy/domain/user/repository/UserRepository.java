@@ -75,4 +75,18 @@ public class UserRepository {
         User nullableUser = DataAccessUtils.singleResult(user);
         return Optional.ofNullable(nullableUser);
     }
+
+    public Optional<User> findById(Long id) {
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE id = :id
+                """, TABLE);
+
+        var params = new MapSqlParameterSource().addValue("id", id);
+
+        var user = namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
+        User nullableUser = DataAccessUtils.singleResult(user);
+        return Optional.ofNullable(nullableUser);
+    }
 }

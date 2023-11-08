@@ -23,6 +23,11 @@ public class UserReadService {
         return toDto(user);
     }
 
+    public UserDto getUser(Long id) {
+        var user = userRepository.findById(id).orElseThrow();
+        return toDto(user);
+    }
+
     public void logout(String email) {
         // TODO: check user's token in DB
         System.out.println(email + " 이 로그아웃 되었습니다.");
