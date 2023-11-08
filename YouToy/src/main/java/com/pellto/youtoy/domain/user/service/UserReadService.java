@@ -29,6 +29,10 @@ public class UserReadService {
     }
 
     public UserDto toDto(User user) {
-        return new UserDto(user.getId(), user.getEmail(), user.getPwd());
+        return new UserDto(
+                user.getId(),
+                user.getEmail(),
+                user.getPwd()
+        );
     }
 }

@@ -1,5 +1,6 @@
 package com.pellto.youtoy.application.controller;
 
+import com.pellto.youtoy.application.usecase.SigninUserUsecase;
 import com.pellto.youtoy.domain.user.dto.LoginUserCommand;
 import com.pellto.youtoy.domain.user.dto.RegisterUserCommand;
 import com.pellto.youtoy.domain.user.dto.UserDto;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
     // TODO: login, logout to session controller
-    private final UserWriteService userWriteService;
+//    private final UserWriteService userWriteService;
     private final UserReadService userReadService;
+    private final SigninUserUsecase signinUserUsecase;
 
     @PostMapping
     public UserDto signIn(@RequestBody RegisterUserCommand cmd) {
-        return userReadService.toDto(userWriteService.signIn(cmd));
+        return userReadService.toDto(signinUserUsecase.execute(cmd));
     }
 
     @PostMapping("/login")

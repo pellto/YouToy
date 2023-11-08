@@ -1,6 +1,7 @@
 package com.pellto.youtoy.domain.user.service;
 
 import com.pellto.youtoy.domain.user.dto.RegisterUserCommand;
+import com.pellto.youtoy.domain.user.dto.UserDto;
 import com.pellto.youtoy.domain.user.entity.User;
 import com.pellto.youtoy.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class UserWriteService {
     private final UserRepository userRepository;
 
-    public User signIn(RegisterUserCommand cmd) {
+    public User register(RegisterUserCommand cmd) {
         if (!Objects.equals(cmd.pwd(), cmd.repeatPwd())) {
             // TODO: convert custom error
             throw new UnsupportedOperationException("비밀번호가 일치 하지 않습니다.");
