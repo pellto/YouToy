@@ -60,7 +60,7 @@ public class UserRepository {
         return findByEmail(email).isPresent();
     }
 
-    private Optional<User> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         /*
         * SELECT * FROM User WHERE email = :email
         * */
@@ -74,7 +74,5 @@ public class UserRepository {
         var user = namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
         User nullableUser = DataAccessUtils.singleResult(user);
         return Optional.ofNullable(nullableUser);
-
-
     }
 }
