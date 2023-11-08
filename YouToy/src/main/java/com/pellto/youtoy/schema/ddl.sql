@@ -38,3 +38,13 @@ create table Video
     constraint video_id_uindex
         primary key (id)
 );
+
+create table Subscribe
+(
+    id int auto_increment,
+    channelId int not null,
+    userId int not null,
+    createdAt datetime not null,
+    constraint subscribe_id_uindex
+        primary key (id)
+);
