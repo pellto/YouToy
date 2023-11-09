@@ -1,11 +1,10 @@
 package com.pellto.youtoy.application.controller;
 
-import com.pellto.youtoy.application.usecase.SigninUserUsecase;
+import com.pellto.youtoy.application.usecase.SignupUserUsecase;
 import com.pellto.youtoy.domain.user.dto.LoginUserCommand;
 import com.pellto.youtoy.domain.user.dto.RegisterUserCommand;
 import com.pellto.youtoy.domain.user.dto.UserDto;
 import com.pellto.youtoy.domain.user.service.UserReadService;
-import com.pellto.youtoy.domain.user.service.UserWriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
     // TODO: login, logout to session controller
-//    private final UserWriteService userWriteService;
     private final UserReadService userReadService;
-    private final SigninUserUsecase signinUserUsecase;
+    private final SignupUserUsecase signupUserUsecase;
 
     @PostMapping
-    public UserDto signIn(@RequestBody RegisterUserCommand cmd) {
-        return userReadService.toDto(signinUserUsecase.execute(cmd));
+    public UserDto signup(@RequestBody RegisterUserCommand cmd) {
+        return userReadService.toDto(signupUserUsecase.execute(cmd));
     }
 
     @PostMapping("/login")

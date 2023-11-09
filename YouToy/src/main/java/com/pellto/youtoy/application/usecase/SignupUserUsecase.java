@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class SigninUserUsecase {
+public class SignupUserUsecase {
     private final UserWriteService userWriteService;
     private final ChannelWriteService channelWriteService;
 
