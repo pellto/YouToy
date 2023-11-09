@@ -39,6 +39,7 @@ create table Video
         primary key (id)
 );
 
+# Subscribe Table 생성
 create table Subscribe
 (
     id int auto_increment,
@@ -48,3 +49,9 @@ create table Subscribe
     constraint subscribe_id_uindex
         primary key (id)
 );
+
+# user Info 추가
+## 생년월일 컬럼 추가
+ALTER TABLE User ADD birthDate datetime AFTER pwd;
+## 이름 컬럼 추가
+ALTER TABLE User ADD name varchar(32) AFTER pwd;

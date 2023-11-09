@@ -27,6 +27,8 @@ public class UserWriteService {
         var user = User.builder()
                 .email(cmd.email())
                 .pwd(cmd.pwd())
+                .name(cmd.name())
+                .birthDate(cmd.birthDate())
                 .build();
 
         return userRepository.save(user);

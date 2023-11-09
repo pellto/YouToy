@@ -37,7 +37,9 @@ public class UserReadService {
         return new UserDto(
                 user.getId(),
                 user.getEmail(),
-                user.getPwd()
+                user.getPwd(),
+                user.getName(),
+                user.getBirthDate()
         );
     }
 }

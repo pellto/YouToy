@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -13,13 +14,24 @@ public class User {
     private final Long id;
     private final String email;
     private final String pwd;
+    private String name;
+    private LocalDate birthDate;
     private final LocalDateTime createdAt;
 
     @Builder
-    public User(Long id, String email, String pwd, LocalDateTime createdAt) {
+    public User(
+            Long id,
+            String email,
+            String pwd,
+            String name,
+            LocalDate birthDate,
+            LocalDateTime createdAt
+    ) {
         this.id = id;
         this.email = Objects.requireNonNull(email);
         this.pwd = Objects.requireNonNull(pwd);
+        this.name = name == null ? "user" : name;
+        this.birthDate = Objects.requireNonNull(birthDate);
         this.createdAt = createdAt == null ? LocalDateTime.now() : createdAt;
     }
 }

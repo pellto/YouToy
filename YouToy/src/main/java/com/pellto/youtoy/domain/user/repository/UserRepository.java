@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -28,6 +29,8 @@ public class UserRepository {
             .id(resultSet.getLong("id"))
             .email(resultSet.getString("email"))
             .pwd(resultSet.getString("pwd"))
+            .name(resultSet.getString("name"))
+            .birthDate(resultSet.getObject("birthDate", LocalDate.class))
             .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
             .build();
 
@@ -52,6 +55,8 @@ public class UserRepository {
                 .id(id)
                 .email(user.getEmail())
                 .pwd(user.getPwd())
+                .name(user.getName())
+                .birthDate(user.getBirthDate())
                 .createdAt(user.getCreatedAt())
                 .build();
     }
