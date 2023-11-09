@@ -2,6 +2,7 @@ package com.pellto.youtoy.domain.user.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
@@ -9,11 +10,12 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
+@Setter
 @ToString
 public class User {
     private final Long id;
-    private final String email;
-    private final String pwd;
+    private String email;
+    private String pwd;
     private String name;
     private LocalDate birthDate;
     private final LocalDateTime createdAt;

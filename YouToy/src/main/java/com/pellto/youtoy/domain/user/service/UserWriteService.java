@@ -1,7 +1,7 @@
 package com.pellto.youtoy.domain.user.service;
 
 import com.pellto.youtoy.domain.user.dto.RegisterUserCommand;
-import com.pellto.youtoy.domain.user.dto.UserDto;
+import com.pellto.youtoy.domain.user.dto.UpdateUserInfoCommand;
 import com.pellto.youtoy.domain.user.entity.User;
 import com.pellto.youtoy.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +32,31 @@ public class UserWriteService {
                 .build();
 
         return userRepository.save(user);
+    }
+
+    public void update(UpdateUserInfoCommand cmd) {
+        User user = userRepository.findById(cmd.id()).orElseThrow();
+        boolean changeChecker = false;
+        if (cmd.email() != null) {
+            user.setEmail(cmd.email());
+            changeChecker = true;
+        }
+        if (cmd.pwd() != null
+            && cmd.repeatPwd() != null
+            && cmd.pwd().equals(cmd.repeatPwd())) {
+            user.setPwd(cmd.pwd());
+            changeChecker = true;
+        }
+        if (cmd.name() != null) {
+            user.setName(cmd.name());
+            changeChecker = true;
+        }
+        if (cmd.birthDate() != null) {
+            user.setBirthDate(cmd.birthDate());
+            changeChecker = true;
+        }
+        if (!changeChecker) return;
+
+        userRepository.save(user);
     }
 }

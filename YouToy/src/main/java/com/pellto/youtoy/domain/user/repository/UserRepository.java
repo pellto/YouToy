@@ -38,7 +38,21 @@ public class UserRepository {
         if (user.getId() == null) {
             return insert(user);
         }
-        throw new UnsupportedOperationException("User는 업데이트를 지원하지 않습니다.");
+        return update(user);
+    }
+
+    private User update(User user) {
+        System.out.println("user = " + user);
+        var sql = String.format("""
+                UPDATE %s
+                SET email = :email, pwd = :pwd, name = :name, birthDate = :birthDate
+                WHERE id = :id
+                """, TABLE);
+
+        SqlParameterSource params = new BeanPropertySqlParameterSource(user);
+        System.out.println("params = " + params);
+        namedParameterJdbcTemplate.update(sql, params);
+        return user;
     }
 
     private User insert(User user) {
@@ -94,4 +108,6 @@ public class UserRepository {
         User nullableUser = DataAccessUtils.singleResult(user);
         return Optional.ofNullable(nullableUser);
     }
+
+
 }
