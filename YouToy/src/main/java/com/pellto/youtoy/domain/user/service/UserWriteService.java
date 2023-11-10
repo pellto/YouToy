@@ -55,8 +55,6 @@ public class UserWriteService {
             user.setBirthDate(cmd.birthDate());
             changeChecker = true;
         }
-        if (!changeChecker) return;
-
-        userRepository.save(user);
+        if (changeChecker) userRepository.save(user);
     }
 }

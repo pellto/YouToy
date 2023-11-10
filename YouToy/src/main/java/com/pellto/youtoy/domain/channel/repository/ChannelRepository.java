@@ -15,6 +15,8 @@ import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+
+
 @Repository
 @RequiredArgsConstructor
 public class ChannelRepository {
@@ -25,7 +27,11 @@ public class ChannelRepository {
             .builder()
             .id(resultSet.getLong("id"))
             .ownerId(resultSet.getLong("ownerId"))
+            .handle(resultSet.getString("handle"))
             .displayName(resultSet.getString("displayName"))
+            .description(resultSet.getString("description"))
+            .banner(resultSet.getString("banner"))
+            .profile(resultSet.getString("profile"))
             .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
             .build();
 
@@ -33,8 +39,7 @@ public class ChannelRepository {
         if (channel.getId() == null) {
             return insert(channel);
         }
-        // TODO: throw to update Channel
-        throw new UnsupportedOperationException("채널은 업데이트를 지원하지 않습니다.");
+        return update(channel);
     }
 
     public Optional<Channel> findById(Long id) {
@@ -49,6 +54,42 @@ public class ChannelRepository {
                 WHERE id = :id
                 """, TABLE);
         var params = new MapSqlParameterSource().addValue("id", id);
+        var nullableChannel = namedParameterJdbcTemplate.queryForObject(sql, params, ROW_MAPPER);
+        return Optional.ofNullable(nullableChannel);
+    }
+
+    public boolean existsHandle(String handle) {
+        return findByHandle(handle).isPresent();
+    }
+
+    public Optional<Channel> findByHandle(String handle) {
+        /*
+         * SELECT *
+         * FROM channel
+         * WHERE handle = :handle
+         * */
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE handle = :handle
+                """, TABLE);
+        var params = new MapSqlParameterSource().addValue("handle", handle);
+        var nullableChannel = namedParameterJdbcTemplate.queryForObject(sql, params, ROW_MAPPER);
+        return Optional.ofNullable(nullableChannel);
+    }
+
+    public Optional<Channel> findByOwnerId(Long ownerId) {
+        /*
+         * SELECT *
+         * FROM channel
+         * WHERE ownerId = :ownerId
+         * */
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE ownerId = :ownerId
+                """, TABLE);
+        var params = new MapSqlParameterSource().addValue("ownerId", ownerId);
         var nullableChannel = namedParameterJdbcTemplate.queryForObject(sql, params, ROW_MAPPER);
         return Optional.ofNullable(nullableChannel);
     }
@@ -70,5 +111,21 @@ public class ChannelRepository {
                 .createdAt(channel.getCreatedAt())
                 .build();
 
+    }
+
+    private Channel update(Channel channel) {
+        var sql = String.format("""
+                UPDATE %s
+                SET handle = :handle,
+                    displayName = :displayName,
+                    description = :description,
+                    banner = :banner,
+                    profile = :profile
+                WHERE id = :id
+                """, TABLE);
+
+        SqlParameterSource params = new BeanPropertySqlParameterSource(channel);
+        namedParameterJdbcTemplate.update(sql, params);
+        return channel;
     }
 }
