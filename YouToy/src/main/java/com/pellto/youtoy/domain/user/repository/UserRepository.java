@@ -42,7 +42,6 @@ public class UserRepository {
     }
 
     private User update(User user) {
-        System.out.println("user = " + user);
         var sql = String.format("""
                 UPDATE %s
                 SET email = :email, pwd = :pwd, name = :name, birthDate = :birthDate
@@ -50,7 +49,6 @@ public class UserRepository {
                 """, TABLE);
 
         SqlParameterSource params = new BeanPropertySqlParameterSource(user);
-        System.out.println("params = " + params);
         namedParameterJdbcTemplate.update(sql, params);
         return user;
     }
@@ -81,8 +79,8 @@ public class UserRepository {
 
     public Optional<User> findByEmail(String email) {
         /*
-        * SELECT * FROM User WHERE email = :email
-        * */
+         * SELECT * FROM User WHERE email = :email
+         * */
         var sql = String.format("""
                 SELECT *
                 FROM %s

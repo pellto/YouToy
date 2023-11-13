@@ -4,10 +4,10 @@ import com.pellto.youtoy.domain.user.dto.RegisterUserCommand;
 import com.pellto.youtoy.domain.user.dto.UpdateUserInfoCommand;
 import com.pellto.youtoy.domain.user.entity.User;
 import com.pellto.youtoy.domain.user.repository.UserRepository;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -15,13 +15,13 @@ public class UserWriteService {
     private final UserRepository userRepository;
 
     public User register(RegisterUserCommand cmd) {
-        if (!Objects.equals(cmd.pwd(), cmd.repeatPwd())) {
+        if (!cmd.pwd().equals(cmd.repeatPwd())) {
             // TODO: convert custom error
-            throw new UnsupportedOperationException("비밀번호가 일치 하지 않습니다.");
+            throw new UnsupportedOperationException(ErrorCode.PASSWORD_MISMATCH.getMessage());
         }
         if (userRepository.existsEmail(cmd.email())) {
             // TODO: convert custom error
-            throw new UnsupportedOperationException("이미 존재하는 email 입니다.");
+            throw new UnsupportedOperationException(ErrorCode.ALREADY_EXIST_EMAIL.getMessage());
         }
 
         var user = User.builder()
@@ -42,8 +42,10 @@ public class UserWriteService {
             changeChecker = true;
         }
         if (cmd.pwd() != null
-            && cmd.repeatPwd() != null
-            && cmd.pwd().equals(cmd.repeatPwd())) {
+                && cmd.repeatPwd() != null) {
+            if (!cmd.pwd().equals(cmd.repeatPwd())) {
+                throw new UnsupportedOperationException(ErrorCode.PASSWORD_MISMATCH.getMessage());
+            }
             user.setPwd(cmd.pwd());
             changeChecker = true;
         }

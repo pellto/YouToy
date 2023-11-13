@@ -22,4 +22,13 @@ public class RegisterUserCommandFixtureFactory {
 
         return new RegisterUserCommand(email, pwd, repeatPwd, name, birthDate);
     }
+
+    public static RegisterUserCommand getWithPwd(String pwd) {
+        String email = "email@email.com";
+        String repeatPwd = "pwd";
+        String name = "name";
+        LocalDate birthDate = LocalDate.of(2023, 1, 1);
+
+        return new RegisterUserCommand(email, pwd, repeatPwd, name, birthDate);
+    }
 }
