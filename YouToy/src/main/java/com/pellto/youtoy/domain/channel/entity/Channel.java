@@ -1,10 +1,10 @@
 package com.pellto.youtoy.domain.channel.entity;
 
+import com.pellto.youtoy.util.GenerateRandomString;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -50,7 +50,7 @@ public class Channel {
         boolean useLetters = true;
         boolean useNumbers = true;
 
-        String handle = RandomStringUtils.random(initHandleLength, useLetters, useNumbers);
-        return  prefix + handle;
+        String handle = GenerateRandomString.make(initHandleLength, useLetters, useNumbers);
+        return prefix + handle;
     }
 }
