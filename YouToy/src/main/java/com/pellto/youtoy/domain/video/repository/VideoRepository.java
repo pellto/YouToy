@@ -35,7 +35,20 @@ public class VideoRepository {
         if (video.getId() == null) {
             return insert(video);
         }
-        throw new UnsupportedOperationException("temp");
+        return update(video);
+    }
+
+    private Video update(Video video) {
+        var sql = String.format("""
+                UPDATE %s
+                SET title = :title,
+                    description = :description
+                WHERE id = :id
+                """, TABLE);
+
+        SqlParameterSource params = new BeanPropertySqlParameterSource(video);
+        namedParameterJdbcTemplate.update(sql, params);
+        return video;
     }
 
     private Video insert(Video video) {
@@ -69,5 +82,18 @@ public class VideoRepository {
         var video = namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
         Video nullableVideo = DataAccessUtils.singleResult(video);
         return Optional.ofNullable(nullableVideo);
+    }
+
+    public boolean existVideo(Long id) {
+        return findById(id).isPresent();
+    }
+
+    public void delete(Long id) {
+        var sql = String.format("""
+                DELETE FROM %s
+                WHERE id = :id
+                """, TABLE);
+        var params = new MapSqlParameterSource().addValue("id", id);
+        namedParameterJdbcTemplate.update(sql, params);
     }
 }

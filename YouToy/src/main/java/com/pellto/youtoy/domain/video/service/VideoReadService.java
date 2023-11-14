@@ -1,6 +1,5 @@
 package com.pellto.youtoy.domain.video.service;
 
-import com.pellto.youtoy.domain.video.dto.VideoUploadCommand;
 import com.pellto.youtoy.domain.video.entity.Video;
 import com.pellto.youtoy.domain.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
