@@ -8,17 +8,16 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class CreateChannelSubscribeUsecase {
+public class CancelChannelSubscribeUsecase {
     private final UserReadService userReadService;
     private final ChannelReadService channelReadService;
     private final SubscribeWriteService subscribeWriteService;
 
-    // TODO: change to @Transactional
     public void execute(Long userId, Long channelId) {
         // TODO: 로직 손보기
         var user = userReadService.getUser(userId);
         var channel = channelReadService.getChannel(channelId);
 
-        subscribeWriteService.create(user.id(), channel.id());
+        subscribeWriteService.delete(user.id(), channel.id());
     }
 }

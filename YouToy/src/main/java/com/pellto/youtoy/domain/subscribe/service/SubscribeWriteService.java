@@ -18,6 +18,9 @@ public class SubscribeWriteService {
         if (userId == null) {
             throw new UnsupportedOperationException("구독하는 유저의 id는 필수 입니다.");
         }
+        if (subscribeRepository.existSubscribe(channelId, userId)) {
+            throw new UnsupportedOperationException("이미 채널을 구독 중입니다.");
+        }
 
         var subscribe = Subscribe
                 .builder()
@@ -26,5 +29,18 @@ public class SubscribeWriteService {
                 .build();
 
         return subscribeRepository.save(subscribe);
+    }
+
+    public void delete(Long userId, Long channelId) {
+        if (channelId == null) {
+            throw new UnsupportedOperationException("구독 취소할 채널의 id는 필수 입니다.");
+        }
+        if (userId == null) {
+            throw new UnsupportedOperationException("구독하는 유저의 id는 필수 입니다.");
+        }
+        if (!subscribeRepository.existSubscribe(channelId, userId)) {
+            throw new UnsupportedOperationException("채널을 구독 중이 아닙니다.");
+        }
+        subscribeRepository.delete(channelId, userId);
     }
 }
