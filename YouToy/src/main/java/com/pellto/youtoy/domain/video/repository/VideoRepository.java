@@ -42,6 +42,7 @@ public class VideoRepository {
         var sql = String.format("""
                 UPDATE %s
                 SET title = :title,
+                    viewCount = :viewCount,
                     description = :description
                 WHERE id = :id
                 """, TABLE);

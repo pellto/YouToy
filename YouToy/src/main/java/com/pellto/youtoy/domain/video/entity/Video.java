@@ -35,4 +35,8 @@ public class Video {
         String title = GenerateRandomString.make();
         return prefix + title;
     }
+
+    public void incrementViewCount() {
+        this.viewCount += 1;
+    }
 }

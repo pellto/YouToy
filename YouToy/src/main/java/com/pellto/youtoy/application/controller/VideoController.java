@@ -34,4 +34,9 @@ public class VideoController {
     public void remove(@PathVariable Long id) {
         videoWriteService.remove(id);
     }
+
+    @PutMapping("/{id}/view/increment")
+    public void increase(@PathVariable Long id) {
+        videoWriteService.incrementViewCount(id);
+    }
 }

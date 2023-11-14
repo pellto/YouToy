@@ -6,6 +6,7 @@ import com.pellto.youtoy.domain.video.entity.Video;
 import com.pellto.youtoy.domain.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -43,5 +44,13 @@ public class VideoWriteService {
             throw new UnsupportedOperationException("Video가 존재하지 않습니다.");
         }
         videoRepository.delete(id);
+    }
+
+    @Transactional
+    // TODO: Change Transactional
+    public void incrementViewCount(Long id) {
+        Video video = videoRepository.findById(id).orElseThrow();
+        video.incrementViewCount();
+        videoRepository.save(video);
     }
 }
