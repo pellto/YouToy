@@ -19,7 +19,10 @@ public enum ErrorCode {
     NOT_ENTERED_CHANNEL_ID(400, "S001", "구독할 채널의 id는 필수 입니다."),
     NOT_ENTERED_USER_ID(400, "S002", "구독하는 유저의 id는 필수 입니다."),
     ALREADY_SUBSCRIBED(400, "S003", "이미 채널을 구독 중입니다."),
-    NOT_EXIST_SUBSCRIBE(400, "S004", "채널을 구독 중이 아닙니다.");
+    NOT_EXIST_SUBSCRIBE(400, "S004", "채널을 구독 중이 아닙니다."),
+
+    // Video
+    NOT_EXIST_VIDEO(400, "V001", "Video가 존재하지 않습니다.");
 
 
     private final String code;

@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.video.dto.UpdateVideoCommand;
 import com.pellto.youtoy.domain.video.dto.UploadVideoCommand;
 import com.pellto.youtoy.domain.video.entity.Video;
 import com.pellto.youtoy.domain.video.repository.VideoRepository;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class VideoWriteService {
 
     public void remove(Long id) {
         if (!videoRepository.existVideo(id)) {
-            throw new UnsupportedOperationException("Video가 존재하지 않습니다.");
+            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_VIDEO.getMessage());
         }
         videoRepository.delete(id);
     }
