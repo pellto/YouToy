@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.pellto.youtoy.domain.user.repository.UserRepository;
 import com.pellto.youtoy.domain.user.service.UserWriteService;
-import com.pellto.youtoy.util.RegisterUserCommandFixtureFactory;
-import com.pellto.youtoy.util.UpdateUserCommandFixtureFactory;
-import com.pellto.youtoy.util.UserFixtureFactory;
+import com.pellto.youtoy.util.user.RegisterUserCommandFixtureFactory;
+import com.pellto.youtoy.util.user.UpdateUserCommandFixtureFactory;
+import com.pellto.youtoy.util.user.UserFixtureFactory;
 import com.pellto.youtoy.util.error.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class UserTest {
+public class UserServiceTest {
     @InjectMocks
     private UserWriteService userWriteService;
     @Mock
@@ -171,7 +171,7 @@ public class UserTest {
             // then
             assertEquals(e.getMessage(), ErrorCode.PASSWORD_MISMATCH.getMessage());
         }
-        
+
         then(userRepository).should(times(1)).findById(any());
         then(userRepository).should(times(0)).save(any());
     }

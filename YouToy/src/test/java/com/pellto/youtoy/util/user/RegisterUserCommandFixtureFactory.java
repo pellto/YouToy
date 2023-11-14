@@ -1,4 +1,4 @@
-package com.pellto.youtoy.util;
+package com.pellto.youtoy.util.user;
 
 import com.pellto.youtoy.domain.user.dto.RegisterUserCommand;
 import org.jeasy.random.EasyRandom;
@@ -8,27 +8,24 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class RegisterUserCommandFixtureFactory {
+    private static final String EMAIL = "email@email.com";
+    private static final String PWD = "pwd";
+    private static final String REPEAT_PWD = "pwd";
+    private static final String NAME = "name";
+    private static final LocalDate BIRTH_DATE = LocalDate.of(
+            2023, 1, 1
+    );
+
     public static RegisterUserCommand create() {
         var params = new EasyRandomParameters();
         return new EasyRandom(params).nextObject(RegisterUserCommand.class);
     }
 
     public static RegisterUserCommand get() {
-        String email = "email@email.com";
-        String pwd = "pwd";
-        String repeatPwd = "pwd";
-        String name = "name";
-        LocalDate birthDate = LocalDate.of(2023, 1, 1);
-
-        return new RegisterUserCommand(email, pwd, repeatPwd, name, birthDate);
+        return new RegisterUserCommand(EMAIL, PWD, REPEAT_PWD, NAME, BIRTH_DATE);
     }
 
     public static RegisterUserCommand getWithPwd(String pwd) {
-        String email = "email@email.com";
-        String repeatPwd = "pwd";
-        String name = "name";
-        LocalDate birthDate = LocalDate.of(2023, 1, 1);
-
-        return new RegisterUserCommand(email, pwd, repeatPwd, name, birthDate);
+        return new RegisterUserCommand(EMAIL, pwd, REPEAT_PWD, NAME, BIRTH_DATE);
     }
 }

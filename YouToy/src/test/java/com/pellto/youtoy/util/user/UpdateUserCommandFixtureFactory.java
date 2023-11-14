@@ -1,4 +1,4 @@
-package com.pellto.youtoy.util;
+package com.pellto.youtoy.util.user;
 
 import com.pellto.youtoy.domain.user.dto.UpdateUserInfoCommand;
 

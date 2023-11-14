@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.channel.dto.CreateChannelCommand;
 import com.pellto.youtoy.domain.channel.dto.UpdateChannelCommand;
 import com.pellto.youtoy.domain.channel.entity.Channel;
 import com.pellto.youtoy.domain.channel.repository.ChannelRepository;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,10 @@ public class ChannelWriteService {
 
     public Channel create(CreateChannelCommand cmd) {
         // TODO: change custom Error with errorHandler
-        if (cmd.displayName().isEmpty()) throw new UnsupportedOperationException("채널명은 필수입니다.");
-        if (cmd.ownerId() == null) throw new UnsupportedOperationException("유저의 id는 필수입니다.");
+        if (cmd.displayName().isEmpty())
+            throw new UnsupportedOperationException(ErrorCode.CHANNEL_DISPLAY_NAME_IS_REQUIRED.getMessage());
+        if (cmd.ownerId() == null)
+            throw new UnsupportedOperationException(ErrorCode.OWNER_ID_IS_REQUIRED.getMessage());
 
         var channel = Channel
                 .builder()
