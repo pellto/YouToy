@@ -3,6 +3,7 @@ package com.pellto.youtoy.domain.subscribe.service;
 import com.pellto.youtoy.domain.subscribe.dto.CreateSubscribeCommand;
 import com.pellto.youtoy.domain.subscribe.entity.Subscribe;
 import com.pellto.youtoy.domain.subscribe.repository.SubscribeRepository;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,15 +12,15 @@ import org.springframework.stereotype.Service;
 public class SubscribeWriteService {
     private final SubscribeRepository subscribeRepository;
 
-    public Subscribe create(Long channelId, Long userId) {
+    public Subscribe create(Long userId, Long channelId) {
         if (channelId == null) {
-            throw new UnsupportedOperationException("구독할 채널의 id는 필수 입니다.");
+            throw new UnsupportedOperationException(ErrorCode.NOT_ENTERED_CHANNEL_ID.getMessage());
         }
         if (userId == null) {
-            throw new UnsupportedOperationException("구독하는 유저의 id는 필수 입니다.");
+            throw new UnsupportedOperationException(ErrorCode.NOT_ENTERED_USER_ID.getMessage());
         }
         if (subscribeRepository.existSubscribe(channelId, userId)) {
-            throw new UnsupportedOperationException("이미 채널을 구독 중입니다.");
+            throw new UnsupportedOperationException(ErrorCode.ALREADY_SUBSCRIBED.getMessage());
         }
 
         var subscribe = Subscribe
@@ -33,13 +34,13 @@ public class SubscribeWriteService {
 
     public void delete(Long userId, Long channelId) {
         if (channelId == null) {
-            throw new UnsupportedOperationException("구독 취소할 채널의 id는 필수 입니다.");
+            throw new UnsupportedOperationException(ErrorCode.NOT_ENTERED_CHANNEL_ID.getMessage());
         }
         if (userId == null) {
-            throw new UnsupportedOperationException("구독하는 유저의 id는 필수 입니다.");
+            throw new UnsupportedOperationException(ErrorCode.NOT_ENTERED_USER_ID.getMessage());
         }
         if (!subscribeRepository.existSubscribe(channelId, userId)) {
-            throw new UnsupportedOperationException("채널을 구독 중이 아닙니다.");
+            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_SUBSCRIBE.getMessage());
         }
         subscribeRepository.delete(channelId, userId);
     }
