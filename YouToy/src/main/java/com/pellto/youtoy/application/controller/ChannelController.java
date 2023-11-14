@@ -29,7 +29,7 @@ public class ChannelController {
     }
 
     @PutMapping
-    public void update(@Valid @RequestBody UpdateChannelCommand cmd) {
-        channelWriteService.update(cmd);
+    public ChannelDto update(@Valid @RequestBody UpdateChannelCommand cmd) {
+        return channelReadService.toDto(channelWriteService.update(cmd));
     }
 }

@@ -12,8 +12,8 @@ public enum ErrorCode {
 
     // Channel
     CHANNEL_DISPLAY_NAME_IS_REQUIRED(400, "C001", "채널명은 필수입니다."),
-    OWNER_ID_IS_REQUIRED(400, "C002", "유저의 id는 필수입니다.");
-
+    OWNER_ID_IS_REQUIRED(400, "C002", "유저의 id는 필수입니다."),
+    ALREADY_EXIST_HANDLE(400, "C003", "이미 존재하는 handle 입니다");
 
     private final String code;
     private final String message;

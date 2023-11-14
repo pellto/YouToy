@@ -5,15 +5,15 @@ import com.pellto.youtoy.domain.user.dto.UpdateUserInfoCommand;
 import java.time.LocalDate;
 
 public class UpdateUserCommandFixtureFactory {
-    public static UpdateUserInfoCommand get() {
-        Long id = 1L;
-        String email = "changedEmail@email.com";
-        String pwd = "changedPwd";
-        String repeatPwd = "changedPwd";
-        String name = "changedName";
-        LocalDate birthDate = LocalDate.of(2023, 1, 2);
+    private static final Long ID = 1L;
+    private static final String EMAIL = "changedEmail@email.com";
+    private static final String PWD = "changedPwd";
+    private static final String REPEAT_PWD = "changedPwd";
+    private static final String NAME = "changedName";
+    private static final LocalDate BIRTH_DATE = LocalDate.of(2023, 1, 2);
 
-        return new UpdateUserInfoCommand(id, email, pwd, repeatPwd, name, birthDate);
+    public static UpdateUserInfoCommand get() {
+        return get(ID, EMAIL, PWD, REPEAT_PWD, NAME, BIRTH_DATE);
     }
 
     public static UpdateUserInfoCommand get(

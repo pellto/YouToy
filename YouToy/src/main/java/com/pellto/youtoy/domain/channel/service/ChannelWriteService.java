@@ -29,12 +29,12 @@ public class ChannelWriteService {
         return channelRepository.save(channel);
     }
 
-    public void update(UpdateChannelCommand cmd) {
+    public Channel update(UpdateChannelCommand cmd) {
         var channel = channelRepository.findById(cmd.id()).orElseThrow();
         boolean changeChecker = false;
         if (cmd.handle() != null) {
             if (channelRepository.existsHandle(cmd.handle())) {
-                throw new UnsupportedOperationException("이미 존재하는 handle 입니다");
+                throw new UnsupportedOperationException(ErrorCode.ALREADY_EXIST_HANDLE.getMessage());
             }
             channel.setHandle(cmd.handle());
             changeChecker = true;
@@ -56,6 +56,7 @@ public class ChannelWriteService {
             changeChecker = true;
         }
 
-        if (changeChecker) channelRepository.save(channel);
+        if (changeChecker) return channelRepository.save(channel);
+        return channel;
     }
 }
