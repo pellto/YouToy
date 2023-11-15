@@ -1,5 +1,7 @@
 package com.pellto.youtoy.application.controller;
 
+import com.pellto.youtoy.application.usecase.UploadShortWithAdminUsecase;
+import com.pellto.youtoy.application.usecase.UploadVideoWithAdminUsecase;
 import com.pellto.youtoy.domain.video.dto.UpdateShortCommand;
 import com.pellto.youtoy.domain.video.dto.UpdateVideoCommand;
 import com.pellto.youtoy.domain.video.dto.UploadShortCommand;
@@ -21,10 +23,12 @@ public class VideoController {
     private final VideoReadService videoReadService;
     private final ShortWriteService shortWriteService;
     private final ShortReadService shortReadService;
+    private final UploadVideoWithAdminUsecase uploadVideoWithAdminUsecase;
+    private final UploadShortWithAdminUsecase uploadShortWithAdminUsecase;
 
     @PostMapping
     public Video upload(@RequestBody UploadVideoCommand cmd) {
-        return videoWriteService.upload(cmd);
+        return uploadVideoWithAdminUsecase.execute(cmd);
     }
 
     @PutMapping
@@ -49,7 +53,7 @@ public class VideoController {
 
     @PostMapping("/short")
     public Shorts uploadShort(@RequestBody UploadShortCommand cmd) {
-        return shortWriteService.upload(cmd);
+        return uploadShortWithAdminUsecase.execute(cmd);
     }
 
     @PutMapping("/short")
