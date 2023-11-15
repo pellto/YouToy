@@ -3,6 +3,8 @@ package com.pellto.youtoy.util.error;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
+import javax.validation.ConstraintViolation;
+
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @Getter
 public enum ErrorCode {
@@ -22,7 +24,10 @@ public enum ErrorCode {
     NOT_EXIST_SUBSCRIBE(400, "S004", "채널을 구독 중이 아닙니다."),
 
     // Video
-    NOT_EXIST_VIDEO(400, "V001", "Video가 존재하지 않습니다.");
+    NOT_EXIST_VIDEO(400, "V001", "Video가 존재하지 않습니다."),
+
+    // Shorts
+    NOT_EXIST_SHORT(400, "VS001", "shorts가 존재하지 않습니다.");
 
 
     private final String code;

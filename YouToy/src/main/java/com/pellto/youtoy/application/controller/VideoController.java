@@ -1,8 +1,13 @@
 package com.pellto.youtoy.application.controller;
 
+import com.pellto.youtoy.domain.video.dto.UpdateShortCommand;
 import com.pellto.youtoy.domain.video.dto.UpdateVideoCommand;
+import com.pellto.youtoy.domain.video.dto.UploadShortCommand;
 import com.pellto.youtoy.domain.video.dto.UploadVideoCommand;
+import com.pellto.youtoy.domain.video.entity.Shorts;
 import com.pellto.youtoy.domain.video.entity.Video;
+import com.pellto.youtoy.domain.video.service.ShortReadService;
+import com.pellto.youtoy.domain.video.service.ShortWriteService;
 import com.pellto.youtoy.domain.video.service.VideoReadService;
 import com.pellto.youtoy.domain.video.service.VideoWriteService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class VideoController {
     private final VideoWriteService videoWriteService;
     private final VideoReadService videoReadService;
+    private final ShortWriteService shortWriteService;
+    private final ShortReadService shortReadService;
 
     @PostMapping
     public Video upload(@RequestBody UploadVideoCommand cmd) {
@@ -38,5 +45,30 @@ public class VideoController {
     @PutMapping("/{id}/view/increment")
     public void increase(@PathVariable Long id) {
         videoWriteService.incrementViewCount(id);
+    }
+
+    @PostMapping("/short")
+    public Shorts uploadShort(@RequestBody UploadShortCommand cmd) {
+        return shortWriteService.upload(cmd);
+    }
+
+    @PutMapping("/short")
+    public Shorts updateShort(@RequestBody UpdateShortCommand cmd) {
+        return shortWriteService.update(cmd);
+    }
+
+    @GetMapping("/short/{id}")
+    public Shorts getShort(@PathVariable Long id) {
+        return shortReadService.getShort(id);
+    }
+
+    @DeleteMapping("/short/{id}")
+    public void removeShort(@PathVariable Long id) {
+        shortWriteService.remove(id);
+    }
+
+    @PutMapping("/short/{id}/view/increment")
+    public void increaseShort(@PathVariable Long id) {
+        shortWriteService.incrementViewCount(id);
     }
 }
