@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 
-
 @Repository
 @RequiredArgsConstructor
 public class ChannelRepository {
@@ -44,10 +43,10 @@ public class ChannelRepository {
 
     public Optional<Channel> findById(Long id) {
         /*
-        * SELECT *
-        * FROM channel
-        * WHERE id = :id
-        * */
+         * SELECT *
+         * FROM channel
+         * WHERE id = :id
+         * */
         var sql = String.format("""
                 SELECT *
                 FROM %s
@@ -127,5 +126,19 @@ public class ChannelRepository {
         SqlParameterSource params = new BeanPropertySqlParameterSource(channel);
         namedParameterJdbcTemplate.update(sql, params);
         return channel;
+    }
+
+    public Optional<Channel> findByChannelIdAndOwnerId(Long id, Long ownerId) {
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE id = :id AND ownerId = :ownerId
+                """, TABLE);
+
+        var params = new MapSqlParameterSource()
+                .addValue("id", id)
+                .addValue("ownerId", ownerId);
+        var nullableChannel = namedParameterJdbcTemplate.queryForObject(sql, params, ROW_MAPPER);
+        return Optional.ofNullable(nullableChannel);
     }
 }

@@ -11,11 +11,13 @@ public enum ErrorCode {
     // User
     PASSWORD_MISMATCH(400, "U001", "비밀번호가 일치 하지 않습니다."),
     ALREADY_EXIST_EMAIL(400, "U002", "이미 존재하는 email 입니다."),
+    NOT_EXIST_USER(400, "U003", "해당 유저는 존재하지 않습니다."),
 
     // Channel
     CHANNEL_DISPLAY_NAME_IS_REQUIRED(400, "C001", "채널명은 필수입니다."),
     OWNER_ID_IS_REQUIRED(400, "C002", "유저의 id는 필수입니다."),
     ALREADY_EXIST_HANDLE(400, "C003", "이미 존재하는 handle 입니다"),
+    NOT_EXIST_CHANNEL(400, "C004", "해당 채널은 존재하지 않습니다."),
 
     // Subscribe
     NOT_ENTERED_CHANNEL_ID(400, "S001", "구독할 채널의 id는 필수 입니다."),
@@ -27,7 +29,12 @@ public enum ErrorCode {
     NOT_EXIST_VIDEO(400, "V001", "Video가 존재하지 않습니다."),
 
     // Shorts
-    NOT_EXIST_SHORT(400, "VS001", "shorts가 존재하지 않습니다.");
+    NOT_EXIST_SHORT(400, "VS001", "shorts가 존재하지 않습니다."),
+
+    // ChannelAdmin
+    USER_IS_NOT_OWNER(400, "CA001", "해당 채널의 owner가 아닙니다."),
+    ALREADY_EXIST_ADMIN(400, "CA002", "이미 해당 채널의 관리자 입니다."),
+    NOT_EXIST_ADMIN(400, "CA003", "해당 채널의 관리자가 아닙니다.");
 
 
     private final String code;

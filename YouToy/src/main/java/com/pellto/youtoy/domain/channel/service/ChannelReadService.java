@@ -24,4 +24,18 @@ public class ChannelReadService {
                 channel.getDisplayName()
         );
     }
+
+    public boolean isOwner(Long channelId, Long ownerId) {
+        try {
+            channelRepository.findByChannelIdAndOwnerId(channelId, ownerId).orElseThrow();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isExist(Long id) {
+        var channel = channelRepository.findById(id);
+        return channel.isPresent();
+    }
 }

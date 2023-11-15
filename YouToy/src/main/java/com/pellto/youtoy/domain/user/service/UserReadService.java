@@ -42,4 +42,9 @@ public class UserReadService {
                 user.getBirthDate()
         );
     }
+
+    public boolean isExist(Long id) {
+        var user = userRepository.findById(id);
+        return user.isPresent();
+    }
 }

@@ -58,7 +58,7 @@ ALTER TABLE User
 ALTER TABLE User
     ADD name varchar(32) AFTER pwd;
 
-
+# short 테이블 추가
 create table Short
 (
     id          int auto_increment,
@@ -68,5 +68,16 @@ create table Short
     description varchar(512) not null,
     createdAt   datetime     not null,
     constraint Short_id_uindex
+        primary key (id)
+);
+
+# 채널 어드민 관계 테이블 추가
+create table ChannelAdmin
+(
+    id        int auto_increment,
+    channelId int      not null,
+    userId    int      not null,
+    createdAt datetime not null,
+    constraint ChannelAdmin_id_uindex
         primary key (id)
 );
