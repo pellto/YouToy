@@ -5,6 +5,7 @@ import com.pellto.youtoy.domain.subscribe.service.SubscribeWriteService;
 import com.pellto.youtoy.util.error.ErrorCode;
 import com.pellto.youtoy.util.subscribe.SubscribeFixtureFactory;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.*;
 
+@Tag("domain")
 @ExtendWith(MockitoExtension.class)
 public class SubscribeServiceTest {
     @InjectMocks

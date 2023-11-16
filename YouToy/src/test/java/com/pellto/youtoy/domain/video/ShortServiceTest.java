@@ -5,6 +5,7 @@ import com.pellto.youtoy.domain.video.service.ShortWriteService;
 import com.pellto.youtoy.util.error.ErrorCode;
 import com.pellto.youtoy.util.video.*;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.*;
 
+@Tag("domain")
 @ExtendWith(MockitoExtension.class)
 public class ShortServiceTest {
     private static final String PREFIX = "Short";

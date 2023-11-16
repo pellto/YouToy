@@ -11,6 +11,7 @@ import com.pellto.youtoy.util.channel.UpdateChannelCommandFixtureFactory;
 import com.pellto.youtoy.util.error.ErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+@Tag("domain")
 @ExtendWith(MockitoExtension.class)
 public class ChannelServiceTest {
     @InjectMocks
