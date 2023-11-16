@@ -1,5 +1,8 @@
 package com.pellto.youtoy.domain.video.dto;
 
+import lombok.ToString;
+
+@ToString
 public class AbVideoCommand {
     Long channelId;
     Long userId;

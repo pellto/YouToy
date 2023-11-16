@@ -1,5 +1,6 @@
 package com.pellto.youtoy.application.usecase;
 
+import com.pellto.youtoy.domain.video.dto.UpdateVideoCommand;
 import com.pellto.youtoy.domain.video.dto.UploadVideoCommand;
 import com.pellto.youtoy.domain.video.entity.Video;
 import com.pellto.youtoy.domain.video.service.VideoWriteService;
@@ -8,15 +9,15 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UploadVideoWithAdminUsecase {
+public class UpdateVideoWithAdminUsecase {
     private final VideoWriteService videoWriteService;
     private final AdminAuthorizeUsecase adminAuthorizeUsecase;
 
     // TODO: entity to dto in usecase
-    public Video execute(UploadVideoCommand cmd) {
+    public Video execute(UpdateVideoCommand cmd) {
         System.out.println("cmd = " + cmd);
         if (adminAuthorizeUsecase.execute(cmd))
-            return videoWriteService.upload(cmd);
+            return videoWriteService.update(cmd);
         return null;
     }
 }

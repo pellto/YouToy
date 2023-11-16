@@ -1,14 +1,22 @@
 package com.pellto.youtoy.domain.video.dto;
 
-import javax.validation.constraints.NotNull;
 
-public record UploadVideoCommand(
-        // TODO: content save location?
-        @NotNull(message = "[video] 채널 id는 필수입니다.")
-        Long channelId,
-        @NotNull(message = "[video] 업로더 id는 필수입니다.")
-        Long userId,
-        String title,
-        String description
-) {
+import javax.validation.constraints.NotNull;
+import java.beans.ConstructorProperties;
+
+public class UploadVideoCommand extends AbVideoCommand {
+    @ConstructorProperties({"channelId", "userId", "title", "description"})
+    public UploadVideoCommand(@NotNull Long channelId, @NotNull Long userId, String title, String description) {
+        super(channelId, userId, title, description);
+    }
+
+    @Override
+    public String toString() {
+        return "UploadVideoCommand{" +
+                "channelId=" + channelId +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
