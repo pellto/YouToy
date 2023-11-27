@@ -81,3 +81,19 @@ create table ChannelAdmin
     constraint ChannelAdmin_id_uindex
         primary key (id)
 );
+
+# comment 관계 테이블 추가
+create table Comment
+(
+    id               int auto_increment,
+    videoId          int          not null,
+    video            boolean      not null,
+    userId           int          not null,
+    content          varchar(512) not null,
+    repliedCommentId int,
+    createdAt        datetime     not null,
+    constraint Comment_id_uindex
+        primary key (id)
+);
+
+DROP TABLE Comment;

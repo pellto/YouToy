@@ -1,10 +1,5 @@
 package com.pellto.youtoy.domain.video.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.ConstructorBinding;
-
 import javax.validation.constraints.NotNull;
 import java.beans.ConstructorProperties;
 
