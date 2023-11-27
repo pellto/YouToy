@@ -2,9 +2,11 @@ package com.pellto.youtoy.domain.comment.repository;
 
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -59,5 +62,19 @@ public class CommentRepository {
                 .video(comment.isVideo())
                 .createdAt(comment.getCreatedAt())
                 .build();
+    }
+
+    public Optional<Comment> findById(Long id) {
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE id = :id
+                """, TABLE);
+
+        var params = new MapSqlParameterSource().addValue("id", id);
+        var comment = namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
+
+        Comment nullableComment = DataAccessUtils.singleResult(comment);
+        return Optional.ofNullable(nullableComment);
     }
 }
