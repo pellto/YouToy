@@ -13,4 +13,8 @@ public class VideoReadService {
     public Video getVideo(Long id) {
         return videoRepository.findById(id).orElseThrow();
     }
+
+    public boolean existVideo(Long id) {
+        return videoRepository.existVideo(id);
+    }
 }

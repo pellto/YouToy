@@ -15,7 +15,6 @@ public class UpdateVideoWithAdminUsecase {
 
     // TODO: entity to dto in usecase
     public Video execute(UpdateVideoCommand cmd) {
-        System.out.println("cmd = " + cmd);
         if (adminAuthorizeUsecase.execute(cmd))
             return videoWriteService.update(cmd);
         return null;

@@ -13,4 +13,8 @@ public class ShortReadService {
     public Shorts getShort(Long id) {
         return shortRepository.findById(id).orElseThrow();
     }
+
+    public boolean existShort(Long id) {
+        return shortRepository.existShort(id);
+    }
 }

@@ -14,7 +14,6 @@ public class UploadVideoWithAdminUsecase {
 
     // TODO: entity to dto in usecase
     public Video execute(UploadVideoCommand cmd) {
-        System.out.println("cmd = " + cmd);
         if (adminAuthorizeUsecase.execute(cmd))
             return videoWriteService.upload(cmd);
         return null;

@@ -12,7 +12,6 @@ public class CommentWriteService {
     private final CommentRepository commentRepository;
 
     public Comment create(CreateCommentCommand cmd) {
-        System.out.println("cmd = " + cmd);
         var comment = Comment.builder()
                 .videoId(cmd.videoId())
                 .userId(cmd.userId())

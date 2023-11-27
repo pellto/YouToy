@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -40,18 +41,12 @@ public class CommentRepository {
     }
 
     private Comment insert(Comment comment) {
-        System.out.println("comment = " + comment);
         JdbcTemplate jdbcTemplate = namedParameterJdbcTemplate.getJdbcTemplate();
-        System.out.println("here 11");
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName(TABLE)
                 .usingGeneratedKeyColumns("id");
-        System.out.println("here 22");
         SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
-        System.out.println("here 33");
-        System.out.println("params = " + params);
         var id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
-        System.out.println("here 44");
         return Comment
                 .builder()
                 .id(id)
@@ -76,5 +71,18 @@ public class CommentRepository {
 
         Comment nullableComment = DataAccessUtils.singleResult(comment);
         return Optional.ofNullable(nullableComment);
+    }
+
+    public List<Comment> findByVideoId(Long videoId, boolean isVideo) {
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE videoId = :videoId AND video = :video
+                """, TABLE);
+
+        var params = new MapSqlParameterSource()
+                .addValue("videoId", videoId)
+                .addValue("video", isVideo);
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
     }
 }
