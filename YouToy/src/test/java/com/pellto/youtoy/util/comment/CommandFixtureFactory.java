@@ -1,6 +1,7 @@
 package com.pellto.youtoy.util.comment;
 
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
+import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 
 import java.time.LocalDateTime;
@@ -47,4 +48,7 @@ public class CommandFixtureFactory {
                 .build();
     }
 
+    public static Comment create(UpdateCommentCommand cmd) {
+        return create(cmd.id(), VIDEO_ID, USER_ID, REPLIED_COMMENT_ID, CREATED_AT, VIDEO, cmd.content());
+    }
 }
