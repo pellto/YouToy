@@ -1,6 +1,5 @@
 package com.pellto.youtoy.domain.comment.repository;
 
-import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.support.DataAccessUtils;
@@ -74,7 +73,7 @@ public class CommentRepository {
         return Optional.ofNullable(nullableComment);
     }
 
-    public List<Comment> findByVideoIdAndVideo(Long videoId, boolean isVideo) {
+    public List<Comment> findByVideoId(Long videoId, boolean isVideo) {
         var sql = String.format("""
                 SELECT *
                 FROM %s
@@ -85,28 +84,5 @@ public class CommentRepository {
                 .addValue("videoId", videoId)
                 .addValue("video", isVideo);
         return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
-    }
-
-    public List<Comment> findByRepliedCommentId(Long repliedCommentId) {
-        var sql = String.format("""
-                SELECT *
-                FROM %s
-                WHERE repliedCommentId = :repliedCommentId
-                """, TABLE);
-
-        var params = new MapSqlParameterSource()
-                .addValue("repliedCommentId", repliedCommentId);
-        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
-    }
-
-    public Long countByRepliedCommentId(Long repliedCommentId) {
-        var sql = String.format("""
-                SELECT COUNT(*)
-                FROM %s
-                WHERE repliedCommentId = :repliedCommentId
-                """, TABLE);
-        var params = new MapSqlParameterSource()
-                .addValue("repliedCommentId", repliedCommentId);
-        return namedParameterJdbcTemplate.queryForObject(sql, params, Long.class);
     }
 }
