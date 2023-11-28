@@ -1,7 +1,7 @@
 package com.pellto.youtoy.application.controller;
 
-import com.pellto.youtoy.application.usecase.GetVideoCommentsUsecase;
 import com.pellto.youtoy.domain.comment.dto.CommentDto;
+import com.pellto.youtoy.application.usecase.GetCommentsUsecase;
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.service.CommentReadService;
@@ -17,7 +17,7 @@ import java.util.List;
 public class CommentController {
     private final CommentWriteService commentWriteService;
     private final CommentReadService commentReadService;
-    private final GetVideoCommentsUsecase getVideoCommentsUsecase;
+    private final GetCommentsUsecase getCommentsUsecase;
 
     @PostMapping
     public Comment create(@RequestBody CreateCommentCommand cmd) {
@@ -36,11 +36,11 @@ public class CommentController {
 
     @GetMapping("/video/{videoId}")
     public List<CommentDto> getVideoComments(@PathVariable Long videoId) {
-        return getVideoCommentsUsecase.execute(videoId, true);
+        return getCommentsUsecase.execute(videoId, true);
     }
 
     @GetMapping("/short/{shortId}")
     public List<CommentDto> getShortComments(@PathVariable Long shortId) {
-        return getVideoCommentsUsecase.execute(shortId, false);
+        return getCommentsUsecase.execute(shortId, false);
     }
 }

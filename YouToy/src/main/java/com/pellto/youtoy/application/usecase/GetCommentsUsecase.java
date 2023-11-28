@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class GetVideoCommentsUsecase {
+public class GetCommentsUsecase {
     private final VideoReadService videoReadService;
     private final ShortReadService shortReadService;
     private final CommentReadService commentReadService;
