@@ -1,9 +1,11 @@
 package com.pellto.youtoy.application.usecase;
 
+import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.service.CommentReadService;
 import com.pellto.youtoy.domain.video.service.ShortReadService;
 import com.pellto.youtoy.domain.video.service.VideoReadService;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +19,19 @@ public class GetVideoCommentsUsecase {
     private final CommentReadService commentReadService;
 
     // TODO: Comment to dto
-    public List<Comment> execute(Long videoId, Boolean isVideo) {
+    public List<CommentDto> execute(Long videoId, Boolean isVideo) {
         if (isVideo) {
             if (!videoReadService.existVideo(videoId)) {
                 // TODO: Convert to Custom Error
-                throw new UnsupportedOperationException("존재하지 않습니다.");
+                throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_VIDEO.getMessage());
             }
         } else {
             if (!shortReadService.existShort(videoId)) {
                 // TODO: Convert to Custom Error
-                throw new UnsupportedOperationException("존재하지 않습니다.");
+                throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_SHORT.getMessage());
             }
         }
 
-        return commentReadService.getByVideoId(videoId, isVideo);
+        return commentReadService.getByVideoIdAndVideo(videoId, isVideo);
     }
 }

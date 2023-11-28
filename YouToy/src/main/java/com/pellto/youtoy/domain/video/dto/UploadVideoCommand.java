@@ -6,7 +6,12 @@ import java.beans.ConstructorProperties;
 
 public class UploadVideoCommand extends AbVideoCommand {
     @ConstructorProperties({"channelId", "userId", "title", "description"})
-    public UploadVideoCommand(@NotNull Long channelId, @NotNull Long userId, String title, String description) {
+    public UploadVideoCommand(
+            @NotNull Long channelId,
+            @NotNull Long userId,
+            String title,
+            String description
+    ) {
         super(channelId, userId, title, description);
     }
 
