@@ -1,8 +1,10 @@
 package com.pellto.youtoy.application.controller;
 
+import com.pellto.youtoy.application.usecase.CreateCommentUsecase;
 import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.application.usecase.GetCommentsUsecase;
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
+import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.service.CommentReadService;
 import com.pellto.youtoy.domain.comment.service.CommentWriteService;
@@ -15,18 +17,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
+    private final CreateCommentUsecase commentUsecase;
+    private final GetCommentsUsecase getCommentsUsecase;
     private final CommentWriteService commentWriteService;
     private final CommentReadService commentReadService;
-    private final GetCommentsUsecase getCommentsUsecase;
+
 
     @PostMapping
     public Comment create(@RequestBody CreateCommentCommand cmd) {
-        return commentWriteService.create(cmd);
+        return commentUsecase.execute(cmd);
     }
 
     @GetMapping("/{id}")
     public Comment get(@PathVariable Long id) {
         return commentReadService.get(id);
+    }
+
+    @PatchMapping
+    public Comment update(@RequestBody UpdateCommentCommand cmd) {
+        return commentWriteService.update(cmd);
     }
 
     @GetMapping("/replies/{id}")

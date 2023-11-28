@@ -38,7 +38,22 @@ public class CommentRepository {
         if (comment.getId() == null) {
             return insert(comment);
         }
-        throw new UnsupportedOperationException("TEMP ERROR");
+        return update(comment);
+    }
+
+    private Comment update(Comment comment) {
+        var sql = String.format("""
+                UPDATE %s
+                SET content = :content
+                WHERE id = :id
+                """, TABLE);
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("id", comment.getId())
+                .addValue("content", comment.getContent());
+        namedParameterJdbcTemplate.update(sql, params);
+        return comment;
+
     }
 
     private Comment insert(Comment comment) {
