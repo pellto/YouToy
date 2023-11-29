@@ -23,7 +23,14 @@ public class LikeWriteService {
                 .commentId(cmd.commentId())
                 .userId(cmd.userId())
                 .build();
-        
+
         return likeRepository.save(like);
+    }
+
+    public void cancel(Long id) {
+        if (!likeRepository.existById(id)) {
+            throw new UnsupportedOperationException("존재하지 않습니다.");
+        }
+        likeRepository.deleteById(id);
     }
 }
