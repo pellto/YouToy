@@ -40,7 +40,10 @@ public enum ErrorCode {
     // Comment
     NOT_EXIST_COMMENT(400, "CM001", "해당 댓글이 존재하지 않습니다."),
     // Like
-    UNSUPPORTED_LIKE_CASE(400, "LK001", "지원하지않는 like 유형입니다.");
+    UNSUPPORTED_LIKE_CASE(400, "LK001", "지원하지 않는 like 유형입니다."),
+    UNSUPPORTED_DISLIKE_CASE(400, "LK002", "지원하지 않는 dislike 유형입니다."),
+    NOT_EXIST_LIKE(400, "LK003", "해당 Like는 존재하지 않습니다."),
+    NOT_EXIST_DISLIKE(400, "LK004", "해당 Dislike는 존재하지 않습니다.");
 
 
     private final String code;

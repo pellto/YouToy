@@ -22,7 +22,7 @@ public class LikeReadService {
         return like == null ? null : toDto(like);
     }
 
-    private LikeDto toDto(Like like) {
+    public LikeDto toDto(Like like) {
         return new LikeDto(
                 like.getId(),
                 like.getVideoId(),

@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.like.dto.CreateLikeCommand;
 import com.pellto.youtoy.domain.like.dto.LikeDto;
 import com.pellto.youtoy.domain.like.entity.Like;
 import com.pellto.youtoy.domain.like.repository.LikeRepository;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class LikeWriteService {
 
     public void cancel(Long id) {
         if (!likeRepository.existById(id)) {
-            throw new UnsupportedOperationException("존재하지 않습니다.");
+            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_LIKE.getMessage());
         }
         likeRepository.deleteById(id);
     }

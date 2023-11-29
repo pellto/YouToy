@@ -2,9 +2,8 @@ package com.pellto.youtoy.domain.like.service;
 
 import com.pellto.youtoy.domain.like.dto.CreateLikeCommand;
 import com.pellto.youtoy.domain.like.entity.Dislike;
-import com.pellto.youtoy.domain.like.entity.Like;
 import com.pellto.youtoy.domain.like.repository.DislikeRepository;
-import com.pellto.youtoy.domain.like.repository.LikeRepository;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ public class DislikeWriteService {
 
     public Dislike dislike(CreateLikeCommand cmd) {
         if (cmd.videoType() == null && cmd.commentId() == null) {
-            throw new UnsupportedOperationException("지원하지않는 dislike 유형입니다.");
+            throw new UnsupportedOperationException(ErrorCode.UNSUPPORTED_LIKE_CASE.getMessage());
         }
 
         var dislike = Dislike.builder()
@@ -31,7 +30,7 @@ public class DislikeWriteService {
 
     public void cancel(Long id) {
         if (!dislikeRepository.existById(id)) {
-            throw new UnsupportedOperationException("존재하지 않습니다.");
+            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_DISLIKE.getMessage());
         }
         dislikeRepository.deleteById(id);
     }

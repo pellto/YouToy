@@ -1,6 +1,5 @@
 package com.pellto.youtoy.domain.comment;
 
-import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.repository.CommentRepository;
 import com.pellto.youtoy.domain.comment.service.CommentWriteService;
 import com.pellto.youtoy.util.comment.CommandFixtureFactory;

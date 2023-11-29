@@ -119,9 +119,9 @@ public class ShortServiceTest {
         }
     }
 
-    @DisplayName("[" + PREFIX + ": incrementViewCount: success] 쇼츠 view count 증가 성공 테스트")
+    @DisplayName("[" + PREFIX + ": increaseViewCount: success] 쇼츠 view count 증가 성공 테스트")
     @Test
-    public void incrementViewCountTest() {
+    public void increaseViewCountTest() {
         Long id = 1L;
         var shorts = ShortFixtureFactory.create();
 
@@ -135,9 +135,9 @@ public class ShortServiceTest {
         then(shortRepository).should(times(1)).save(any());
     }
 
-    @DisplayName("[" + PREFIX + ": incrementViewCount: not exist short] 쇼츠 view count 증가 시 없는 쇼츠 테스트")
+    @DisplayName("[" + PREFIX + ": increaseViewCount: not exist short] 쇼츠 view count 증가 시 없는 쇼츠 테스트")
     @Test
-    public void incrementViewCountNotExistVideTest() {
+    public void increaseViewCountNotExistVideTest() {
         Long id = 1L;
 
         given(shortRepository.findById(any())).willReturn(null);
