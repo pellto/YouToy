@@ -96,4 +96,28 @@ create table Comment
         primary key (id)
 );
 
-DROP TABLE Comment;
+# like 관계 테이블 추가
+create table Likes
+(
+    id        int auto_increment,
+    videoId   int,
+    videoType boolean,
+    commentId int,
+    userId    int      not null,
+    createdAt datetime not null,
+    constraint Like_id_uindex
+        primary key (id)
+);
+
+# dislike 관계 테이블 추가
+create table Dislike
+(
+    id        int auto_increment,
+    videoId   int,
+    videoType boolean,
+    commentId int,
+    userId    int      not null,
+    createdAt datetime not null,
+    constraint Dislike_id_uindex
+        primary key (id)
+);
