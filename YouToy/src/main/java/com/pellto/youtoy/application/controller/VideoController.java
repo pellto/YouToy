@@ -52,7 +52,7 @@ public class VideoController {
 
     @PutMapping("/{id}/view/increment")
     public void increase(@PathVariable Long id) {
-        videoWriteService.incrementViewCount(id);
+        videoWriteService.increaseViewCount(id);
     }
 
     @PostMapping("/short")
@@ -77,6 +77,6 @@ public class VideoController {
 
     @PutMapping("/short/{id}/view/increment")
     public void increaseShort(@PathVariable Long id) {
-        shortWriteService.incrementViewCount(id);
+        shortWriteService.increaseViewCount(id);
     }
 }

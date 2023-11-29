@@ -122,9 +122,14 @@ create table Dislike
         primary key (id)
 );
 
-SELECT *
-FROM Dislike
-WHERE videoId = 2
-  AND videoType = 0
-  AND commentId IS NULL
-  AND userId = 4;
+# Video에 likeCount 컬럼 추가
+ALTER TABLE Video
+    ADD likeCount int not null default 0;
+
+# Shorts에 likeCount 컬럼 추가
+ALTER TABLE Short
+    ADD likeCount int not null default 0;
+
+# Comment에 likeCount 컬럼 추가
+ALTER TABLE Comment
+    ADD likeCount int not null default 0;

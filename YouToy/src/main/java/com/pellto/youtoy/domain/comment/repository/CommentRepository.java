@@ -44,13 +44,12 @@ public class CommentRepository {
     private Comment update(Comment comment) {
         var sql = String.format("""
                 UPDATE %s
-                SET content = :content
+                SET content = :content,
+                    likeCount = :likeCount
                 WHERE id = :id
                 """, TABLE);
 
-        SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("id", comment.getId())
-                .addValue("content", comment.getContent());
+        SqlParameterSource params = new BeanPropertySqlParameterSource(comment);
         namedParameterJdbcTemplate.update(sql, params);
         return comment;
 

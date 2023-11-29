@@ -19,6 +19,7 @@ public class Comment {
     private final LocalDateTime createdAt;
     private final boolean video;
     private String content;
+    private Long likeCount;
 
     @Builder
     public Comment(
@@ -28,7 +29,8 @@ public class Comment {
             Long userId,
             Long repliedCommentId,
             String content,
-            LocalDateTime createdAt
+            LocalDateTime createdAt,
+            Long likeCount
     ) {
         this.id = id;
         this.videoId = Objects.requireNonNull(videoId);
@@ -37,5 +39,14 @@ public class Comment {
         this.repliedCommentId = repliedCommentId;
         this.createdAt = createdAt == null ? LocalDateTime.now() : createdAt;
         this.content = content == null ? "" : content;
+        this.likeCount = likeCount;
+    }
+
+    public void increaseLikeCount() {
+        this.likeCount += 1;
+    }
+
+    public void decreaseLikeCount() {
+        this.likeCount -= 1;
     }
 }

@@ -127,7 +127,7 @@ public class ShortServiceTest {
 
         given(shortRepository.findById(any())).willReturn(Optional.ofNullable(shorts));
 
-        shortWriteService.incrementViewCount(id);
+        shortWriteService.increaseViewCount(id);
 
         assertNotNull(shorts);
         assertEquals(shorts.getViewCount(), 1L);
@@ -143,7 +143,7 @@ public class ShortServiceTest {
         given(shortRepository.findById(any())).willReturn(null);
 
         try {
-            shortWriteService.incrementViewCount(id);
+            shortWriteService.increaseViewCount(id);
         } catch (Exception e) {
             assertEquals(NullPointerException.class, e.getClass());
             then(shortRepository).should(times(1)).findById(any());

@@ -128,7 +128,7 @@ public class VideoServiceTest {
 
         given(videoRepository.findById(any())).willReturn(Optional.ofNullable(video));
 
-        videoWriteService.incrementViewCount(id);
+        videoWriteService.increaseViewCount(id);
 
         assertNotNull(video);
         assertEquals(video.getViewCount(), 1L);
@@ -144,7 +144,7 @@ public class VideoServiceTest {
         given(videoRepository.findById(any())).willReturn(null);
 
         try {
-            videoWriteService.incrementViewCount(id);
+            videoWriteService.increaseViewCount(id);
         } catch (Exception e) {
             assertEquals(NullPointerException.class, e.getClass());
             then(videoRepository).should(times(1)).findById(any());

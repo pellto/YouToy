@@ -17,15 +17,25 @@ public class Shorts {
     private final Long channelId;
     private String title;
     private Long viewCount;
+    private Long likeCount;
     private String description;
     private final LocalDateTime createdAt;
 
     @Builder
-    public Shorts(Long id, Long channelId, String title, Long viewCount, String description, LocalDateTime createdAt) {
+    public Shorts(
+            Long id,
+            Long channelId,
+            String title,
+            Long viewCount,
+            String description,
+            LocalDateTime createdAt,
+            Long likeCount
+    ) {
         this.id = id;
         this.channelId = Objects.requireNonNull(channelId);
         this.title = title == null ? makeRandomTitle() : title;
         this.viewCount = viewCount == null ? 0 : viewCount;
+        this.likeCount = likeCount;
         this.description = description == null ? "" : description;
         this.createdAt = createdAt == null ? LocalDateTime.now() : createdAt;
     }
@@ -36,7 +46,15 @@ public class Shorts {
         return prefix + title;
     }
 
-    public void incrementViewCount() {
+    public void increaseViewCount() {
         this.viewCount += 1;
+    }
+
+    public void increaseLikeCount() {
+        this.likeCount += 1;
+    }
+
+    public void decreaseLikeCount() {
+        this.likeCount -= 1;
     }
 }

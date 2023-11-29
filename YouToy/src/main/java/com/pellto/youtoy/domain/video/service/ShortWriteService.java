@@ -49,9 +49,21 @@ public class ShortWriteService {
 
     @Transactional
     // TODO: Change Transactional
-    public void incrementViewCount(Long id) {
+    public void increaseViewCount(Long id) {
         Shorts shorts = shortRepository.findById(id).orElseThrow();
-        shorts.incrementViewCount();
+        shorts.increaseLikeCount();
+        shortRepository.save(shorts);
+    }
+
+    public void increaseLikeCount(Long id) {
+        Shorts shorts = shortRepository.findById(id).orElseThrow();
+        shorts.increaseLikeCount();
+        shortRepository.save(shorts);
+    }
+
+    public void decreaseLikeCount(Long id) {
+        Shorts shorts = shortRepository.findById(id).orElseThrow();
+        shorts.decreaseLikeCount();
         shortRepository.save(shorts);
     }
 }

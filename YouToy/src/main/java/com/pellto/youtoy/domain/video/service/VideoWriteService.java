@@ -49,9 +49,21 @@ public class VideoWriteService {
 
     @Transactional
     // TODO: Change Transactional
-    public void incrementViewCount(Long id) {
+    public void increaseViewCount(Long id) {
         Video video = videoRepository.findById(id).orElseThrow();
-        video.incrementViewCount();
+        video.increaseViewCount();
+        videoRepository.save(video);
+    }
+
+    public void increaseLikeCount(Long id) {
+        Video video = videoRepository.findById(id).orElseThrow();
+        video.increaseLikeCount();
+        videoRepository.save(video);
+    }
+
+    public void decreaseLikeCount(Long id) {
+        Video video = videoRepository.findById(id).orElseThrow();
+        video.decreaseLikeCount();
         videoRepository.save(video);
     }
 }

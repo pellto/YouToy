@@ -28,6 +28,7 @@ public class VideoRepository {
             .title(resultSet.getString("title"))
             .viewCount(resultSet.getLong("viewCount"))
             .description(resultSet.getString("description"))
+            .likeCount(resultSet.getLong("likeCount"))
             .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
             .build();
 
@@ -43,7 +44,8 @@ public class VideoRepository {
                 UPDATE %s
                 SET title = :title,
                     viewCount = :viewCount,
-                    description = :description
+                    description = :description,
+                    likeCount = :likeCount
                 WHERE id = :id
                 """, TABLE);
 

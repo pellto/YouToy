@@ -33,4 +33,16 @@ public class CommentWriteService {
         }
         return comment;
     }
+
+    public void increaseLikeCount(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        comment.increaseLikeCount();
+        commentRepository.save(comment);
+    }
+
+    public void decreaseLikeCount(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        comment.decreaseLikeCount();
+        commentRepository.save(comment);
+    }
 }
