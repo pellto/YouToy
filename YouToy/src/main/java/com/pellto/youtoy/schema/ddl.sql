@@ -146,4 +146,16 @@ create table Playlist
         primary key (id)
 );
 
-DROP TABLE Playlist;
+# DROP TABLE Playlist;
+
+# Playlist-Video 관계 테이블 추가
+create table Playlist_Video
+(
+    id         int auto_increment,
+    playlistId int        not null,
+    videoId    int        not null,
+    videoType  tinyint(2) not null,
+    createdAt  datetime   not null,
+    constraint Playlist_Video_id_uindex
+        primary key (id)
+);

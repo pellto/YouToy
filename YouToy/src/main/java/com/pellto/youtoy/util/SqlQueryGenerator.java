@@ -27,6 +27,13 @@ public class SqlQueryGenerator {
         return sql + String.format("%s %s %s :%s", prefix, columnName, operator, columnName);
     }
 
+    public static String deleteByIdQuery(String tableName) {
+        return String.format("""
+                DELETE FROM %s
+                WHERE id = :id
+                """, tableName);
+    }
+
     public static <T> Optional<T> transformSingleListToSingleObject(List<T> obj) {
         return Optional.ofNullable(DataAccessUtils.singleResult(obj));
     }
