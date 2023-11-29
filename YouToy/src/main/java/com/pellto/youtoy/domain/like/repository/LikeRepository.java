@@ -4,7 +4,6 @@ import com.pellto.youtoy.domain.like.dto.CreateLikeCommand;
 import com.pellto.youtoy.domain.like.entity.Like;
 import com.pellto.youtoy.util.SqlQueryGenerator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -16,10 +15,10 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static com.pellto.youtoy.util.SqlQueryGenerator.addQueryCondition;
+import static com.pellto.youtoy.util.SqlQueryGenerator.transformSingleListToSingleObject;
 
 @RequiredArgsConstructor
 @Repository
@@ -68,7 +67,7 @@ public class LikeRepository {
         sql = addQueryCondition(sql, "id", id);
 
         SqlParameterSource params = new MapSqlParameterSource().addValue("id", id);
-        return transformSingleListToSingleLike(
+        return transformSingleListToSingleObject(
                 namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER)
         );
     }
@@ -100,10 +99,6 @@ public class LikeRepository {
                 .addValue("commentId", cmd.commentId())
                 .addValue("userId", cmd.userId());
 
-        return transformSingleListToSingleLike(namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER));
-    }
-
-    private Optional<Like> transformSingleListToSingleLike(List<Like> likes) {
-        return Optional.ofNullable(DataAccessUtils.singleResult(likes));
+        return transformSingleListToSingleObject(namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER));
     }
 }

@@ -1,5 +1,10 @@
 package com.pellto.youtoy.util;
 
+import org.springframework.dao.support.DataAccessUtils;
+
+import java.util.List;
+import java.util.Optional;
+
 public class SqlQueryGenerator {
     public static String findAllQuery(String tableName) {
         return String.format("""
@@ -20,5 +25,9 @@ public class SqlQueryGenerator {
         }
 
         return sql + String.format("%s %s %s :%s", prefix, columnName, operator, columnName);
+    }
+
+    public static <T> Optional<T> transformSingleListToSingleObject(List<T> obj) {
+        return Optional.ofNullable(DataAccessUtils.singleResult(obj));
     }
 }

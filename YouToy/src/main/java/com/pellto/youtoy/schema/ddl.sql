@@ -133,3 +133,17 @@ ALTER TABLE Short
 # Comment에 likeCount 컬럼 추가
 ALTER TABLE Comment
     ADD likeCount int not null default 0;
+
+# Playlist 관계 테이블 추가
+create table Playlist
+(
+    id          int auto_increment,
+    channelId   int          not null,
+    title       varchar(128) not null,
+    targetRange tinyint(2)   not null,
+    createdAt   datetime     not null,
+    constraint Playlist_id_uindex
+        primary key (id)
+);
+
+DROP TABLE Playlist;
