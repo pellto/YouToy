@@ -13,10 +13,6 @@ public class LikeWriteService {
     private final LikeRepository likeRepository;
 
     public Like like(CreateLikeCommand cmd) {
-        if (cmd.videoType() == null && cmd.commentId() == null) {
-            throw new UnsupportedOperationException("지원하지않는 like 유형입니다.");
-        }
-
         var like = Like.builder()
                 .videoId(cmd.videoId())
                 .videoType(cmd.videoType())

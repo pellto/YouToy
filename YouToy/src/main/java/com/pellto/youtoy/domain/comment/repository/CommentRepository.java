@@ -124,4 +124,9 @@ public class CommentRepository {
                 .addValue("repliedCommentId", repliedCommentId);
         return namedParameterJdbcTemplate.queryForObject(sql, params, Long.class);
     }
+
+    public boolean existById(Long id) {
+        var comment = findById(id);
+        return comment.isPresent();
+    }
 }

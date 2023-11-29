@@ -1,5 +1,6 @@
 package com.pellto.youtoy.application.controller;
 
+import com.pellto.youtoy.application.usecase.CreateLikeUsecase;
 import com.pellto.youtoy.domain.like.dto.CreateLikeCommand;
 import com.pellto.youtoy.domain.like.service.DislikeWriteService;
 import com.pellto.youtoy.domain.like.service.LikeWriteService;
@@ -11,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/like")
 public class LikeController {
     private final LikeWriteService likeWriteService;
+    private final CreateLikeUsecase createLikeUsecase;
     private final DislikeWriteService dislikeWriteService;
 
     @PostMapping
     public void like(@RequestBody CreateLikeCommand cmd) {
-        likeWriteService.like(cmd);
+        createLikeUsecase.executeLike(cmd);
     }
 
     @DeleteMapping("/{id}")
@@ -25,7 +27,7 @@ public class LikeController {
 
     @PostMapping("/dislike")
     public void dislike(@RequestBody CreateLikeCommand cmd) {
-        dislikeWriteService.dislike(cmd);
+        createLikeUsecase.executeDislike(cmd);
     }
 
     @DeleteMapping("/dislike/{id}")

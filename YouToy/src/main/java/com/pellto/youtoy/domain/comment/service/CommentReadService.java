@@ -44,4 +44,8 @@ public class CommentReadService {
         var replies = commentRepository.findByRepliedCommentId(id);
         return replies.stream().map(this::toDto).toList();
     }
+
+    public boolean existComment(Long id) {
+        return commentRepository.existById(id);
+    }
 }

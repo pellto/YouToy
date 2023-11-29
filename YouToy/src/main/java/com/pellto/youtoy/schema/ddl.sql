@@ -121,3 +121,10 @@ create table Dislike
     constraint Dislike_id_uindex
         primary key (id)
 );
+
+SELECT *
+FROM Dislike
+WHERE videoId = 2
+  AND videoType = 0
+  AND commentId IS NULL
+  AND userId = 4;

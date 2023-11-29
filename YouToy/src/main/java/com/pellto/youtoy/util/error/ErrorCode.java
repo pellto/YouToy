@@ -35,10 +35,12 @@ public enum ErrorCode {
     USER_IS_NOT_OWNER(400, "CA001", "해당 채널의 owner가 아닙니다."),
     ALREADY_EXIST_ADMIN(400, "CA002", "이미 해당 채널의 관리자 입니다."),
     NOT_EXIST_ADMIN(400, "CA003", "해당 채널의 관리자가 아닙니다."),
-    NOT_AUTHORIZED_USER(400, "CA004", "해당 유저는 해당 채널의 권한이 없습니다.")
+    NOT_AUTHORIZED_USER(400, "CA004", "해당 유저는 해당 채널의 권한이 없습니다."),
 
     // Comment
-    ;
+    NOT_EXIST_COMMENT(400, "CM001", "해당 댓글이 존재하지 않습니다."),
+    // Like
+    UNSUPPORTED_LIKE_CASE(400, "LK001", "지원하지않는 like 유형입니다.");
 
 
     private final String code;
