@@ -27,4 +27,9 @@ public class LikeController {
     public void dislike(@RequestBody CreateLikeCommand cmd) {
         dislikeWriteService.dislike(cmd);
     }
+
+    @DeleteMapping("/dislike/{id}")
+    public void dislikeCancel(@PathVariable Long id) {
+        dislikeWriteService.cancel(id);
+    }
 }

@@ -28,4 +28,11 @@ public class DislikeWriteService {
 
         return dislikeRepository.save(dislike);
     }
+
+    public void cancel(Long id) {
+        if (!dislikeRepository.existById(id)) {
+            throw new UnsupportedOperationException("존재하지 않습니다.");
+        }
+        dislikeRepository.deleteById(id);
+    }
 }
