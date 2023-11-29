@@ -4,8 +4,10 @@ import com.pellto.youtoy.domain.playlist.dto.CreatePlaylistCommand;
 import com.pellto.youtoy.domain.playlist.dto.UpdatePlaylistCommand;
 import com.pellto.youtoy.domain.playlist.entity.Playlist;
 import com.pellto.youtoy.domain.playlist.repository.PlaylistRepository;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.Objects;
 
@@ -15,9 +17,6 @@ public class PlaylistWriteService {
     private final PlaylistRepository playlistRepository;
 
     public Playlist create(CreatePlaylistCommand cmd) {
-        if (cmd.channelId() == null) {
-            throw new UnsupportedOperationException("필수입니다.");
-        }
         var playlist = Playlist
                 .builder()
                 .channelId(cmd.channelId())
@@ -30,11 +29,11 @@ public class PlaylistWriteService {
 
     public void update(UpdatePlaylistCommand cmd) {
         boolean changeChecker = false;
-        if (cmd.id() == null) {
-            throw new UnsupportedOperationException("필수입니다");
-        }
-        var playlist = playlistRepository.findById(cmd.id()).orElseThrow();
-        
+        // TODO: change all if-throw statement to Assertion
+        Assert.notNull(cmd.id(), ErrorCode.NOT_ENTERED_PLAYLIST_ID.getMessage());
+        var playlist = playlistRepository.findById(cmd.id()).orElse(null);
+        Assert.notNull(playlist, ErrorCode.NOT_EXIST_PLAYLIST.getMessage());
+
         if (cmd.title() != null && !cmd.title().equals(playlist.getTitle())) {
             playlist.setTitle(cmd.title());
             changeChecker = true;

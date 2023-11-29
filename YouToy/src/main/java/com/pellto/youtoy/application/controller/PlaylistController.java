@@ -1,6 +1,8 @@
 package com.pellto.youtoy.application.controller;
 
+import com.pellto.youtoy.application.usecase.CreateChannelPlaylistUsecase;
 import com.pellto.youtoy.domain.playlist.dto.CreatePlaylistCommand;
+import com.pellto.youtoy.domain.playlist.dto.PlaylistDto;
 import com.pellto.youtoy.domain.playlist.dto.UpdatePlaylistCommand;
 import com.pellto.youtoy.domain.playlist.entity.Playlist;
 import com.pellto.youtoy.domain.playlist.service.PlaylistReadService;
@@ -15,11 +17,12 @@ import javax.validation.Valid;
 @RequestMapping("/playlist")
 public class PlaylistController {
     private final PlaylistWriteService playlistWriteService;
+    private final CreateChannelPlaylistUsecase createChannelPlaylistUsecase;
     private final PlaylistReadService playlistReadService;
 
     @PostMapping
-    public Playlist create(@Valid @RequestBody CreatePlaylistCommand cmd) {
-        return playlistWriteService.create(cmd);
+    public PlaylistDto create(@Valid @RequestBody CreatePlaylistCommand cmd) {
+        return createChannelPlaylistUsecase.execute(cmd);
     }
 
     @PatchMapping
