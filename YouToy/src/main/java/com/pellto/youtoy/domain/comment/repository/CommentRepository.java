@@ -1,6 +1,5 @@
 package com.pellto.youtoy.domain.comment.repository;
 
-import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.support.DataAccessUtils;
@@ -31,6 +30,7 @@ public class CommentRepository {
             .content(resultSet.getString("content"))
             .repliedCommentId(resultSet.getLong("repliedCommentId"))
             .video(resultSet.getBoolean("video"))
+            .likeCount(resultSet.getLong("likeCount"))
             .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
             .build();
 

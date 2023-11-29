@@ -29,9 +29,9 @@ public class DislikeRepository {
     private static final RowMapper<Dislike> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Dislike
             .builder()
             .id(resultSet.getLong("id"))
-            .videoId(resultSet.getLong("videoId"))
-            .videoType(resultSet.getInt("videoType"))
-            .commentId(resultSet.getLong("commentId"))
+            .videoId(resultSet.getObject("videoId", Long.class))
+            .videoType(resultSet.getObject("videoType", Integer.class))
+            .commentId(resultSet.getObject("commentId", Long.class))
             .userId(resultSet.getLong("userId"))
             .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
             .build();

@@ -1,6 +1,7 @@
 package com.pellto.youtoy.domain.like.service;
 
 import com.pellto.youtoy.domain.like.dto.CreateLikeCommand;
+import com.pellto.youtoy.domain.like.dto.LikeDto;
 import com.pellto.youtoy.domain.like.entity.Like;
 import com.pellto.youtoy.domain.like.repository.LikeRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,9 @@ public class LikeWriteService {
             throw new UnsupportedOperationException("존재하지 않습니다.");
         }
         likeRepository.deleteById(id);
+    }
+
+    public void cancel(LikeDto like) {
+        likeRepository.deleteById(like.id());
     }
 }

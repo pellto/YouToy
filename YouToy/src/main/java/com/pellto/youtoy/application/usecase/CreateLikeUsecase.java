@@ -12,12 +12,13 @@ import com.pellto.youtoy.domain.video.service.ShortWriteService;
 import com.pellto.youtoy.domain.video.service.VideoReadService;
 import com.pellto.youtoy.domain.video.service.VideoWriteService;
 import com.pellto.youtoy.util.error.ErrorCode;
-import com.pellto.youtoy.util.types.VideoTypes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+
+import static com.pellto.youtoy.util.types.VideoTypes.*;
 
 @RequiredArgsConstructor
 @Service
@@ -76,7 +77,7 @@ public class CreateLikeUsecase {
             if (!commentReadService.existComment(cmd.commentId())) {
                 throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_COMMENT.getMessage());
             }
-        } else if (Objects.equals(cmd.videoType(), VideoTypes.VIDEO_TYPE.getValue())) {
+        } else if (cmd.videoType().equals(VIDEO_TYPE.getValue())) {
             // video's like
             if (!videoReadService.existVideo(cmd.videoId())) {
                 throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_VIDEO.getMessage());
@@ -91,14 +92,14 @@ public class CreateLikeUsecase {
 
     private void fluctuateLikeCount(CreateLikeCommand cmd, Boolean isIncrease) {
         if (isIncrease == null) return;
-        if (Objects.equals(cmd.videoType(), VideoTypes.COMMENT_TYPE.getValue())) {
+        if (Objects.equals(cmd.videoType(), COMMENT_TYPE.getValue())) {
             // is Comment
             if (isIncrease) {
                 commentWriteService.increaseLikeCount(cmd.commentId());
             } else {
                 commentWriteService.decreaseLikeCount(cmd.commentId());
             }
-        } else if (Objects.equals(cmd.videoType(), VideoTypes.VIDEO_TYPE.getValue())) {
+        } else if (Objects.equals(cmd.videoType(), VIDEO_TYPE.getValue())) {
             // is Video
             if (isIncrease) {
                 videoWriteService.increaseLikeCount(cmd.videoId());

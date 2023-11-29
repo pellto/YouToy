@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 public class LikeReadService {
     private final LikeRepository likeRepository;
 
+    public LikeDto getById(Long id) {
+        var like = likeRepository.findById(id).orElseThrow();
+        return toDto(like);
+    }
+
     public LikeDto getByCreateCmd(CreateLikeCommand cmd) {
         var like = likeRepository.findByCreateCmd(cmd).orElse(null);
         return like == null ? null : toDto(like);

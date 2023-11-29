@@ -1,9 +1,8 @@
 package com.pellto.youtoy.application.controller;
 
+import com.pellto.youtoy.application.usecase.CancelLikeUsecase;
 import com.pellto.youtoy.application.usecase.CreateLikeUsecase;
 import com.pellto.youtoy.domain.like.dto.CreateLikeCommand;
-import com.pellto.youtoy.domain.like.service.DislikeWriteService;
-import com.pellto.youtoy.domain.like.service.LikeWriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +10,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/like")
 public class LikeController {
-    private final LikeWriteService likeWriteService;
     private final CreateLikeUsecase createLikeUsecase;
-    private final DislikeWriteService dislikeWriteService;
+    private final CancelLikeUsecase cancelLikeUsecase;
 
     @PostMapping
     public void like(@RequestBody CreateLikeCommand cmd) {
@@ -22,7 +20,7 @@ public class LikeController {
 
     @DeleteMapping("/{id}")
     public void likeCancel(@PathVariable Long id) {
-        likeWriteService.cancel(id);
+        cancelLikeUsecase.executeLike(id);
     }
 
     @PostMapping("/dislike")
@@ -32,6 +30,6 @@ public class LikeController {
 
     @DeleteMapping("/dislike/{id}")
     public void dislikeCancel(@PathVariable Long id) {
-        dislikeWriteService.cancel(id);
+        cancelLikeUsecase.executeDislike(id);
     }
 }
