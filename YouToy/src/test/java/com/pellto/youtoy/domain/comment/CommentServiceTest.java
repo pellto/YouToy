@@ -68,9 +68,6 @@ public class CommentServiceTest {
     @DisplayName("[" + DOMAIN + ": update: not exist comment] comment 미변경 성공 테스트")
     @Test
     public void updateNotExistTest() {
-        var comment = CommandFixtureFactory.create(
-                CreateCommentCommandFixtureFactory.create()
-        );
         var cmd = UpdateCommentCommandFixtureFactory.create(-1L);
 
         given(commentRepository.findById(any())).willReturn(null);

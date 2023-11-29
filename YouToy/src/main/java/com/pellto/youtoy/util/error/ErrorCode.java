@@ -3,7 +3,6 @@ package com.pellto.youtoy.util.error;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
-import javax.validation.ConstraintViolation;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @Getter
