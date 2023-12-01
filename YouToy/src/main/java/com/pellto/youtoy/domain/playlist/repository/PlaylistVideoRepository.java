@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -68,5 +69,13 @@ public class PlaylistVideoRepository {
         var sql = SqlQueryGenerator.deleteByIdQuery(TABLE);
         SqlParameterSource params = new MapSqlParameterSource("id", id);
         namedParameterJdbcTemplate.update(sql, params);
+    }
+
+    public List<PlaylistVideo> findByPlaylistId(Long playlistId) {
+        var sql = SqlQueryGenerator.findAllQuery(TABLE);
+        sql = SqlQueryGenerator.addQueryCondition(sql, "playlistId", playlistId);
+        sql = SqlQueryGenerator.addOrderByCondition(sql, "createdAt");
+        SqlParameterSource params = new MapSqlParameterSource("playlistId", playlistId);
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
     }
 }

@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 public class PlaylistReadService {
     private final PlaylistRepository playlistRepository;
 
-    public Playlist getById(Long id) {
-        return playlistRepository.findById(id).orElseThrow();
+    public PlaylistDto getById(Long id) {
+        return toDto(playlistRepository.findById(id).orElseThrow());
+    }
+
+    public boolean existById(Long id) {
+        return playlistRepository.existById(id);
     }
 
     public PlaylistDto toDto(Playlist playlist) {

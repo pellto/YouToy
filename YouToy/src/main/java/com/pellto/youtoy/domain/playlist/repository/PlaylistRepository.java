@@ -76,4 +76,8 @@ public class PlaylistRepository {
         SqlParameterSource params = new MapSqlParameterSource().addValue("id", id);
         return transformSingleListToSingleObject(namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER));
     }
+
+    public boolean existById(Long id) {
+        return findById(id).isPresent();
+    }
 }

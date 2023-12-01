@@ -30,6 +30,9 @@ public enum ErrorCode {
     // Shorts
     NOT_EXIST_SHORT(400, "VS001", "shorts가 존재하지 않습니다."),
 
+    // VideoType
+    UNSUPPORTED_VIDEO_TYPE(400, "VT001", "지원하지 않는 비디오 타입입니다."),
+
     // ChannelAdmin
     USER_IS_NOT_OWNER(400, "CA001", "해당 채널의 owner가 아닙니다."),
     ALREADY_EXIST_ADMIN(400, "CA002", "이미 해당 채널의 관리자 입니다."),
@@ -47,7 +50,11 @@ public enum ErrorCode {
 
     // Playlist
     NOT_EXIST_PLAYLIST(400, "PL001", "해당 playlist는 존재하지 않습니다."),
-    NOT_ENTERED_PLAYLIST_ID(400, "PL002", "playlist의 Id를 입력하지 않았습니다.");
+    NOT_ENTERED_PLAYLIST_ID(400, "PL002", "playlist의 Id를 입력하지 않았습니다."),
+
+    // Playlist-Video
+    NOT_EXIST_PLAYLIST_VIDEO(400, "PV001", "해당 playlist-video 관계가 존재하지 않습니다."),
+    ;
 
 
     private final String code;

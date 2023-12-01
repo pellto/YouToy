@@ -4,10 +4,7 @@ import com.pellto.youtoy.application.usecase.UpdateShortWithAdminUsecase;
 import com.pellto.youtoy.application.usecase.UpdateVideoWithAdminUsecase;
 import com.pellto.youtoy.application.usecase.UploadShortWithAdminUsecase;
 import com.pellto.youtoy.application.usecase.UploadVideoWithAdminUsecase;
-import com.pellto.youtoy.domain.video.dto.UpdateShortCommand;
-import com.pellto.youtoy.domain.video.dto.UpdateVideoCommand;
-import com.pellto.youtoy.domain.video.dto.UploadShortCommand;
-import com.pellto.youtoy.domain.video.dto.UploadVideoCommand;
+import com.pellto.youtoy.domain.video.dto.*;
 import com.pellto.youtoy.domain.video.entity.Shorts;
 import com.pellto.youtoy.domain.video.entity.Video;
 import com.pellto.youtoy.domain.video.service.ShortReadService;
@@ -41,7 +38,7 @@ public class VideoController {
     }
 
     @GetMapping("/{id}")
-    public Video get(@PathVariable Long id) {
+    public VideoDto get(@PathVariable Long id) {
         return videoReadService.getVideo(id);
     }
 
@@ -66,7 +63,7 @@ public class VideoController {
     }
 
     @GetMapping("/short/{id}")
-    public Shorts getShort(@PathVariable Long id) {
+    public ShortsDto getShort(@PathVariable Long id) {
         return shortReadService.getShort(id);
     }
 

@@ -1,19 +1,18 @@
 package com.pellto.youtoy.application.controller;
 
 import com.pellto.youtoy.application.usecase.CreateChannelPlaylistUsecase;
-import com.pellto.youtoy.domain.playlist.dto.CreatePlaylistCommand;
-import com.pellto.youtoy.domain.playlist.dto.CreatePlaylistVideoCommand;
-import com.pellto.youtoy.domain.playlist.dto.PlaylistDto;
-import com.pellto.youtoy.domain.playlist.dto.UpdatePlaylistCommand;
-import com.pellto.youtoy.domain.playlist.entity.Playlist;
-import com.pellto.youtoy.domain.playlist.entity.PlaylistVideo;
+import com.pellto.youtoy.application.usecase.CreatePlaylistVideoUsecase;
+import com.pellto.youtoy.application.usecase.GetVideosInPlaylistUsecase;
+import com.pellto.youtoy.domain.playlist.dto.*;
 import com.pellto.youtoy.domain.playlist.service.PlaylistReadService;
 import com.pellto.youtoy.domain.playlist.service.PlaylistVideoWriteService;
 import com.pellto.youtoy.domain.playlist.service.PlaylistWriteService;
+import com.pellto.youtoy.domain.video.dto.VideoContentsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +21,8 @@ public class PlaylistController {
     private final PlaylistWriteService playlistWriteService;
     private final PlaylistVideoWriteService playlistVideoWriteService;
     private final CreateChannelPlaylistUsecase createChannelPlaylistUsecase;
+    private final CreatePlaylistVideoUsecase createPlaylistVideoUsecase;
+    private final GetVideosInPlaylistUsecase getVideosInPlaylistUsecase;
     private final PlaylistReadService playlistReadService;
 
     @PostMapping
@@ -35,17 +36,22 @@ public class PlaylistController {
     }
 
     @GetMapping("/{id}")
-    public Playlist get(@PathVariable Long id) {
+    public PlaylistDto get(@PathVariable Long id) {
         return playlistReadService.getById(id);
     }
 
     @PostMapping("/video")
-    public PlaylistVideo create(@Valid @RequestBody CreatePlaylistVideoCommand cmd) {
-        return playlistVideoWriteService.create(cmd);
+    public PlaylistVideoDto create(@Valid @RequestBody CreatePlaylistVideoCommand cmd) {
+        return createPlaylistVideoUsecase.execute(cmd);
     }
 
     @DeleteMapping("/video/{id}")
     public void delete(@Valid @PathVariable Long id) {
         playlistVideoWriteService.delete(id);
+    }
+
+    @GetMapping("/video/{playlistId}/contents")
+    public List<VideoContentsDto> getByPlaylistId(@PathVariable Long playlistId) {
+        return getVideosInPlaylistUsecase.execute(playlistId);
     }
 }

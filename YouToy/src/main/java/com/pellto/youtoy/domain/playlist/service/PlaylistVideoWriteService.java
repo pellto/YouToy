@@ -1,6 +1,7 @@
 package com.pellto.youtoy.domain.playlist.service;
 
 import com.pellto.youtoy.domain.playlist.dto.CreatePlaylistVideoCommand;
+import com.pellto.youtoy.domain.playlist.dto.PlaylistVideoDto;
 import com.pellto.youtoy.domain.playlist.entity.PlaylistVideo;
 import com.pellto.youtoy.domain.playlist.repository.PlaylistVideoRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,16 +12,15 @@ import org.springframework.util.Assert;
 @Service
 public class PlaylistVideoWriteService {
     private final PlaylistVideoRepository playlistVideoRepository;
+    private final PlaylistVideoReadService playlistVideoReadService;
 
-    public PlaylistVideo create(CreatePlaylistVideoCommand cmd) {
-        // TODO: playlist exist check at usecase
-        // TODO: videoId exist check at usecase
+    public PlaylistVideoDto create(CreatePlaylistVideoCommand cmd) {
         var playlistVideo = PlaylistVideo.builder()
                 .playlistId(cmd.playlistId())
                 .videoId(cmd.videoId())
                 .videoType(cmd.videoType())
                 .build();
-        return playlistVideoRepository.save(playlistVideo);
+        return playlistVideoReadService.toDto(playlistVideoRepository.save(playlistVideo));
     }
 
     public void delete(Long id) {
