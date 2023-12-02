@@ -39,7 +39,7 @@ public class Comment {
         this.repliedCommentId = repliedCommentId;
         this.createdAt = createdAt == null ? LocalDateTime.now() : createdAt;
         this.content = content == null ? "" : content;
-        this.likeCount = likeCount;
+        this.likeCount = likeCount == null ? 0 : likeCount;
     }
 
     public void increaseLikeCount() {

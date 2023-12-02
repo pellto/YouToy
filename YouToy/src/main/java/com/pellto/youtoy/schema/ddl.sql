@@ -159,3 +159,16 @@ create table Playlist_Video
     constraint Playlist_Video_id_uindex
         primary key (id)
 );
+
+# Mention 테이블 추가
+create table Mention
+(
+    id                 int auto_increment,
+    commentId          int      not null,
+    mentionedChannelId int      not null,
+    createdAt          datetime not null,
+    constraint Mention_Video_id_uindex
+        primary key (id)
+);
+
+# DROP TABLE Mention;

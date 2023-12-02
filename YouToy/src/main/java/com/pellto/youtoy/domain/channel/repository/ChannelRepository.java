@@ -2,6 +2,7 @@ package com.pellto.youtoy.domain.channel.repository;
 
 import com.pellto.youtoy.domain.channel.entity.Channel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -73,8 +74,12 @@ public class ChannelRepository {
                 WHERE handle = :handle
                 """, TABLE);
         var params = new MapSqlParameterSource().addValue("handle", handle);
-        var nullableChannel = namedParameterJdbcTemplate.queryForObject(sql, params, ROW_MAPPER);
-        return Optional.ofNullable(nullableChannel);
+        try {
+            var nullableChannel = namedParameterJdbcTemplate.queryForObject(sql, params, ROW_MAPPER);
+            return Optional.ofNullable(nullableChannel);
+        } catch (EmptyResultDataAccessException emptyErr) {
+            return Optional.empty();
+        }
     }
 
     public Optional<Channel> findByOwnerId(Long ownerId) {

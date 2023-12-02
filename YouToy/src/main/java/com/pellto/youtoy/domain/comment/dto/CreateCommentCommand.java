@@ -11,6 +11,7 @@ public record CreateCommentCommand(
         Boolean video,
         @NotNull
         String content,
-        Long repliedCommentId
+        Long repliedCommentId,
+        String mentionedChannelHandle
 ) {
 }

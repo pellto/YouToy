@@ -17,6 +17,7 @@ public enum ErrorCode {
     OWNER_ID_IS_REQUIRED(400, "C002", "유저의 id는 필수입니다."),
     ALREADY_EXIST_HANDLE(400, "C003", "이미 존재하는 handle 입니다"),
     NOT_EXIST_CHANNEL(400, "C004", "해당 채널은 존재하지 않습니다."),
+    NOT_EXIST_CHANNEL_HANDLE(400, "CM001", "해당 채널 핸들은 존재하지 않습니다"),
 
     // Subscribe
     NOT_ENTERED_CHANNEL_ID(400, "S001", "구독할 채널의 id는 필수 입니다."),
