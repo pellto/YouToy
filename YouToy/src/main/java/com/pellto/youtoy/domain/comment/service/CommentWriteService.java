@@ -1,5 +1,6 @@
 package com.pellto.youtoy.domain.comment.service;
 
+import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
@@ -13,8 +14,9 @@ import java.util.Objects;
 @Service
 public class CommentWriteService {
     private final CommentRepository commentRepository;
+    private final CommentReadService commentReadService;
 
-    public Comment create(CreateCommentCommand cmd) {
+    public CommentDto create(CreateCommentCommand cmd) {
         var comment = Comment.builder()
                 .videoId(cmd.videoId())
                 .userId(cmd.userId())
@@ -22,16 +24,16 @@ public class CommentWriteService {
                 .content(cmd.content())
                 .repliedCommentId(cmd.repliedCommentId())
                 .build();
-        return commentRepository.save(comment);
+        return commentReadService.toDto(commentRepository.save(comment));
     }
 
-    public Comment update(UpdateCommentCommand cmd) {
+    public CommentDto update(UpdateCommentCommand cmd) {
         var comment = commentRepository.findById(cmd.id()).orElseThrow();
         if (!Objects.equals(cmd.content(), comment.getContent())) {
             comment.setContent(cmd.content());
             commentRepository.save(comment);
         }
-        return comment;
+        return commentReadService.toDto(comment);
     }
 
     public void increaseLikeCount(Long id) {

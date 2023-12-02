@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 public record UpdateCommentCommand(
         @NotNull
         Long id,
-        String content
+        String content,
+        String mentionedChannelHandle
 ) {
 }

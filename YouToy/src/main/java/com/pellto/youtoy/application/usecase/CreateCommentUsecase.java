@@ -1,6 +1,7 @@
 package com.pellto.youtoy.application.usecase;
 
 import com.pellto.youtoy.domain.channel.service.ChannelReadService;
+import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.dto.CreateMentionCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
@@ -24,7 +25,7 @@ public class CreateCommentUsecase {
     private final CommentWriteService commentWriteService;
     private final MentionWriteService mentionWriteService;
 
-    public Comment execute(CreateCommentCommand cmd) {
+    public CommentDto execute(CreateCommentCommand cmd) {
         if (cmd.video()) {
             if (!videoReadService.existVideo(cmd.videoId())) {
                 // TODO: Convert to Custom Error

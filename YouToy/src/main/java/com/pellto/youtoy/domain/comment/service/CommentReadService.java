@@ -13,8 +13,8 @@ import java.util.List;
 public class CommentReadService {
     private final CommentRepository commentRepository;
 
-    public Comment get(Long id) {
-        return commentRepository.findById(id).orElseThrow();
+    public CommentDto get(Long id) {
+        return toDto(commentRepository.findById(id).orElseThrow());
     }
 
     public List<CommentDto> getByVideoIdAndVideo(Long videoId, boolean isVideo) {

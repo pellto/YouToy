@@ -1,13 +1,12 @@
 package com.pellto.youtoy.application.controller;
 
 import com.pellto.youtoy.application.usecase.CreateCommentUsecase;
+import com.pellto.youtoy.application.usecase.UpdateCommentUsecase;
 import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.application.usecase.GetCommentsUsecase;
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
-import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.service.CommentReadService;
-import com.pellto.youtoy.domain.comment.service.CommentWriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,25 +16,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
-    private final CreateCommentUsecase commentUsecase;
+    private final CreateCommentUsecase createCommentUsecase;
+    private final UpdateCommentUsecase updateCommentUsecase;
     private final GetCommentsUsecase getCommentsUsecase;
-    private final CommentWriteService commentWriteService;
     private final CommentReadService commentReadService;
 
 
     @PostMapping
-    public Comment create(@RequestBody CreateCommentCommand cmd) {
-        return commentUsecase.execute(cmd);
+    public CommentDto create(@RequestBody CreateCommentCommand cmd) {
+        return createCommentUsecase.execute(cmd);
     }
 
     @GetMapping("/{id}")
-    public Comment get(@PathVariable Long id) {
+    public CommentDto get(@PathVariable Long id) {
         return commentReadService.get(id);
     }
 
     @PatchMapping
-    public Comment update(@RequestBody UpdateCommentCommand cmd) {
-        return commentWriteService.update(cmd);
+    public CommentDto update(@RequestBody UpdateCommentCommand cmd) {
+        return updateCommentUsecase.execute(cmd);
     }
 
     @GetMapping("/replies/{id}")
