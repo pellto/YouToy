@@ -1,8 +1,10 @@
 package com.pellto.youtoy.domain.comment;
 
 import com.pellto.youtoy.domain.comment.repository.CommentRepository;
+import com.pellto.youtoy.domain.comment.service.CommentReadService;
 import com.pellto.youtoy.domain.comment.service.CommentWriteService;
 import com.pellto.youtoy.util.comment.CommandFixtureFactory;
+import com.pellto.youtoy.util.comment.CommentDtoFixtureCommand;
 import com.pellto.youtoy.util.comment.CreateCommentCommandFixtureFactory;
 import com.pellto.youtoy.util.comment.UpdateCommentCommandFixtureFactory;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +26,8 @@ public class CommentServiceTest {
     private static final String DOMAIN = "Comment";
     @InjectMocks
     private CommentWriteService commentWriteService;
+    @Mock
+    private CommentReadService commentReadService;
 
     @Mock
     private CommentRepository commentRepository;
@@ -33,17 +37,18 @@ public class CommentServiceTest {
     public void createTest() {
         var cmd = CreateCommentCommandFixtureFactory.create();
         var comment = CommandFixtureFactory.create(cmd);
+        var commentDto = CommentDtoFixtureCommand.create(comment);
 
         given(commentRepository.save(any())).willReturn(comment);
+        given(commentReadService.toDto(any())).willReturn(commentDto);
 
         var createdComment = commentWriteService.create(cmd);
 
-        assertEquals(cmd.videoId(), createdComment.getVideoId());
         assertEquals(cmd.userId(), createdComment.getUserId());
-        assertEquals(cmd.video(), createdComment.isVideo());
         assertEquals(cmd.content(), createdComment.getContent());
-        assertEquals(cmd.repliedCommentId(), createdComment.getRepliedCommentId());
+        assertEquals(0, createdComment.getReplyCnt());
         then(commentRepository).should(times(1)).save(any());
+        then(commentReadService).should(times(1)).toDto(any());
     }
 
     @DisplayName("[" + DOMAIN + ": update: success] comment 내용 변경 성공 테스트")
@@ -53,14 +58,17 @@ public class CommentServiceTest {
         var comment = CommandFixtureFactory.create(
                 CreateCommentCommandFixtureFactory.create()
         );
+        var commentDto = CommentDtoFixtureCommand.create(cmd.content());
 
-        given(commentRepository.findById(any())).willReturn(Optional.ofNullable(comment));
+        given(commentRepository.findById(any())).willReturn(Optional.of(comment));
         given(commentRepository.save(any())).willReturn(comment);
+        given(commentReadService.toDto(any())).willReturn(commentDto);
 
         var updatedComment = commentWriteService.update(cmd);
 
         then(commentRepository).should(times(1)).save(any());
         then(commentRepository).should(times(1)).findById(any());
+        then(commentReadService).should(times(1)).toDto(any());
         assertEquals(cmd.id(), updatedComment.getId());
         assertEquals(cmd.content(), updatedComment.getContent());
     }
@@ -88,13 +96,16 @@ public class CommentServiceTest {
                 CreateCommentCommandFixtureFactory.create()
         );
         var cmd = UpdateCommentCommandFixtureFactory.create(comment.getContent());
+        var commentDto = CommentDtoFixtureCommand.create(comment);
 
         given(commentRepository.findById(any())).willReturn(Optional.of(comment));
+        given(commentReadService.toDto(any())).willReturn(commentDto);
 
         var updatedComment = commentWriteService.update(cmd);
 
         then(commentRepository).should(times(0)).save(any());
         then(commentRepository).should(times(1)).findById(any());
+        then(commentReadService).should(times(1)).toDto(any());
         assertEquals(cmd.id(), updatedComment.getId());
         assertEquals(cmd.content(), updatedComment.getContent());
     }
