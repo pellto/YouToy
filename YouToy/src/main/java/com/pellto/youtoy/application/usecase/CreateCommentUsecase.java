@@ -4,13 +4,11 @@ import com.pellto.youtoy.domain.channel.service.ChannelReadService;
 import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.dto.CreateMentionCommand;
-import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.service.CommentWriteService;
-import com.pellto.youtoy.domain.comment.service.MentionReadService;
 import com.pellto.youtoy.domain.comment.service.MentionWriteService;
-import com.pellto.youtoy.domain.user.service.UserReadService;
 import com.pellto.youtoy.domain.video.service.ShortReadService;
 import com.pellto.youtoy.domain.video.service.VideoReadService;
+import com.pellto.youtoy.util.ChannelHandlePattern;
 import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +25,6 @@ public class CreateCommentUsecase {
     private final ShortReadService shortReadService;
     private final CommentWriteService commentWriteService;
     private final MentionWriteService mentionWriteService;
-    private final MentionReadService mentionReadService;
 
     public CommentDto execute(CreateCommentCommand cmd) {
         if (cmd.video()) {
@@ -41,10 +38,10 @@ public class CreateCommentUsecase {
                 throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_SHORT.getMessage());
             }
         }
-        if (!mentionReadService.hasMention(cmd.content())) {
+        if (!ChannelHandlePattern.hasPattern(cmd.content())) {
             return commentWriteService.create(cmd);
         }
-        var mentionedChannelHandles = mentionReadService.extractChannelHandle(cmd.content());
+        var mentionedChannelHandles = ChannelHandlePattern.extractChannelHandle(cmd.content());
         var comment = commentWriteService.create(cmd);
 
         mentionedChannelHandles.forEach((mentionedChannelHandle) -> saveMention(

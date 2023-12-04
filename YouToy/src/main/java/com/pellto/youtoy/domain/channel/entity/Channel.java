@@ -45,7 +45,7 @@ public class Channel {
     }
 
     private String makeRandomHandle() {
-        String prefix = "user-";
+        String prefix = "@user-";
         int initHandleLength = 10;
         boolean useLetters = true;
         boolean useNumbers = true;

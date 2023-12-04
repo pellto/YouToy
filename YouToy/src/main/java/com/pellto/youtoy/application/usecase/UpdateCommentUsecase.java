@@ -6,8 +6,8 @@ import com.pellto.youtoy.domain.comment.dto.CreateMentionCommand;
 import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
 import com.pellto.youtoy.domain.comment.service.CommentReadService;
 import com.pellto.youtoy.domain.comment.service.CommentWriteService;
-import com.pellto.youtoy.domain.comment.service.MentionReadService;
 import com.pellto.youtoy.domain.comment.service.MentionWriteService;
+import com.pellto.youtoy.util.ChannelHandlePattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,17 +20,16 @@ public class UpdateCommentUsecase {
     private final CommentWriteService commentWriteService;
     private final CommentReadService commentReadService;
     private final MentionWriteService mentionWriteService;
-    private final MentionReadService mentionReadService;
 
     public CommentDto execute(UpdateCommentCommand cmd) {
         var commentDto = commentReadService.get(cmd.id());
-        if (mentionReadService.hasMention(commentDto.content())) {
+        if (ChannelHandlePattern.hasPattern(commentDto.content())) {
             mentionWriteService.deleteByCommentId(cmd.id());
         }
-        if (!mentionReadService.hasMention(cmd.content())) {
+        if (!ChannelHandlePattern.hasPattern(cmd.content())) {
             return commentWriteService.update(cmd);
         }
-        var mentionedChannelHandles = mentionReadService.extractChannelHandle(cmd.content());
+        var mentionedChannelHandles = ChannelHandlePattern.extractChannelHandle(cmd.content());
         var updatedComment = commentWriteService.update(cmd);
         mentionedChannelHandles.forEach((mentionedChannelHandle) -> {
             var channelDto = channelReadService.getByHandle(mentionedChannelHandle);
