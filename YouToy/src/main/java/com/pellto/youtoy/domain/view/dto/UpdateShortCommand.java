@@ -1,18 +1,18 @@
-package com.pellto.youtoy.domain.video.dto;
+package com.pellto.youtoy.domain.view.dto;
 
 import javax.validation.constraints.NotNull;
 import java.beans.ConstructorProperties;
 
-public class UpdateVideoCommand extends AbVideoCommand {
+public class UpdateShortCommand extends AbVideoCommand {
     private final Long id;
 
-    public UpdateVideoCommand(@NotNull Long channelId, @NotNull Long userId, String title, String description) {
+    public UpdateShortCommand(@NotNull Long channelId, @NotNull Long userId, String title, String description) {
         super(channelId, userId, title, description);
-        this.id = null;
+        id = null;
     }
 
     @ConstructorProperties({"id", "channelId", "userId", "title", "description"})
-    public UpdateVideoCommand(@NotNull Long id, @NotNull Long channelId, @NotNull Long userId, String title, String description) {
+    public UpdateShortCommand(@NotNull Long id, @NotNull Long channelId, @NotNull Long userId, String title, String description) {
         super(channelId, userId, title, description);
         this.id = id;
     }
@@ -23,7 +23,7 @@ public class UpdateVideoCommand extends AbVideoCommand {
 
     @Override
     public String toString() {
-        return "UpdateVideoCommand{" +
+        return "UpdateShortCommand{" +
                 "id=" + id +
                 ", channelId=" + channelId +
                 ", userId=" + userId +

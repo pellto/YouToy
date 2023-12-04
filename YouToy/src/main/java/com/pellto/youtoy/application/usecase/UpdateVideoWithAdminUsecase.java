@@ -1,9 +1,8 @@
 package com.pellto.youtoy.application.usecase;
 
-import com.pellto.youtoy.domain.video.dto.UpdateVideoCommand;
-import com.pellto.youtoy.domain.video.dto.UploadVideoCommand;
-import com.pellto.youtoy.domain.video.entity.Video;
-import com.pellto.youtoy.domain.video.service.VideoWriteService;
+import com.pellto.youtoy.domain.view.dto.UpdateVideoCommand;
+import com.pellto.youtoy.domain.view.entity.Video;
+import com.pellto.youtoy.domain.view.service.VideoWriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

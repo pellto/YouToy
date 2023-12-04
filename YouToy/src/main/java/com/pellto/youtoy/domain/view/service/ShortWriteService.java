@@ -1,9 +1,9 @@
-package com.pellto.youtoy.domain.video.service;
+package com.pellto.youtoy.domain.view.service;
 
-import com.pellto.youtoy.domain.video.dto.UpdateShortCommand;
-import com.pellto.youtoy.domain.video.dto.UploadShortCommand;
-import com.pellto.youtoy.domain.video.entity.Shorts;
-import com.pellto.youtoy.domain.video.repository.ShortRepository;
+import com.pellto.youtoy.domain.view.dto.UpdateShortCommand;
+import com.pellto.youtoy.domain.view.dto.UploadShortCommand;
+import com.pellto.youtoy.domain.view.entity.Shorts;
+import com.pellto.youtoy.domain.view.repository.ShortRepository;
 import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

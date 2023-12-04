@@ -3,7 +3,7 @@ package com.pellto.youtoy.application.usecase;
 import com.pellto.youtoy.domain.channel.service.ChannelAdminReadService;
 import com.pellto.youtoy.domain.channel.service.ChannelReadService;
 import com.pellto.youtoy.domain.user.service.UserReadService;
-import com.pellto.youtoy.domain.video.dto.AbVideoCommand;
+import com.pellto.youtoy.domain.view.dto.AbVideoCommand;
 import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -2,9 +2,9 @@ package com.pellto.youtoy.application.usecase;
 
 import com.pellto.youtoy.domain.playlist.dto.PlaylistVideoDto;
 import com.pellto.youtoy.domain.playlist.service.PlaylistVideoReadService;
-import com.pellto.youtoy.domain.video.dto.VideoContentsDto;
-import com.pellto.youtoy.domain.video.service.ShortReadService;
-import com.pellto.youtoy.domain.video.service.VideoReadService;
+import com.pellto.youtoy.domain.view.dto.VideoContentsDto;
+import com.pellto.youtoy.domain.view.service.ShortReadService;
+import com.pellto.youtoy.domain.view.service.VideoReadService;
 import com.pellto.youtoy.util.types.VideoTypes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

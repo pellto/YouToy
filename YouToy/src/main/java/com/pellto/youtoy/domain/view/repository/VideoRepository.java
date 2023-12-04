@@ -1,6 +1,6 @@
-package com.pellto.youtoy.domain.video.repository;
+package com.pellto.youtoy.domain.view.repository;
 
-import com.pellto.youtoy.domain.video.entity.Shorts;
+import com.pellto.youtoy.domain.view.entity.Video;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,11 +18,11 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class ShortRepository {
+public class VideoRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final String TABLE = "Short";
+    private static final String TABLE = "Video";
 
-    static final RowMapper<Shorts> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Shorts.builder()
+    static final RowMapper<Video> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Video.builder()
             .id(resultSet.getLong("id"))
             .channelId(resultSet.getLong("channelId"))
             .title(resultSet.getString("title"))
@@ -32,14 +32,14 @@ public class ShortRepository {
             .createdAt(resultSet.getObject("createdAt", LocalDateTime.class))
             .build();
 
-    public Shorts save(Shorts shorts) {
-        if (shorts.getId() == null) {
-            return insert(shorts);
+    public Video save(Video video) {
+        if (video.getId() == null) {
+            return insert(video);
         }
-        return update(shorts);
+        return update(video);
     }
 
-    private Shorts update(Shorts shorts) {
+    private Video update(Video video) {
         var sql = String.format("""
                 UPDATE %s
                 SET title = :title,
@@ -49,31 +49,31 @@ public class ShortRepository {
                 WHERE id = :id
                 """, TABLE);
 
-        SqlParameterSource params = new BeanPropertySqlParameterSource(shorts);
+        SqlParameterSource params = new BeanPropertySqlParameterSource(video);
         namedParameterJdbcTemplate.update(sql, params);
-        return shorts;
+        return video;
     }
 
-    private Shorts insert(Shorts shorts) {
+    private Video insert(Video video) {
         JdbcTemplate jdbcTemplate = namedParameterJdbcTemplate.getJdbcTemplate();
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName(TABLE)
                 .usingGeneratedKeyColumns("id");
-        SqlParameterSource params = new BeanPropertySqlParameterSource(shorts);
+        SqlParameterSource params = new BeanPropertySqlParameterSource(video);
 
         var id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
 
-        return Shorts.builder()
+        return Video.builder()
                 .id(id)
-                .channelId(shorts.getChannelId())
-                .title(shorts.getTitle())
-                .viewCount(shorts.getViewCount())
-                .description(shorts.getDescription())
-                .createdAt(shorts.getCreatedAt())
+                .channelId(video.getChannelId())
+                .title(video.getTitle())
+                .viewCount(video.getViewCount())
+                .description(video.getDescription())
+                .createdAt(video.getCreatedAt())
                 .build();
     }
 
-    public Optional<Shorts> findById(Long id) {
+    public Optional<Video> findById(Long id) {
         var sql = String.format("""
                 SELECT *
                 FROM %s
@@ -82,12 +82,12 @@ public class ShortRepository {
 
         var params = new MapSqlParameterSource().addValue("id", id);
 
-        var shorts = namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
-        Shorts nullableShort = DataAccessUtils.singleResult(shorts);
-        return Optional.ofNullable(nullableShort);
+        var video = namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
+        Video nullableVideo = DataAccessUtils.singleResult(video);
+        return Optional.ofNullable(nullableVideo);
     }
 
-    public boolean existShort(Long id) {
+    public boolean existVideo(Long id) {
         return findById(id).isPresent();
     }
 

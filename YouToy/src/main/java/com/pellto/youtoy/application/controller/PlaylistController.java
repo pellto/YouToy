@@ -7,7 +7,7 @@ import com.pellto.youtoy.domain.playlist.dto.*;
 import com.pellto.youtoy.domain.playlist.service.PlaylistReadService;
 import com.pellto.youtoy.domain.playlist.service.PlaylistVideoWriteService;
 import com.pellto.youtoy.domain.playlist.service.PlaylistWriteService;
-import com.pellto.youtoy.domain.video.dto.VideoContentsDto;
+import com.pellto.youtoy.domain.view.dto.VideoContentsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

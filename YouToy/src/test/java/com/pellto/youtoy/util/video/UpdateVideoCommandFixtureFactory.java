@@ -1,6 +1,6 @@
 package com.pellto.youtoy.util.video;
 
-import com.pellto.youtoy.domain.video.dto.UpdateVideoCommand;
+import com.pellto.youtoy.domain.view.dto.UpdateVideoCommand;
 
 public class UpdateVideoCommandFixtureFactory {
     private static final Long ID = 1L;

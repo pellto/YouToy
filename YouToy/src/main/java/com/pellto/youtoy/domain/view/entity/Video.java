@@ -1,4 +1,4 @@
-package com.pellto.youtoy.domain.video.entity;
+package com.pellto.youtoy.domain.view.entity;
 
 import com.pellto.youtoy.util.GenerateRandomString;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-public class Shorts {
+public class Video {
     private final Long id;
     private final Long channelId;
     private String title;
@@ -22,7 +22,7 @@ public class Shorts {
     private final LocalDateTime createdAt;
 
     @Builder
-    public Shorts(
+    public Video(
             Long id,
             Long channelId,
             String title,
@@ -41,7 +41,7 @@ public class Shorts {
     }
 
     private String makeRandomTitle() {
-        String prefix = "short-title-";
+        String prefix = "title-";
         String title = GenerateRandomString.make();
         return prefix + title;
     }

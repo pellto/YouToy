@@ -1,4 +1,4 @@
-package com.pellto.youtoy.domain.video.dto;
+package com.pellto.youtoy.domain.view.dto;
 
 
 import javax.validation.constraints.NotNull;

@@ -1,7 +1,7 @@
-package com.pellto.youtoy.domain.video;
+package com.pellto.youtoy.domain.view;
 
-import com.pellto.youtoy.domain.video.repository.VideoRepository;
-import com.pellto.youtoy.domain.video.service.VideoWriteService;
+import com.pellto.youtoy.domain.view.repository.VideoRepository;
+import com.pellto.youtoy.domain.view.service.VideoWriteService;
 import com.pellto.youtoy.util.error.ErrorCode;
 import com.pellto.youtoy.util.video.UpdateVideoCommandFixtureFactory;
 import com.pellto.youtoy.util.video.UploadVideoCommandFixtureFactory;

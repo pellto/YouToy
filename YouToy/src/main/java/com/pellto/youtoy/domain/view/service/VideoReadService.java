@@ -1,8 +1,8 @@
-package com.pellto.youtoy.domain.video.service;
+package com.pellto.youtoy.domain.view.service;
 
-import com.pellto.youtoy.domain.video.dto.VideoDto;
-import com.pellto.youtoy.domain.video.entity.Video;
-import com.pellto.youtoy.domain.video.repository.VideoRepository;
+import com.pellto.youtoy.domain.view.dto.VideoDto;
+import com.pellto.youtoy.domain.view.entity.Video;
+import com.pellto.youtoy.domain.view.repository.VideoRepository;
 import com.pellto.youtoy.util.types.VideoTypes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,9 @@
 package com.pellto.youtoy.application.usecase;
 
 import com.pellto.youtoy.domain.comment.dto.CommentDto;
-import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.service.CommentReadService;
-import com.pellto.youtoy.domain.video.service.ShortReadService;
-import com.pellto.youtoy.domain.video.service.VideoReadService;
+import com.pellto.youtoy.domain.view.service.ShortReadService;
+import com.pellto.youtoy.domain.view.service.VideoReadService;
 import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

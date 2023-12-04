@@ -1,8 +1,8 @@
 package com.pellto.youtoy.util.video;
 
-import com.pellto.youtoy.domain.video.dto.UpdateVideoCommand;
-import com.pellto.youtoy.domain.video.dto.UploadVideoCommand;
-import com.pellto.youtoy.domain.video.entity.Video;
+import com.pellto.youtoy.domain.view.dto.UpdateVideoCommand;
+import com.pellto.youtoy.domain.view.dto.UploadVideoCommand;
+import com.pellto.youtoy.domain.view.entity.Video;
 
 import java.time.LocalDateTime;
 

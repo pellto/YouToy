@@ -1,6 +1,6 @@
 package com.pellto.youtoy.util.video;
 
-import com.pellto.youtoy.domain.video.dto.UploadVideoCommand;
+import com.pellto.youtoy.domain.view.dto.UploadVideoCommand;
 
 public class UploadVideoCommandFixtureFactory {
     private static final Long CHANNEL_ID = 1L;
