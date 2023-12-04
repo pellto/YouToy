@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -66,5 +67,16 @@ public class MentionRepository {
         sql = SqlQueryGenerator.addQueryCondition(sql, "commentId", commentId);
         var params = new MapSqlParameterSource().addValue("commentId", commentId);
         namedParameterJdbcTemplate.update(sql, params);
+    }
+
+    public boolean existByCommentId(Long commentId) {
+        return !findByCommentId(commentId).isEmpty();
+    }
+
+    public List<Mention> findByCommentId(Long commentId) {
+        var sql = SqlQueryGenerator.findAllQuery(TABLE);
+        sql = SqlQueryGenerator.addQueryCondition(sql, "commentId", commentId);
+        var params = new MapSqlParameterSource().addValue("commentId", commentId);
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
     }
 }

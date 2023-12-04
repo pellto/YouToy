@@ -7,6 +7,7 @@ import com.pellto.youtoy.util.comment.CommentFixtureFactory;
 import com.pellto.youtoy.util.comment.CommentDtoFixtureCommand;
 import com.pellto.youtoy.util.comment.CreateCommentCommandFixtureFactory;
 import com.pellto.youtoy.util.comment.UpdateCommentCommandFixtureFactory;
+import com.pellto.youtoy.util.error.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -108,5 +109,34 @@ public class CommentServiceTest {
         then(commentReadService).should(times(1)).toDto(any());
         assertEquals(cmd.id(), updatedComment.id());
         assertEquals(cmd.content(), updatedComment.content());
+    }
+
+    @DisplayName("[" + DOMAIN + ": delete: success] comment 삭제 성공 테스트")
+    @Test
+    public void deleteTest() {
+        Long id = 1L;
+
+        given(commentRepository.existById(any())).willReturn(true);
+
+        commentWriteService.delete(id);
+
+        then(commentRepository).should(times(1)).existById(any());
+        then(commentRepository).should(times(1)).delete(any());
+    }
+
+    @DisplayName("[" + DOMAIN + ": delete: not exist comment] 존재하지 않는 comment 삭제 실패 테스트")
+    @Test
+    public void deleteNotExistCommentTest() {
+        Long id = 1L;
+
+        given(commentRepository.existById(any())).willReturn(false);
+
+        try {
+            commentWriteService.delete(id);
+        } catch (Exception e) {
+            assertEquals(ErrorCode.NOT_EXIST_COMMENT.getMessage(), e.getMessage());
+            then(commentRepository).should(times(1)).existById(any());
+            then(commentRepository).should(times(0)).delete(any());
+        }
     }
 }
