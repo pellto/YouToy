@@ -1,9 +1,6 @@
 package com.pellto.youtoy.application.controller;
 
-import com.pellto.youtoy.application.usecase.UpdateShortWithAdminUsecase;
-import com.pellto.youtoy.application.usecase.UpdateVideoWithAdminUsecase;
-import com.pellto.youtoy.application.usecase.UploadShortWithAdminUsecase;
-import com.pellto.youtoy.application.usecase.UploadVideoWithAdminUsecase;
+import com.pellto.youtoy.application.usecase.*;
 import com.pellto.youtoy.domain.view.dto.*;
 import com.pellto.youtoy.domain.view.entity.Shorts;
 import com.pellto.youtoy.domain.view.entity.Video;
@@ -11,7 +8,10 @@ import com.pellto.youtoy.domain.view.service.ShortReadService;
 import com.pellto.youtoy.domain.view.service.ShortWriteService;
 import com.pellto.youtoy.domain.view.service.VideoReadService;
 import com.pellto.youtoy.domain.view.service.VideoWriteService;
+import com.pellto.youtoy.util.error.ErrorCode;
+import com.pellto.youtoy.util.types.VideoTypes;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -26,6 +26,7 @@ public class VideoController {
     private final UploadShortWithAdminUsecase uploadShortWithAdminUsecase;
     private final UpdateVideoWithAdminUsecase updateVideoWithAdminUsecase;
     private final UpdateShortWithAdminUsecase updateShortWithAdminUsecase;
+    private final ViewVideoShortUsecase viewVideoShortUsecase;
 
     @PostMapping
     public Video upload(@RequestBody UploadVideoCommand cmd) {
@@ -47,9 +48,13 @@ public class VideoController {
         videoWriteService.remove(id);
     }
 
-    @PutMapping("/{id}/view/increment")
-    public void increase(@PathVariable Long id) {
-        videoWriteService.increaseViewCount(id);
+    @PutMapping("/view/increment")
+    public void increase(@RequestBody CreateViewHistoryCommand cmd) {
+        Assert.isTrue(
+                cmd.videoType().equals(VideoTypes.VIDEO_TYPE.getValue()),
+                ErrorCode.INCREASE_BAD_REQUEST.getMessage()
+        );
+        viewVideoShortUsecase.execute(cmd);
     }
 
     @PostMapping("/short")
@@ -72,8 +77,12 @@ public class VideoController {
         shortWriteService.remove(id);
     }
 
-    @PutMapping("/short/{id}/view/increment")
-    public void increaseShort(@PathVariable Long id) {
-        shortWriteService.increaseViewCount(id);
+    @PutMapping("/short/view/increment")
+    public void increaseShort(@RequestBody CreateViewHistoryCommand cmd) {
+        Assert.isTrue(
+                cmd.videoType().equals(VideoTypes.SHORTS_TYPE.getValue()),
+                ErrorCode.INCREASE_BAD_REQUEST.getMessage()
+        );
+        viewVideoShortUsecase.execute(cmd);
     }
 }

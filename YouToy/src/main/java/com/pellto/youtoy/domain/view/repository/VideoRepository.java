@@ -22,7 +22,7 @@ public class VideoRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String TABLE = "Video";
 
-    static final RowMapper<Video> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Video.builder()
+    private static final RowMapper<Video> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Video.builder()
             .id(resultSet.getLong("id"))
             .channelId(resultSet.getLong("channelId"))
             .title(resultSet.getString("title"))

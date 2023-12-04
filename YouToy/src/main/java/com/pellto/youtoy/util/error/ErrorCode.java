@@ -25,6 +25,11 @@ public enum ErrorCode {
     ALREADY_SUBSCRIBED(400, "S003", "이미 채널을 구독 중입니다."),
     NOT_EXIST_SUBSCRIBE(400, "S004", "채널을 구독 중이 아닙니다."),
 
+    // ViewHistory
+    UNSUPPORTED_UPDATE_VIEW_HISTORY(400, "VW001", "viewHistory는 업데이트를 지원하지 않습니다."),
+    NOT_EXIST_VIEW_HISTORY(400, "VW002", "해당 기록이 존재하지 않습니다."),
+    INTERNAL_VIEW_HISTORY_DATA_CONFLICT(500, "VW003", "해당 데이터가 충돌되었습니다"),
+
     // Video
     NOT_EXIST_VIDEO(400, "V001", "Video가 존재하지 않습니다."),
 
@@ -58,6 +63,9 @@ public enum ErrorCode {
 
     // Playlist-Video
     NOT_EXIST_PLAYLIST_VIDEO(400, "PV001", "해당 playlist-video 관계가 존재하지 않습니다."),
+
+    // COMMON
+    INCREASE_BAD_REQUEST(400, "BD001", "해당 접근은 잘못된 접근입니다."),
     ;
 
 

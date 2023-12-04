@@ -23,7 +23,7 @@ public class ChannelRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String TABLE = "Channel";
 
-    static final RowMapper<Channel> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Channel
+    private static final RowMapper<Channel> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Channel
             .builder()
             .id(resultSet.getLong("id"))
             .ownerId(resultSet.getLong("ownerId"))

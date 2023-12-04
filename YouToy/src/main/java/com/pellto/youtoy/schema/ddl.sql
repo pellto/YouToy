@@ -97,6 +97,7 @@ create table Comment
 );
 
 # like 관계 테이블 추가
+# TODO: change videoType to not null
 create table Likes
 (
     id        int auto_increment,
@@ -110,6 +111,7 @@ create table Likes
 );
 
 # dislike 관계 테이블 추가
+# TODO: change videoType to not null
 create table Dislike
 (
     id        int auto_increment,
@@ -172,3 +174,20 @@ create table Mention
 );
 
 # DROP TABLE Mention;
+
+# ViewHistory 테이블 추가
+create table ViewHistory
+(
+    id        int auto_increment,
+    userId    int        not null,
+    videoId   int        not null,
+    videoType tinyint(1) not null, # true -> video, false -> shorts
+    createdAt datetime   not null,
+    constraint ViewHistory_Video_id_uindex
+        primary key (id)
+);
+
+# ViewHistory 에 lastViewAt 컬럼 추가
+ALTER TABLE ViewHistory
+    ADD lastViewAt int not null default -1;
+

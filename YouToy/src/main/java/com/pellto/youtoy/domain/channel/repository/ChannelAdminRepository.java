@@ -20,7 +20,7 @@ import java.util.Optional;
 public class ChannelAdminRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String TABLE = "ChannelAdmin";
-    static final RowMapper<ChannelAdmin> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> ChannelAdmin
+    private static final RowMapper<ChannelAdmin> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> ChannelAdmin
             .builder()
             .id(resultSet.getLong("id"))
             .channelId(resultSet.getLong("channelId"))

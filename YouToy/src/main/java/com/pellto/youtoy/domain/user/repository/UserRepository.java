@@ -24,7 +24,7 @@ public class UserRepository {
 
     private static final String TABLE = "User";
 
-    static final RowMapper<User> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> User
+    private static final RowMapper<User> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> User
             .builder()
             .id(resultSet.getLong("id"))
             .email(resultSet.getString("email"))

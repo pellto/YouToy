@@ -23,7 +23,7 @@ import java.util.Optional;
 public class CommentRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String TABLE = "Comment";
-    static final RowMapper<Comment> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Comment
+    private static final RowMapper<Comment> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Comment
             .builder()
             .id(resultSet.getLong("id"))
             .videoId(resultSet.getLong("videoId"))

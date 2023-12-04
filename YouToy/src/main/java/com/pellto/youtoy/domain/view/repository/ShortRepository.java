@@ -22,7 +22,7 @@ public class ShortRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final String TABLE = "Short";
 
-    static final RowMapper<Shorts> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Shorts.builder()
+    private static final RowMapper<Shorts> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Shorts.builder()
             .id(resultSet.getLong("id"))
             .channelId(resultSet.getLong("channelId"))
             .title(resultSet.getString("title"))
