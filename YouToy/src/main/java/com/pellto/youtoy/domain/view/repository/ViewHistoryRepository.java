@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -98,5 +99,12 @@ public class ViewHistoryRepository {
                 .addValue("videoId", videoId)
                 .addValue("videoType", videoType);
         namedParameterJdbcTemplate.update(sql, params);
+    }
+
+    public List<ViewHistory> getByUserId(Long userId) {
+        var sql = SqlQueryGenerator.findAllQuery(TABLE);
+        sql = SqlQueryGenerator.addQueryCondition(sql, "userId", userId);
+        SqlParameterSource params = new MapSqlParameterSource().addValue("userId", userId);
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
     }
 }

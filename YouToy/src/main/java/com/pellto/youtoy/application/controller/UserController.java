@@ -1,5 +1,6 @@
 package com.pellto.youtoy.application.controller;
 
+import com.pellto.youtoy.application.usecase.GetUserViewHistoryUsecase;
 import com.pellto.youtoy.application.usecase.SignupUserUsecase;
 import com.pellto.youtoy.domain.user.dto.LoginUserCommand;
 import com.pellto.youtoy.domain.user.dto.RegisterUserCommand;
@@ -7,10 +8,12 @@ import com.pellto.youtoy.domain.user.dto.UpdateUserInfoCommand;
 import com.pellto.youtoy.domain.user.dto.UserDto;
 import com.pellto.youtoy.domain.user.service.UserReadService;
 import com.pellto.youtoy.domain.user.service.UserWriteService;
+import com.pellto.youtoy.domain.view.dto.ViewHistoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class UserController {
     private final UserReadService userReadService;
     private final UserWriteService userWriteService;
     private final SignupUserUsecase signupUserUsecase;
+    private final GetUserViewHistoryUsecase getUserViewHistoryUsecase;
 
     @PostMapping
     public UserDto signup(@RequestBody RegisterUserCommand cmd) {
@@ -48,5 +52,10 @@ public class UserController {
     // TODO: check token or session when moving sessionController
     public void logout(@PathVariable String email) {
         userReadService.logout(email);
+    }
+
+    @GetMapping("/view-history/{id}")
+    public List<ViewHistoryDto> getUserViewHistory(@PathVariable Long id) {
+        return getUserViewHistoryUsecase.execute(id);
     }
 }

@@ -28,7 +28,7 @@ public class ViewVideoShortUsecase {
 
     public void execute(CreateViewHistoryCommand cmd) {
         Assert.isTrue(userReadService.isExist(cmd.userId()), ErrorCode.NOT_EXIST_USER.getMessage());
-        var diffDays = -1L;
+        var diffDays = 7L;
         if (viewHistoryReadService.existByCreateCommand(cmd)) {
             var lastViewHistoryDto = viewHistoryReadService.getByCreateCommand(cmd);
             diffDays = Duration.between(lastViewHistoryDto.createdAt(), LocalDateTime.now()).toDays();

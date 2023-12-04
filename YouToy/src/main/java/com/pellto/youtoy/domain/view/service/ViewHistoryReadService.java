@@ -7,6 +7,9 @@ import com.pellto.youtoy.domain.view.repository.ViewHistoryRepository;
 import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -42,5 +45,11 @@ public class ViewHistoryReadService {
         ).orElseThrow(
                 () -> new UnsupportedOperationException(ErrorCode.NOT_EXIST_VIEW_HISTORY.getMessage())
         ));
+    }
+
+    public List<ViewHistoryDto> getByUserId(Long userId) {
+        var viewHistories = viewHistoryRepository.getByUserId(userId);
+        Assert.notEmpty(viewHistories, ErrorCode.NOT_EXIST_USER_VIEW_HISTORY.getMessage());
+        return viewHistories.stream().map(this::toDto).toList();
     }
 }

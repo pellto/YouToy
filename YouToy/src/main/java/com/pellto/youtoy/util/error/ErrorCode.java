@@ -29,6 +29,7 @@ public enum ErrorCode {
     UNSUPPORTED_UPDATE_VIEW_HISTORY(400, "VW001", "viewHistory는 업데이트를 지원하지 않습니다."),
     NOT_EXIST_VIEW_HISTORY(400, "VW002", "해당 기록이 존재하지 않습니다."),
     INTERNAL_VIEW_HISTORY_DATA_CONFLICT(500, "VW003", "해당 데이터가 충돌되었습니다"),
+    NOT_EXIST_USER_VIEW_HISTORY(400, "VW004", "해당 유저의 시청 기록이 없습니다."),
 
     // Video
     NOT_EXIST_VIDEO(400, "V001", "Video가 존재하지 않습니다."),
