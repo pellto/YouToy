@@ -10,10 +10,9 @@ public class CreateCommentCommandFixtureFactory {
     private static final Long REPLIED_COMMENT_ID = 1L;
     private static final boolean VIDEO = true;
     private static final String CONTENT = "content";
-    private static final String MENTIONED_CHANNEL_HANDLE = "test-handle";
 
     public static CreateCommentCommand create() {
-        return create(VIDEO_ID, USER_ID, REPLIED_COMMENT_ID, VIDEO, CONTENT, MENTIONED_CHANNEL_HANDLE);
+        return create(VIDEO_ID, USER_ID, REPLIED_COMMENT_ID, VIDEO, CONTENT);
 
     }
 
@@ -22,9 +21,8 @@ public class CreateCommentCommandFixtureFactory {
             Long userId,
             Long repliedCommentId,
             boolean video,
-            String content,
-            String mentionedChannelHandle
+            String content
     ) {
-        return new CreateCommentCommand(videoId, userId, video, content, repliedCommentId, mentionedChannelHandle);
+        return new CreateCommentCommand(videoId, userId, video, content, repliedCommentId);
     }
 }

@@ -32,9 +32,13 @@ public class SqlQueryGenerator {
     }
 
     public static String deleteByIdQuery(String tableName) {
+        var sql = deleteBasicQuery(tableName);
+        return addQueryCondition(sql, "id", "id");
+    }
+
+    public static String deleteBasicQuery(String tableName) {
         return String.format("""
                 DELETE FROM %s
-                WHERE id = :id
                 """, tableName);
     }
 

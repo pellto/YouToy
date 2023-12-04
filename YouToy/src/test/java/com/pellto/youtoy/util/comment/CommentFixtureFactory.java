@@ -6,7 +6,7 @@ import com.pellto.youtoy.domain.comment.entity.Comment;
 
 import java.time.LocalDateTime;
 
-public class CommandFixtureFactory {
+public class CommentFixtureFactory {
     private static final Long ID = 1L;
     private static final Long VIDEO_ID = 1L;
     private static final Long USER_ID = 1L;

@@ -1,10 +1,12 @@
 package com.pellto.youtoy.domain.comment.repository;
 
 import com.pellto.youtoy.domain.comment.entity.Mention;
+import com.pellto.youtoy.util.SqlQueryGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -47,5 +50,21 @@ public class MentionRepository {
                 .mentionedChannelId(mention.getMentionedChannelId())
                 .createdAt(mention.getCreatedAt())
                 .build();
+    }
+
+    public Optional<Mention> findById(Long id) {
+        var sql = SqlQueryGenerator.findAllQuery(TABLE);
+        sql = SqlQueryGenerator.addQueryCondition(sql, "id", id);
+        var params = new MapSqlParameterSource().addValue("id", id);
+        return SqlQueryGenerator.transformSingleListToSingleObject(
+                namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER)
+        );
+    }
+
+    public void deleteByCommentId(Long commentId) {
+        var sql = SqlQueryGenerator.deleteBasicQuery(TABLE);
+        sql = SqlQueryGenerator.addQueryCondition(sql, "commentId", commentId);
+        var params = new MapSqlParameterSource().addValue("commentId", commentId);
+        namedParameterJdbcTemplate.update(sql, params);
     }
 }

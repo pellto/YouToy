@@ -6,6 +6,7 @@ import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.dto.CreateMentionCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.service.CommentWriteService;
+import com.pellto.youtoy.domain.comment.service.MentionReadService;
 import com.pellto.youtoy.domain.comment.service.MentionWriteService;
 import com.pellto.youtoy.domain.user.service.UserReadService;
 import com.pellto.youtoy.domain.video.service.ShortReadService;
@@ -14,6 +15,8 @@ import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +27,7 @@ public class CreateCommentUsecase {
     private final ShortReadService shortReadService;
     private final CommentWriteService commentWriteService;
     private final MentionWriteService mentionWriteService;
+    private final MentionReadService mentionReadService;
 
     public CommentDto execute(CreateCommentCommand cmd) {
         if (cmd.video()) {
@@ -37,13 +41,23 @@ public class CreateCommentUsecase {
                 throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_SHORT.getMessage());
             }
         }
-        if (cmd.mentionedChannelHandle() == null) {
+        if (!mentionReadService.hasMention(cmd.content())) {
             return commentWriteService.create(cmd);
         }
-        var channel = channelReadService.getByHandle(cmd.mentionedChannelHandle());
+        var mentionedChannelHandles = mentionReadService.extractChannelHandle(cmd.content());
         var comment = commentWriteService.create(cmd);
-        var createMentionCommand = new CreateMentionCommand(comment.getId(), channel.id(), comment.getCreatedAt());
-        mentionWriteService.create(createMentionCommand);
+
+        mentionedChannelHandles.forEach((mentionedChannelHandle) -> saveMention(
+                mentionedChannelHandle,
+                comment.id(),
+                comment.createdAt()
+        ));
         return comment;
+    }
+
+    private void saveMention(String mentionedChannelHandle, Long commentId, LocalDateTime commentCreatedAt) {
+        var channel = channelReadService.getByHandle(mentionedChannelHandle);
+        var createMentionCommand = new CreateMentionCommand(commentId, channel.id(), commentCreatedAt);
+        mentionWriteService.create(createMentionCommand);
     }
 }

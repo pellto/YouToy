@@ -7,6 +7,7 @@ import com.pellto.youtoy.application.usecase.GetCommentsUsecase;
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
 import com.pellto.youtoy.domain.comment.service.CommentReadService;
+import com.pellto.youtoy.domain.comment.service.CommentWriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class CommentController {
     private final CreateCommentUsecase createCommentUsecase;
     private final UpdateCommentUsecase updateCommentUsecase;
     private final GetCommentsUsecase getCommentsUsecase;
+    private final CommentWriteService commentWriteService;
     private final CommentReadService commentReadService;
 
 
@@ -35,6 +37,11 @@ public class CommentController {
     @PatchMapping
     public CommentDto update(@RequestBody UpdateCommentCommand cmd) {
         return updateCommentUsecase.execute(cmd);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        commentWriteService.delete(id);
     }
 
     @GetMapping("/replies/{id}")

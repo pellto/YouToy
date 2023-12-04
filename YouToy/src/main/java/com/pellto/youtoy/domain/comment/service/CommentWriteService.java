@@ -5,8 +5,10 @@ import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.repository.CommentRepository;
+import com.pellto.youtoy.util.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.Objects;
 
@@ -46,5 +48,10 @@ public class CommentWriteService {
         Comment comment = commentRepository.findById(id).orElseThrow();
         comment.decreaseLikeCount();
         commentRepository.save(comment);
+    }
+
+    public void delete(Long id) {
+        Assert.isTrue(commentRepository.existById(id), ErrorCode.NOT_EXIST_COMMENT.getMessage());
+        commentRepository.delete(id);
     }
 }

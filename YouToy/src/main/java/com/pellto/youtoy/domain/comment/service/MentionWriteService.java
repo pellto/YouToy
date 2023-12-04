@@ -19,4 +19,8 @@ public class MentionWriteService {
                 .build();
         return mentionRepository.save(mention);
     }
+
+    public void deleteByCommentId(Long commentId) {
+        mentionRepository.deleteByCommentId(commentId);
+    }
 }

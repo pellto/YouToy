@@ -1,6 +1,7 @@
 package com.pellto.youtoy.domain.comment.repository;
 
 import com.pellto.youtoy.domain.comment.entity.Comment;
+import com.pellto.youtoy.util.SqlQueryGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -127,5 +128,11 @@ public class CommentRepository {
     public boolean existById(Long id) {
         var comment = findById(id);
         return comment.isPresent();
+    }
+
+    public void delete(Long id) {
+        var sql = SqlQueryGenerator.deleteByIdQuery(TABLE);
+        SqlParameterSource params = new MapSqlParameterSource("id", id);
+        namedParameterJdbcTemplate.update(sql, params);
     }
 }
