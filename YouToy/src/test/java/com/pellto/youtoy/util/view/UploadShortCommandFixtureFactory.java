@@ -1,4 +1,4 @@
-package com.pellto.youtoy.util.video;
+package com.pellto.youtoy.util.view;
 
 import com.pellto.youtoy.domain.view.dto.UploadShortCommand;
 

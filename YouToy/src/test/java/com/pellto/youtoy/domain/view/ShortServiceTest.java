@@ -3,7 +3,7 @@ package com.pellto.youtoy.domain.view;
 import com.pellto.youtoy.domain.view.repository.ShortRepository;
 import com.pellto.youtoy.domain.view.service.ShortWriteService;
 import com.pellto.youtoy.util.error.ErrorCode;
-import com.pellto.youtoy.util.video.*;
+import com.pellto.youtoy.util.view.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
