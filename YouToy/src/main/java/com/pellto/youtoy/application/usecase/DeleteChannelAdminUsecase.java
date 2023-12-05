@@ -1,6 +1,5 @@
 package com.pellto.youtoy.application.usecase;
 
-import com.pellto.youtoy.domain.channel.dto.CreateChannelAdminCommand;
 import com.pellto.youtoy.domain.channel.dto.DeleteChannelAdminCommand;
 import com.pellto.youtoy.domain.channel.service.ChannelAdminWriteService;
 import com.pellto.youtoy.domain.channel.service.ChannelReadService;

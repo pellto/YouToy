@@ -1,5 +1,6 @@
 package com.pellto.youtoy.util.playlist;
 
+import com.pellto.youtoy.domain.playlist.dto.PlaylistDto;
 import com.pellto.youtoy.domain.playlist.entity.Playlist;
 
 import java.time.LocalDateTime;
@@ -44,5 +45,14 @@ public class PlaylistFixtureFactory {
                 .title(title)
                 .createdAt(createdAt)
                 .build();
+    }
+
+    public static PlaylistDto toDto(Playlist playlist) {
+        return new PlaylistDto(
+                playlist.getId(),
+                playlist.getChannelId(),
+                playlist.getTitle(),
+                playlist.getTargetRange()
+        );
     }
 }
