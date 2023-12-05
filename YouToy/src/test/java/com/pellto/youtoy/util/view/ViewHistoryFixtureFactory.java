@@ -1,8 +1,13 @@
 package com.pellto.youtoy.util.view;
 
+import com.pellto.youtoy.domain.view.dto.ViewHistoryDto;
 import com.pellto.youtoy.domain.view.entity.ViewHistory;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewHistoryFixtureFactory {
     private static final Long ID = 1L;
@@ -34,5 +39,22 @@ public class ViewHistoryFixtureFactory {
                 .lastViewAt(lastViewAt)
                 .createdAt(createdAt)
                 .build();
+    }
+
+    public static List<ViewHistoryDto> createList(Integer size) {
+        var params = new EasyRandomParameters();
+        var ret = new ArrayList<ViewHistoryDto>();
+        for (int i = 0; i < size; i++) {
+            var tmp = new EasyRandom(params).nextObject(ViewHistory.class);
+            ret.add(new ViewHistoryDto(
+                    tmp.getId(),
+                    tmp.getUserId(),
+                    tmp.getVideoId(),
+                    tmp.getVideoType(),
+                    tmp.getLastViewAt(),
+                    tmp.getCreatedAt()
+            ));
+        }
+        return ret;
     }
 }
