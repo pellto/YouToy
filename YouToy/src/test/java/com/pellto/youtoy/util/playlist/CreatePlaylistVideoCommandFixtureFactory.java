@@ -11,6 +11,10 @@ public class CreatePlaylistVideoCommandFixtureFactory {
         return create(PLAYLIST_ID, VIDEO_ID, VIDEO_TYPE);
     }
 
+    public static CreatePlaylistVideoCommand create(Integer videoType) {
+        return create(PLAYLIST_ID, VIDEO_ID, videoType);
+    }
+
     private static CreatePlaylistVideoCommand create(
             Long playlistId,
             Long videoId,

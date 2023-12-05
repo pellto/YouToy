@@ -18,7 +18,6 @@ import org.springframework.util.Assert;
 @Service
 public class CreatePlaylistVideoUsecase {
     private final PlaylistVideoWriteService playlistVideoWriteService;
-    private final PlaylistVideoReadService playlistVideoReadService;
     private final PlaylistReadService playlistReadService;
     private final VideoReadService videoReadService;
     private final ShortReadService shortReadService;
