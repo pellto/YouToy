@@ -1,5 +1,6 @@
 package com.pellto.youtoy.util.like;
 
+import com.pellto.youtoy.domain.like.dto.LikeDto;
 import com.pellto.youtoy.domain.like.entity.Like;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,11 @@ public class LikeFixtureFactory {
         return create(ID, VIDEO_ID, VIDEO_TYPE, COMMENT_ID, USER_ID, CREATED_AT);
     }
 
-    private static Like create(
+    public static Like create(Integer videoType) {
+        return create(ID, VIDEO_ID, videoType, COMMENT_ID, USER_ID, CREATED_AT);
+    }
+
+    public static Like create(
             Long id,
             Long videoId,
             Integer videoType,
@@ -33,5 +38,15 @@ public class LikeFixtureFactory {
                 .userId(userId)
                 .createdAt(createdAt)
                 .build();
+    }
+
+    public static LikeDto toDto(Like like) {
+        return new LikeDto(
+                like.getId(),
+                like.getVideoId(),
+                like.getVideoType(),
+                like.getCommentId(),
+                like.getUserId()
+        );
     }
 }
