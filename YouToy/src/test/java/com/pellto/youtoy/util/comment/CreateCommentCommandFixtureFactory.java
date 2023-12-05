@@ -13,7 +13,18 @@ public class CreateCommentCommandFixtureFactory {
 
     public static CreateCommentCommand create() {
         return create(VIDEO_ID, USER_ID, REPLIED_COMMENT_ID, VIDEO, CONTENT);
+    }
 
+    public static CreateCommentCommand create(boolean video) {
+        return create(VIDEO_ID, USER_ID, REPLIED_COMMENT_ID, video, CONTENT);
+    }
+
+    public static CreateCommentCommand create(boolean video, String content) {
+        return create(VIDEO_ID, USER_ID, REPLIED_COMMENT_ID, video, content);
+    }
+
+    public static CreateCommentCommand create(String content) {
+        return create(VIDEO_ID, USER_ID, REPLIED_COMMENT_ID, VIDEO, content);
     }
 
     public static CreateCommentCommand create(

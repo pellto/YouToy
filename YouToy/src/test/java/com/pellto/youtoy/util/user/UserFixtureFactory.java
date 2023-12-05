@@ -6,20 +6,50 @@ import com.pellto.youtoy.domain.user.entity.User;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class UserFixtureFactory {
-    public static User create() {
+    private static final Long ID = 1L;
+    private static final String EMAIL = "email";
+    private static final String PWD = "pwd";
+    private static final String NAME = "name";
+    private static final LocalDate BIRTH_DATE = LocalDate.of(
+            2023, 1, 1
+    );
+    private static final LocalDateTime CREATED_AT = LocalDateTime.of(
+            2023, 1, 1, 0, 0, 0
+    );
+
+    public static User createRandom() {
         var params = new EasyRandomParameters();
         return new EasyRandom(params).nextObject(User.class);
     }
 
-    public static User create(RegisterUserCommand cmd) {
-        return User.builder()
-                .email(cmd.email())
-                .pwd(cmd.pwd())
-                .name(cmd.name())
-                .birthDate(cmd.birthDate())
-                .build();
+    public static User create() {
+        return create(ID, EMAIL, PWD, NAME, BIRTH_DATE, CREATED_AT);
+    }
 
+    public static User create(
+            Long id,
+            String email,
+            String pwd,
+            String name,
+            LocalDate birthDate,
+            LocalDateTime createdAt
+    ) {
+        return User.builder()
+                .id(id)
+                .email(email)
+                .pwd(pwd)
+                .name(name)
+                .birthDate(birthDate)
+                .createdAt(createdAt)
+                .build();
+    }
+
+    public static User create(RegisterUserCommand cmd) {
+        return create(ID, cmd.email(), cmd.pwd(), cmd.name(), cmd.birthDate(), CREATED_AT);
     }
 
     public static UserDto toDto(User user) {

@@ -1,11 +1,12 @@
 package com.pellto.youtoy.util.comment;
 
 import com.pellto.youtoy.domain.comment.dto.CommentDto;
+import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 
 import java.time.LocalDateTime;
 
-public class CommentDtoFixtureCommand {
+public class CommentDtoFixtureFactory {
     private static final Long ID = 1L;
     private static final Long USER_ID = 1L;
     private static final String CONTENT = "content";
@@ -16,6 +17,10 @@ public class CommentDtoFixtureCommand {
 
     public static CommentDto create(Comment comment) {
         return create(comment.getId(), comment.getUserId(), comment.getContent(), REPLY_CNT, comment.getCreatedAt());
+    }
+
+    public static CommentDto create(CreateCommentCommand cmd) {
+        return create(ID, cmd.userId(), cmd.content(), REPLY_CNT, CREATED_AT);
     }
 
     public static CommentDto create() {

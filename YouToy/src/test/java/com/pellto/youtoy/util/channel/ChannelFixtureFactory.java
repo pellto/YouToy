@@ -18,6 +18,10 @@ public class ChannelFixtureFactory {
         return create(TEST_ID, OWNER_ID, DISPLAY_NAME, CREATED_AT);
     }
 
+    public static Channel create(Long channelId) {
+        return create(channelId, OWNER_ID, DISPLAY_NAME, CREATED_AT);
+    }
+
     public static Channel create(
             Long testId,
             Long ownerId,

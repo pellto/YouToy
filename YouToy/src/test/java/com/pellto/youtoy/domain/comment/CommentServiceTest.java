@@ -4,7 +4,7 @@ import com.pellto.youtoy.domain.comment.repository.CommentRepository;
 import com.pellto.youtoy.domain.comment.service.CommentReadService;
 import com.pellto.youtoy.domain.comment.service.CommentWriteService;
 import com.pellto.youtoy.util.comment.CommentFixtureFactory;
-import com.pellto.youtoy.util.comment.CommentDtoFixtureCommand;
+import com.pellto.youtoy.util.comment.CommentDtoFixtureFactory;
 import com.pellto.youtoy.util.comment.CreateCommentCommandFixtureFactory;
 import com.pellto.youtoy.util.comment.UpdateCommentCommandFixtureFactory;
 import com.pellto.youtoy.util.error.ErrorCode;
@@ -38,7 +38,7 @@ public class CommentServiceTest {
     public void createTest() {
         var cmd = CreateCommentCommandFixtureFactory.create();
         var comment = CommentFixtureFactory.create(cmd);
-        var commentDto = CommentDtoFixtureCommand.create(comment);
+        var commentDto = CommentDtoFixtureFactory.create(comment);
 
         given(commentRepository.save(any())).willReturn(comment);
         given(commentReadService.toDto(any())).willReturn(commentDto);
@@ -59,7 +59,7 @@ public class CommentServiceTest {
         var comment = CommentFixtureFactory.create(
                 CreateCommentCommandFixtureFactory.create()
         );
-        var commentDto = CommentDtoFixtureCommand.create(cmd.content());
+        var commentDto = CommentDtoFixtureFactory.create(cmd.content());
 
         given(commentRepository.findById(any())).willReturn(Optional.of(comment));
         given(commentRepository.save(any())).willReturn(comment);
@@ -97,7 +97,7 @@ public class CommentServiceTest {
                 CreateCommentCommandFixtureFactory.create()
         );
         var cmd = UpdateCommentCommandFixtureFactory.create(comment.getContent());
-        var commentDto = CommentDtoFixtureCommand.create(comment);
+        var commentDto = CommentDtoFixtureFactory.create(comment);
 
         given(commentRepository.findById(any())).willReturn(Optional.of(comment));
         given(commentReadService.toDto(any())).willReturn(commentDto);
