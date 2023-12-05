@@ -35,8 +35,6 @@ public class CreateLikeUsecase {
     private final CommentReadService commentReadService;
     private final CommentWriteService commentWriteService;
 
-
-    // TODO: TEST fluctuateLikeCount();
     public void executeLike(CreateLikeCommand cmd) {
         check(cmd);
         Boolean isIncrease = crossCheck(cmd, true);

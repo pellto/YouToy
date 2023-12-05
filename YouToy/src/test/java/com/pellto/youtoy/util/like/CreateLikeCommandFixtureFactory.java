@@ -12,6 +12,10 @@ public class CreateLikeCommandFixtureFactory {
         return create(USER_ID, VIDEO_ID, VIDEO_TYPE, COMMENT_ID);
     }
 
+    public static CreateLikeCommand create(Integer videoType) {
+        return create(USER_ID, VIDEO_ID, videoType, COMMENT_ID);
+    }
+
     public static CreateLikeCommand create(Integer videoType, Long commentId) {
         return create(USER_ID, VIDEO_ID, videoType, commentId);
     }
