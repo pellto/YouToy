@@ -22,7 +22,8 @@ public class AdminAuthorizeUsecase {
         if (!userReadService.isExist(cmd.userId())) {
             throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_USER.getMessage());
         }
-        if (!channelReadService.isOwner(cmd.channelId(), cmd.userId()) && !channelAdminReadService.isAdmin(cmd.channelId(), cmd.userId())) {
+        if (!channelReadService.isOwner(cmd.channelId(), cmd.userId())
+                && !channelAdminReadService.isAdmin(cmd.channelId(), cmd.userId())) {
             throw new UnsupportedOperationException(ErrorCode.NOT_AUTHORIZED_USER.getMessage());
         }
         return true;
