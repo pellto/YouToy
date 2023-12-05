@@ -1,5 +1,6 @@
 package com.pellto.youtoy.util.view;
 
+import com.pellto.youtoy.domain.view.dto.ShortsDto;
 import com.pellto.youtoy.domain.view.dto.UpdateShortCommand;
 import com.pellto.youtoy.domain.view.dto.UploadShortCommand;
 import com.pellto.youtoy.domain.view.entity.Shorts;
@@ -44,5 +45,18 @@ public class ShortFixtureFactory {
                 .description(DESCRIPTION)
                 .createdAt(CREATED_AT)
                 .build();
+    }
+
+    public static ShortsDto toDto(Shorts shorts) {
+        return new ShortsDto(
+                shorts.getId(),
+                shorts.getChannelId(),
+                shorts.getTitle(),
+                shorts.getViewCount(),
+                shorts.getDescription(),
+                shorts.getCreatedAt(),
+                shorts.getLikeCount() == null ? 0 : shorts.getLikeCount(),
+                false
+        );
     }
 }

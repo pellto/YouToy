@@ -12,6 +12,10 @@ public class PlaylistVideoDtoFixtureFactory {
         return create(ID, PLAYLIST_ID, VIDEO_ID, VIDEO_TYPE);
     }
 
+    public static PlaylistVideoDto create(Integer videoType) {
+        return create(ID, PLAYLIST_ID, VIDEO_ID, videoType);
+    }
+
     private static PlaylistVideoDto create(
             Long id,
             Long playlistId,

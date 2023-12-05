@@ -2,6 +2,7 @@ package com.pellto.youtoy.util.view;
 
 import com.pellto.youtoy.domain.view.dto.UpdateVideoCommand;
 import com.pellto.youtoy.domain.view.dto.UploadVideoCommand;
+import com.pellto.youtoy.domain.view.dto.VideoDto;
 import com.pellto.youtoy.domain.view.entity.Video;
 
 import java.time.LocalDateTime;
@@ -44,5 +45,18 @@ public class VideoFixtureFactory {
                 .description(DESCRIPTION)
                 .createdAt(CREATED_AT)
                 .build();
+    }
+
+    public static VideoDto toDto(Video video) {
+        return new VideoDto(
+                video.getId(),
+                video.getChannelId(),
+                video.getTitle(),
+                video.getViewCount(),
+                video.getDescription(),
+                video.getCreatedAt(),
+                video.getLikeCount() == null ? 0 : video.getLikeCount(),
+                true
+        );
     }
 }
