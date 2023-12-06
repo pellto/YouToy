@@ -2,6 +2,7 @@ package com.pellto.youtoy.util.comment;
 
 import com.pellto.youtoy.domain.comment.dto.CommentDto;
 import com.pellto.youtoy.domain.comment.dto.CreateCommentCommand;
+import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
@@ -41,6 +42,10 @@ public class CommentDtoFixtureFactory {
 
     public static CommentDto create(CreateCommentCommand cmd) {
         return create(ID, cmd.userId(), cmd.content(), REPLY_CNT, CREATED_AT);
+    }
+
+    public static CommentDto create(UpdateCommentCommand cmd) {
+        return create(cmd.id(), USER_ID, cmd.content(), REPLY_CNT, CREATED_AT);
     }
 
     public static CommentDto create() {

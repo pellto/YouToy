@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping
     public UserDto signup(@RequestBody RegisterUserCommand cmd) {
-        return userReadService.toDto(signupUserUsecase.execute(cmd));
+        return signupUserUsecase.execute(cmd);
     }
 
     @PutMapping

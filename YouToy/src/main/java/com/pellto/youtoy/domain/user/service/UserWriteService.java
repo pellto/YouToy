@@ -2,6 +2,7 @@ package com.pellto.youtoy.domain.user.service;
 
 import com.pellto.youtoy.domain.user.dto.RegisterUserCommand;
 import com.pellto.youtoy.domain.user.dto.UpdateUserInfoCommand;
+import com.pellto.youtoy.domain.user.dto.UserDto;
 import com.pellto.youtoy.domain.user.entity.User;
 import com.pellto.youtoy.domain.user.repository.UserRepository;
 import com.pellto.youtoy.util.error.ErrorCode;
@@ -13,8 +14,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserWriteService {
     private final UserRepository userRepository;
+    private final UserReadService userReadService;
 
-    public User register(RegisterUserCommand cmd) {
+    public UserDto register(RegisterUserCommand cmd) {
         if (!cmd.pwd().equals(cmd.repeatPwd())) {
             // TODO: convert custom error
             throw new UnsupportedOperationException(ErrorCode.PASSWORD_MISMATCH.getMessage());
@@ -31,7 +33,7 @@ public class UserWriteService {
                 .birthDate(cmd.birthDate())
                 .build();
 
-        return userRepository.save(user);
+        return userReadService.toDto(userRepository.save(user));
     }
 
     public void update(UpdateUserInfoCommand cmd) {

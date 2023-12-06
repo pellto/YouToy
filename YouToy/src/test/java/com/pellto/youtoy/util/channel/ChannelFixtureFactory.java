@@ -18,6 +18,10 @@ public class ChannelFixtureFactory {
         return create(TEST_ID, OWNER_ID, DISPLAY_NAME, CREATED_AT);
     }
 
+    public static Channel create(String channelHandle) {
+        return create(TEST_ID, OWNER_ID, DISPLAY_NAME, channelHandle, CREATED_AT);
+    }
+
     public static Channel create(Long channelId) {
         return create(channelId, OWNER_ID, DISPLAY_NAME, CREATED_AT);
     }
@@ -32,6 +36,22 @@ public class ChannelFixtureFactory {
                 .id(testId)
                 .ownerId(ownerId)
                 .displayName(displayName)
+                .createdAt(createdAt)
+                .build();
+    }
+
+    private static Channel create(
+            Long testId,
+            Long ownerId,
+            String displayName,
+            String channelHandle,
+            LocalDateTime createdAt
+    ) {
+        return Channel.builder()
+                .id(testId)
+                .ownerId(ownerId)
+                .displayName(displayName)
+                .handle(channelHandle)
                 .createdAt(createdAt)
                 .build();
     }
