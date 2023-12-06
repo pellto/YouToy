@@ -40,8 +40,6 @@ public class ChannelAdminServiceTest {
 
         var retChannelAdmin = channelAdminWriteService.create(cmd);
 
-        // REMOVE_ME: for jenkins error trigger test
-        assertEquals(1, 2);
         assertEquals(cmd.channelId(), retChannelAdmin.getChannelId());
         assertEquals(cmd.userId(), retChannelAdmin.getUserId());
         then(channelAdminRepository).should(times(1)).findByChannelIdAndUserId(any(), any());
