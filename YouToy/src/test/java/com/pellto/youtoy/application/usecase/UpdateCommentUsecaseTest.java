@@ -22,7 +22,7 @@ import static org.mockito.BDDMockito.*;
 
 @Tag("usecase")
 @ExtendWith(MockitoExtension.class)
-@DisplayName("[SignupUserUsecase Test]")
+@DisplayName("[UpdateCommentUsecase Test]")
 public class UpdateCommentUsecaseTest {
     @InjectMocks
     private UpdateCommentUsecase updateCommentUsecase;
