@@ -4,6 +4,7 @@ import static org.mockito.BDDMockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.pellto.youtoy.domain.user.repository.UserRepository;
+import com.pellto.youtoy.domain.user.service.UserReadService;
 import com.pellto.youtoy.domain.user.service.UserWriteService;
 import com.pellto.youtoy.util.user.RegisterUserCommandFixtureFactory;
 import com.pellto.youtoy.util.user.UpdateUserCommandFixtureFactory;
@@ -27,6 +28,8 @@ public class UserServiceTest {
     private UserWriteService userWriteService;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private UserReadService userReadService;
 
     @DisplayName("[User: register] 유저 생성 테스트")
     @Test
@@ -50,6 +53,7 @@ public class UserServiceTest {
         assertEquals(findUser.getName(), user.getName());
         assertEquals(findUser.getBirthDate(), user.getBirthDate());
         assertEquals(findUser.getCreatedAt(), user.getCreatedAt());
+        then(userReadService).should(times(1)).toDto(any());
     }
 
     @DisplayName("[User: register: wrong password] 유저 생성시 다른 비밀번호 테스트")

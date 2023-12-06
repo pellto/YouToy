@@ -12,6 +12,10 @@ public class CreateViewHistoryCommandFixtureFactory {
         return create(USER_ID, VIDEO_ID, VIDEO_TYPE, LAST_VIEW_AT);
     }
 
+    public static CreateViewHistoryCommand create(Integer videType) {
+        return create(USER_ID, VIDEO_ID, videType, LAST_VIEW_AT);
+    }
+
     private static CreateViewHistoryCommand create(Long userId, Long videoId, Integer videoType, Long lastViewAt) {
         return new CreateViewHistoryCommand(userId, videoId, videoType, lastViewAt);
     }

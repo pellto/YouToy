@@ -23,6 +23,10 @@ public class ViewHistoryFixtureFactory {
         return create(ID, USER_ID, VIDEO_ID, VIDEO_TYPE, LAST_VIEW_AT, CREATED_AT);
     }
 
+    public static ViewHistory create(LocalDateTime createdAt) {
+        return create(ID, USER_ID, VIDEO_ID, VIDEO_TYPE, LAST_VIEW_AT, createdAt);
+    }
+
     public static ViewHistory create(
             Long id,
             Long userId,
@@ -56,5 +60,17 @@ public class ViewHistoryFixtureFactory {
             ));
         }
         return ret;
+    }
+
+    public static ViewHistoryDto toDto(ViewHistory viewHistory) {
+        return new ViewHistoryDto(
+                viewHistory.getId(),
+                viewHistory.getUserId(),
+                viewHistory.getVideoId(),
+                viewHistory.getVideoType(),
+                viewHistory.getLastViewAt(),
+                viewHistory.getCreatedAt()
+        );
+
     }
 }
