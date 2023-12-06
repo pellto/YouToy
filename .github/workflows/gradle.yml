@@ -1,18 +1,10 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Java CI with Gradle
 
 on:
   push:
     branches: [ "feature/**" ]
 
-permissions:
-  contents: read
+permissions: write-all
 
 jobs:
   build:
@@ -27,9 +19,23 @@ jobs:
       with:
         java-version: '16'
         distribution: 'temurin'
+    - name: working directory check
+      run: pwd
+      working-directory: ${{ env.working-directory }}
+    - name: check files
+      run: ls
+      working-directory: ${{ env.working-directory }}
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-      working-directory: ${{ env.workworking-directory }}
+      run: chmod +x ./gradlew
+      working-directory: ${{ env.working-directory }}
     - name: Build with Gradle
       run: ./gradlew build
-      working-directory: ${{ env.workworking-directory }}
+      working-directory: ${{ env.working-directory }}
+    - name: Test with Gradle
+      run: ./gradlew :test --tests com.pellto.youtoy.*
+      working-directory: ${{ env.working-directory }}
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: ${{ always() }}
+      with:
+        files: /home/runner/work/YouToy/YouToy/YouToy/build/test-results/**/*.xml
