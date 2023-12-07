@@ -9,19 +9,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ViewHistoryWriteService {
-    private final ViewHistoryRepository viewHistoryRepository;
 
-    public ViewHistory create(CreateViewHistoryCommand cmd) {
-        ViewHistory viewHistory = ViewHistory.builder()
-                .userId(cmd.userId())
-                .videoId(cmd.videoId())
-                .videoType(cmd.videoType())
-                .lastViewAt(cmd.lastViewAt())
-                .build();
-        return viewHistoryRepository.save(viewHistory);
-    }
+  private final ViewHistoryRepository viewHistoryRepository;
 
-    public void deleteByCreateCommand(CreateViewHistoryCommand cmd) {
-        viewHistoryRepository.deleteByUserIdVideoIdVideoType(cmd.userId(), cmd.videoId(), cmd.videoType());
-    }
+  public ViewHistory create(CreateViewHistoryCommand cmd) {
+    ViewHistory viewHistory = ViewHistory.builder()
+        .userId(cmd.userId())
+        .videoId(cmd.videoId())
+        .videoType(cmd.videoType())
+        .lastViewAt(cmd.lastViewAt())
+        .build();
+    return viewHistoryRepository.save(viewHistory);
+  }
+
+  public void deleteByCreateCommand(CreateViewHistoryCommand cmd) {
+    viewHistoryRepository.deleteByUserIdVideoIdVideoType(cmd.userId(), cmd.videoId(),
+        cmd.videoType());
+  }
 }

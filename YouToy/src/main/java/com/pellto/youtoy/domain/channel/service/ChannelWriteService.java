@@ -11,52 +11,58 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ChannelWriteService {
-    private final ChannelRepository channelRepository;
 
-    public Channel create(CreateChannelCommand cmd) {
-        // TODO: change custom Error with errorHandler
-        if (cmd.displayName().isEmpty())
-            throw new UnsupportedOperationException(ErrorCode.CHANNEL_DISPLAY_NAME_IS_REQUIRED.getMessage());
-        if (cmd.ownerId() == null)
-            throw new UnsupportedOperationException(ErrorCode.OWNER_ID_IS_REQUIRED.getMessage());
+  private final ChannelRepository channelRepository;
 
-        var channel = Channel
-                .builder()
-                .ownerId(cmd.ownerId())
-                .displayName(cmd.displayName())
-                .build();
-
-        return channelRepository.save(channel);
+  public Channel create(CreateChannelCommand cmd) {
+    // TODO: change custom Error with errorHandler
+    if (cmd.displayName().isEmpty()) {
+      throw new UnsupportedOperationException(
+          ErrorCode.CHANNEL_DISPLAY_NAME_IS_REQUIRED.getMessage());
+    }
+    if (cmd.ownerId() == null) {
+      throw new UnsupportedOperationException(ErrorCode.OWNER_ID_IS_REQUIRED.getMessage());
     }
 
-    public Channel update(UpdateChannelCommand cmd) {
-        var channel = channelRepository.findById(cmd.id()).orElseThrow();
-        boolean changeChecker = false;
-        if (cmd.handle() != null) {
-            if (channelRepository.existsHandle(cmd.handle())) {
-                throw new UnsupportedOperationException(ErrorCode.ALREADY_EXIST_HANDLE.getMessage());
-            }
-            channel.setHandle(cmd.handle());
-            changeChecker = true;
-        }
-        if (cmd.displayName() != null) {
-            channel.setDisplayName(cmd.displayName());
-            changeChecker = true;
-        }
-        if (cmd.description() != null) {
-            channel.setDescription(cmd.description());
-            changeChecker = true;
-        }
-        if (cmd.banner() != null) {
-            channel.setBanner(cmd.banner());
-            changeChecker = true;
-        }
-        if (cmd.profile() != null) {
-            channel.setProfile(cmd.profile());
-            changeChecker = true;
-        }
+    var channel = Channel
+        .builder()
+        .ownerId(cmd.ownerId())
+        .displayName(cmd.displayName())
+        .build();
 
-        if (changeChecker) return channelRepository.save(channel);
-        return channel;
+    return channelRepository.save(channel);
+  }
+
+  public Channel update(UpdateChannelCommand cmd) {
+    var channel = channelRepository.findById(cmd.id()).orElseThrow();
+    boolean changeChecker = false;
+    if (cmd.handle() != null) {
+      if (channelRepository.existsHandle(cmd.handle())) {
+        throw new UnsupportedOperationException(ErrorCode.ALREADY_EXIST_HANDLE.getMessage());
+      }
+      channel.setHandle(cmd.handle());
+      changeChecker = true;
     }
+    if (cmd.displayName() != null) {
+      channel.setDisplayName(cmd.displayName());
+      changeChecker = true;
+    }
+    if (cmd.description() != null) {
+      channel.setDescription(cmd.description());
+      changeChecker = true;
+    }
+    if (cmd.banner() != null) {
+      channel.setBanner(cmd.banner());
+      changeChecker = true;
+    }
+    if (cmd.profile() != null) {
+      channel.setProfile(cmd.profile());
+      changeChecker = true;
+    }
+
+    if (changeChecker) {
+      return channelRepository.save(channel);
+    }
+    return channel;
+  }
 }

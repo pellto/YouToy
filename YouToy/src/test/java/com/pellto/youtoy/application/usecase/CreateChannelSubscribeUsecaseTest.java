@@ -1,5 +1,10 @@
 package com.pellto.youtoy.application.usecase;
 
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
+
 import com.pellto.youtoy.domain.channel.service.ChannelReadService;
 import com.pellto.youtoy.domain.subscribe.service.SubscribeWriteService;
 import com.pellto.youtoy.domain.user.service.UserReadService;
@@ -13,39 +18,35 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.BDDMockito.*;
-
 @Tag("usecase")
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[CreateChannelSubscribeUsecase Test]")
 public class CreateChannelSubscribeUsecaseTest {
-    @InjectMocks
-    private CreateChannelSubscribeUsecase createChannelSubscribeUsecase;
-    @Mock
-    private UserReadService userReadService;
-    @Mock
-    private ChannelReadService channelReadService;
-    @Mock
-    private SubscribeWriteService subscribeWriteService;
 
-    private static final Long USER_ID = 1L;
-    private static final Long CHANNEL_ID = 1L;
+  private static final Long USER_ID = 1L;
+  private static final Long CHANNEL_ID = 1L;
+  @InjectMocks
+  private CreateChannelSubscribeUsecase createChannelSubscribeUsecase;
+  @Mock
+  private UserReadService userReadService;
+  @Mock
+  private ChannelReadService channelReadService;
+  @Mock
+  private SubscribeWriteService subscribeWriteService;
 
-    @DisplayName("[execute: success] 채널 구독 성공 테스트")
-    @Test
-    public void executeTest() {
-        var userDto = UserFixtureFactory.toDto(UserFixtureFactory.create());
-        var channelDto = ChannelFixtureFactory.toDto(ChannelFixtureFactory.create());
+  @DisplayName("[execute: success] 채널 구독 성공 테스트")
+  @Test
+  public void executeTest() {
+    var userDto = UserFixtureFactory.toDto(UserFixtureFactory.create());
+    var channelDto = ChannelFixtureFactory.toDto(ChannelFixtureFactory.create());
 
-        given(userReadService.getUser(any())).willReturn(userDto);
-        given(channelReadService.getChannel(any())).willReturn(channelDto);
+    given(userReadService.getUser(any())).willReturn(userDto);
+    given(channelReadService.getChannel(any())).willReturn(channelDto);
 
-        createChannelSubscribeUsecase.execute(USER_ID, CHANNEL_ID);
+    createChannelSubscribeUsecase.execute(USER_ID, CHANNEL_ID);
 
-        then(userReadService).should(times(1)).getUser(any());
-        then(channelReadService).should(times(1)).getChannel(any());
-        then(subscribeWriteService).should(times(1)).create(USER_ID, CHANNEL_ID);
-    }
+    then(userReadService).should(times(1)).getUser(any());
+    then(channelReadService).should(times(1)).getChannel(any());
+    then(subscribeWriteService).should(times(1)).create(USER_ID, CHANNEL_ID);
+  }
 }

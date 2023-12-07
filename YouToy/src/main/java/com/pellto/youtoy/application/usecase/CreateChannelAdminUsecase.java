@@ -11,20 +11,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class CreateChannelAdminUsecase {
-    private final ChannelAdminWriteService channelAdminWriteService;
-    private final ChannelReadService channelReadService;
-    private final UserReadService userReadService;
 
-    public void execute(CreateChannelAdminCommand cmd) {
-        if (!channelReadService.isExist(cmd.channelId())) {
-            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_CHANNEL.getMessage());
-        }
-        if (!userReadService.isExist(cmd.userId()) || !userReadService.isExist(cmd.ownerId())) {
-            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_USER.getMessage());
-        }
-        if (!channelReadService.isOwner(cmd.channelId(), cmd.ownerId())) {
-            throw new UnsupportedOperationException(ErrorCode.USER_IS_NOT_OWNER.getMessage());
-        }
-        channelAdminWriteService.create(cmd);
+  private final ChannelAdminWriteService channelAdminWriteService;
+  private final ChannelReadService channelReadService;
+  private final UserReadService userReadService;
+
+  public void execute(CreateChannelAdminCommand cmd) {
+    if (!channelReadService.isExist(cmd.channelId())) {
+      throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_CHANNEL.getMessage());
     }
+    if (!userReadService.isExist(cmd.userId()) || !userReadService.isExist(cmd.ownerId())) {
+      throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_USER.getMessage());
+    }
+    if (!channelReadService.isOwner(cmd.channelId(), cmd.ownerId())) {
+      throw new UnsupportedOperationException(ErrorCode.USER_IS_NOT_OWNER.getMessage());
+    }
+    channelAdminWriteService.create(cmd);
+  }
 }

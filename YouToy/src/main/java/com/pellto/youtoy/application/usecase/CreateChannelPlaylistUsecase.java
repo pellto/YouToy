@@ -12,14 +12,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class CreateChannelPlaylistUsecase {
-    private final PlaylistWriteService playlistWriteService;
-    private final PlaylistReadService playlistReadService;
-    private final ChannelReadService channelReadService;
 
-    public PlaylistDto execute(CreatePlaylistCommand cmd) {
-        if (!channelReadService.isExist(cmd.channelId())) {
-            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_CHANNEL.getMessage());
-        }
-        return playlistReadService.toDto(playlistWriteService.create(cmd));
+  private final PlaylistWriteService playlistWriteService;
+  private final PlaylistReadService playlistReadService;
+  private final ChannelReadService channelReadService;
+
+  public PlaylistDto execute(CreatePlaylistCommand cmd) {
+    if (!channelReadService.isExist(cmd.channelId())) {
+      throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_CHANNEL.getMessage());
     }
+    return playlistReadService.toDto(playlistWriteService.create(cmd));
+  }
 }

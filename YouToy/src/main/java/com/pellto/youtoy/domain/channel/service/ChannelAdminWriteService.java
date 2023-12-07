@@ -11,24 +11,26 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ChannelAdminWriteService {
-    private final ChannelAdminRepository channelAdminRepository;
 
-    public ChannelAdmin create(CreateChannelAdminCommand cmd) {
-        if (channelAdminRepository.findByChannelIdAndUserId(cmd.channelId(), cmd.userId()).isPresent()) {
-            throw new UnsupportedOperationException(ErrorCode.ALREADY_EXIST_ADMIN.getMessage());
-        }
-        var channelAdmin = ChannelAdmin
-                .builder()
-                .channelId(cmd.channelId())
-                .userId(cmd.userId())
-                .build();
-        return channelAdminRepository.save(channelAdmin);
-    }
+  private final ChannelAdminRepository channelAdminRepository;
 
-    public void delete(DeleteChannelAdminCommand cmd) {
-        if (channelAdminRepository.findByChannelIdAndUserId(cmd.channelId(), cmd.userId()).isEmpty()) {
-            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_ADMIN.getMessage());
-        }
-        channelAdminRepository.delete(cmd.channelId(), cmd.userId());
+  public ChannelAdmin create(CreateChannelAdminCommand cmd) {
+    if (channelAdminRepository.findByChannelIdAndUserId(cmd.channelId(), cmd.userId())
+        .isPresent()) {
+      throw new UnsupportedOperationException(ErrorCode.ALREADY_EXIST_ADMIN.getMessage());
     }
+    var channelAdmin = ChannelAdmin
+        .builder()
+        .channelId(cmd.channelId())
+        .userId(cmd.userId())
+        .build();
+    return channelAdminRepository.save(channelAdmin);
+  }
+
+  public void delete(DeleteChannelAdminCommand cmd) {
+    if (channelAdminRepository.findByChannelIdAndUserId(cmd.channelId(), cmd.userId()).isEmpty()) {
+      throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_ADMIN.getMessage());
+    }
+    channelAdminRepository.delete(cmd.channelId(), cmd.userId());
+  }
 }

@@ -1,5 +1,11 @@
 package com.pellto.youtoy.application.usecase;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
+
 import com.pellto.youtoy.domain.view.service.VideoWriteService;
 import com.pellto.youtoy.util.view.UploadVideoCommandFixtureFactory;
 import com.pellto.youtoy.util.view.VideoFixtureFactory;
@@ -11,48 +17,45 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.BDDMockito.*;
-
 @Tag("usecase")
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UploadVideoWithAdminUsecase Test]")
 public class UploadVideoWithAdminUsecaseTest {
-    @InjectMocks
-    private UploadVideoWithAdminUsecase uploadVideoWithAdminUsecase;
-    @Mock
-    private VideoWriteService videoWriteService;
-    @Mock
-    private AdminAuthorizeUsecase adminAuthorizeUsecase;
 
-    @DisplayName("[execute: success] 관리자의 비디오 업로드 성공 테스트")
-    @Test
-    public void executeTest() {
-        var cmd = UploadVideoCommandFixtureFactory.create();
-        var video = VideoFixtureFactory.create(cmd);
+  @InjectMocks
+  private UploadVideoWithAdminUsecase uploadVideoWithAdminUsecase;
+  @Mock
+  private VideoWriteService videoWriteService;
+  @Mock
+  private AdminAuthorizeUsecase adminAuthorizeUsecase;
 
-        given(adminAuthorizeUsecase.execute(cmd)).willReturn(true);
-        given(videoWriteService.upload(cmd)).willReturn(video);
+  @DisplayName("[execute: not auth] 관리자가 아닌 유저의 비디오 업로드 실패 테스트")
+  @Test
+  public void executeNotAuthTest() {
+    var cmd = UploadVideoCommandFixtureFactory.create();
 
-        var uploadedVideo = uploadVideoWithAdminUsecase.execute(cmd);
+    given(adminAuthorizeUsecase.execute(cmd)).willReturn(false);
 
-        assertEquals(video, uploadedVideo);
-        then(adminAuthorizeUsecase).should(times(1)).execute(cmd);
-        then(videoWriteService).should(times(1)).upload(cmd);
-    }
+    var uploadedVideo = uploadVideoWithAdminUsecase.execute(cmd);
 
-    @DisplayName("[execute: not auth] 관리자가 아닌 유저의 비디오 업로드 실패 테스트")
-    @Test
-    public void executeNotAuthTest() {
-        var cmd = UploadVideoCommandFixtureFactory.create();
+    assertNull(uploadedVideo);
+    then(adminAuthorizeUsecase).should(times(1)).execute(cmd);
+    then(videoWriteService).should(times(0)).upload(cmd);
+  }
 
-        given(adminAuthorizeUsecase.execute(cmd)).willReturn(false);
+  @DisplayName("[execute: success] 관리자의 비디오 업로드 성공 테스트")
+  @Test
+  public void executeTest() {
+    var cmd = UploadVideoCommandFixtureFactory.create();
+    var video = VideoFixtureFactory.create(cmd);
 
-        var uploadedVideo = uploadVideoWithAdminUsecase.execute(cmd);
+    given(adminAuthorizeUsecase.execute(cmd)).willReturn(true);
+    given(videoWriteService.upload(cmd)).willReturn(video);
 
-        assertNull(uploadedVideo);
-        then(adminAuthorizeUsecase).should(times(1)).execute(cmd);
-        then(videoWriteService).should(times(0)).upload(cmd);
-    }
+    var uploadedVideo = uploadVideoWithAdminUsecase.execute(cmd);
+
+    assertEquals(video, uploadedVideo);
+    then(adminAuthorizeUsecase).should(times(1)).execute(cmd);
+    then(videoWriteService).should(times(1)).upload(cmd);
+  }
 }

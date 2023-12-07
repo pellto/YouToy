@@ -1,5 +1,11 @@
 package com.pellto.youtoy.application.usecase;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
+
 import com.pellto.youtoy.domain.view.service.ShortWriteService;
 import com.pellto.youtoy.util.view.ShortFixtureFactory;
 import com.pellto.youtoy.util.view.UpdateShortCommandFixtureFactory;
@@ -11,47 +17,45 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
-
 @Tag("usecase")
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UpdateShortWithAdminUsecase Test]")
 public class UpdateShortWithAdminUsecaseTest {
-    @InjectMocks
-    private UpdateShortWithAdminUsecase updateShortWithAdminUsecase;
-    @Mock
-    private ShortWriteService shortWriteService;
-    @Mock
-    private AdminAuthorizeUsecase adminAuthorizeUsecase;
 
-    @DisplayName("[execute: success] 관리자의 쇼츠 업데이트 성공 테스트")
-    @Test
-    public void executeTest() {
-        var cmd = UpdateShortCommandFixtureFactory.create();
-        var shorts = ShortFixtureFactory.create(cmd);
+  @InjectMocks
+  private UpdateShortWithAdminUsecase updateShortWithAdminUsecase;
+  @Mock
+  private ShortWriteService shortWriteService;
+  @Mock
+  private AdminAuthorizeUsecase adminAuthorizeUsecase;
 
-        given(adminAuthorizeUsecase.execute(cmd)).willReturn(true);
-        given(shortWriteService.update(cmd)).willReturn(shorts);
+  @DisplayName("[execute: not auth] 관리자가 아닌 유저의 쇼츠 업데이트 실패 테스트")
+  @Test
+  public void executeNotAuthTest() {
+    var cmd = UpdateShortCommandFixtureFactory.create();
 
-        var updatedShorts = updateShortWithAdminUsecase.execute(cmd);
+    given(adminAuthorizeUsecase.execute(cmd)).willReturn(false);
 
-        assertEquals(shorts, updatedShorts);
-        then(adminAuthorizeUsecase).should(times(1)).execute(cmd);
-        then(shortWriteService).should(times(1)).update(cmd);
-    }
+    var updatedShorts = updateShortWithAdminUsecase.execute(cmd);
 
-    @DisplayName("[execute: not auth] 관리자가 아닌 유저의 쇼츠 업데이트 실패 테스트")
-    @Test
-    public void executeNotAuthTest() {
-        var cmd = UpdateShortCommandFixtureFactory.create();
+    assertNull(updatedShorts);
+    then(adminAuthorizeUsecase).should(times(1)).execute(cmd);
+    then(shortWriteService).should(times(0)).update(cmd);
+  }
 
-        given(adminAuthorizeUsecase.execute(cmd)).willReturn(false);
+  @DisplayName("[execute: success] 관리자의 쇼츠 업데이트 성공 테스트")
+  @Test
+  public void executeTest() {
+    var cmd = UpdateShortCommandFixtureFactory.create();
+    var shorts = ShortFixtureFactory.create(cmd);
 
-        var updatedShorts = updateShortWithAdminUsecase.execute(cmd);
+    given(adminAuthorizeUsecase.execute(cmd)).willReturn(true);
+    given(shortWriteService.update(cmd)).willReturn(shorts);
 
-        assertNull(updatedShorts);
-        then(adminAuthorizeUsecase).should(times(1)).execute(cmd);
-        then(shortWriteService).should(times(0)).update(cmd);
-    }
+    var updatedShorts = updateShortWithAdminUsecase.execute(cmd);
+
+    assertEquals(shorts, updatedShorts);
+    then(adminAuthorizeUsecase).should(times(1)).execute(cmd);
+    then(shortWriteService).should(times(1)).update(cmd);
+  }
 }

@@ -1,5 +1,11 @@
 package com.pellto.youtoy.domain.view;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
+
 import com.pellto.youtoy.domain.view.repository.ViewHistoryRepository;
 import com.pellto.youtoy.domain.view.service.ViewHistoryWriteService;
 import com.pellto.youtoy.util.view.CreateViewHistoryCommandFixtureFactory;
@@ -12,48 +18,45 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.BDDMockito.*;
-
 @Tag("domain")
 @ExtendWith(MockitoExtension.class)
 public class ViewHistoryTest {
-    private static final String DOMAIN = "View-History";
-    @InjectMocks
-    private ViewHistoryWriteService viewHistoryWriteService;
 
-    @Mock
-    private ViewHistoryRepository viewHistoryRepository;
+  private static final String DOMAIN = "View-History";
+  @InjectMocks
+  private ViewHistoryWriteService viewHistoryWriteService;
 
-    @DisplayName("[" + DOMAIN + ": create: success] viewHistory 생성 성공 테스트")
-    @Test
-    public void createTest() {
-        var cmd = CreateViewHistoryCommandFixtureFactory.create();
-        var viewHistory = ViewHistoryFixtureFactory.create();
+  @Mock
+  private ViewHistoryRepository viewHistoryRepository;
 
-        given(viewHistoryRepository.save(any())).willReturn(viewHistory);
+  @DisplayName("[" + DOMAIN + ": create: success] viewHistory 생성 성공 테스트")
+  @Test
+  public void createTest() {
+    var cmd = CreateViewHistoryCommandFixtureFactory.create();
+    var viewHistory = ViewHistoryFixtureFactory.create();
 
-        var createdViewHistory = viewHistoryWriteService.create(cmd);
+    given(viewHistoryRepository.save(any())).willReturn(viewHistory);
 
-        assertEquals(cmd.userId(), createdViewHistory.getUserId());
-        assertEquals(cmd.videoId(), createdViewHistory.getVideoId());
-        assertEquals(cmd.videoType(), createdViewHistory.getVideoType());
-        assertEquals(cmd.lastViewAt(), createdViewHistory.getLastViewAt());
-        then(viewHistoryRepository).should(times(1)).save(any());
-    }
+    var createdViewHistory = viewHistoryWriteService.create(cmd);
 
-    @DisplayName("[" + DOMAIN + ": delete: success] viewHistory 삭제 성공 테스트")
-    @Test
-    public void deleteTest() {
-        var cmd = CreateViewHistoryCommandFixtureFactory.create();
+    assertEquals(cmd.userId(), createdViewHistory.getUserId());
+    assertEquals(cmd.videoId(), createdViewHistory.getVideoId());
+    assertEquals(cmd.videoType(), createdViewHistory.getVideoType());
+    assertEquals(cmd.lastViewAt(), createdViewHistory.getLastViewAt());
+    then(viewHistoryRepository).should(times(1)).save(any());
+  }
 
-        viewHistoryWriteService.deleteByCreateCommand(cmd);
+  @DisplayName("[" + DOMAIN + ": delete: success] viewHistory 삭제 성공 테스트")
+  @Test
+  public void deleteTest() {
+    var cmd = CreateViewHistoryCommandFixtureFactory.create();
 
-        then(viewHistoryRepository).should(times(1)).deleteByUserIdVideoIdVideoType(
-                any(),
-                any(),
-                any()
-        );
-    }
+    viewHistoryWriteService.deleteByCreateCommand(cmd);
+
+    then(viewHistoryRepository).should(times(1)).deleteByUserIdVideoIdVideoType(
+        any(),
+        any(),
+        any()
+    );
+  }
 }

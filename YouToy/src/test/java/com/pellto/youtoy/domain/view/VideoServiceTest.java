@@ -1,11 +1,19 @@
 package com.pellto.youtoy.domain.view;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
+
 import com.pellto.youtoy.domain.view.repository.VideoRepository;
 import com.pellto.youtoy.domain.view.service.VideoWriteService;
 import com.pellto.youtoy.util.error.ErrorCode;
 import com.pellto.youtoy.util.view.UpdateVideoCommandFixtureFactory;
 import com.pellto.youtoy.util.view.UploadVideoCommandFixtureFactory;
 import com.pellto.youtoy.util.view.VideoFixtureFactory;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -14,141 +22,136 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.BDDMockito.*;
-
 @Tag("domain")
 @ExtendWith(MockitoExtension.class)
 public class VideoServiceTest {
-    @InjectMocks
-    private VideoWriteService videoWriteService;
-    @Mock
-    private VideoRepository videoRepository;
 
-    @DisplayName("[Video: upload: success] 비디오 업로드 성공 테스트")
-    @Test
-    // TODO: real upload video test
-    public void uploadVideoTest() {
-        // given
-        var cmd = UploadVideoCommandFixtureFactory.create();
-        var video = VideoFixtureFactory.create(cmd);
+  @InjectMocks
+  private VideoWriteService videoWriteService;
+  @Mock
+  private VideoRepository videoRepository;
 
-        // mocking
-        given(videoRepository.save(any())).willReturn(video);
+  @DisplayName("[Video: incrementViewCount: not exist video] 비디오 view count 증가 시 없는 비디오 테스트")
+  @Test
+  public void incrementViewCountNotExistVideTest() {
+    Long id = 1L;
 
-        // when
-        var uploadedVideo = videoWriteService.upload(cmd);
+    given(videoRepository.findById(any())).willReturn(null);
 
-        assertEquals(cmd.channelId(), uploadedVideo.getChannelId());
-        assertEquals(cmd.title(), uploadedVideo.getTitle());
-        assertEquals(cmd.description(), uploadedVideo.getDescription());
-        then(videoRepository).should(times(1)).save(any());
+    try {
+      videoWriteService.increaseViewCount(id);
+    } catch (Exception e) {
+      assertEquals(NullPointerException.class, e.getClass());
+      then(videoRepository).should(times(1)).findById(any());
+      then(videoRepository).should(times(0)).save(any());
     }
+  }
 
-    @DisplayName("[Video: update: success] 비디오 정보 업데이트 성공 테스트")
-    @Test
-    public void updateVideoTest() {
-        // given
-        var video = VideoFixtureFactory.create();
-        var cmd = UpdateVideoCommandFixtureFactory.create();
-        var changedVideo = VideoFixtureFactory.create(cmd);
+  @DisplayName("[Video: incrementViewCount: success] 비디오 view count 증가 성공 테스트")
+  @Test
+  public void incrementViewCountTest() {
+    Long id = 1L;
+    var video = VideoFixtureFactory.create();
 
-        // mocking
-        given(videoRepository.findById(any())).willReturn(Optional.ofNullable(video));
-        given(videoRepository.save(any())).willReturn(changedVideo);
+    given(videoRepository.findById(any())).willReturn(Optional.ofNullable(video));
 
-        // when
-        var updatedVideo = videoWriteService.update(cmd);
+    videoWriteService.increaseViewCount(id);
 
-        // then
-        assertNotNull(updatedVideo);
-        assertNotNull(updatedVideo.getId());
-        assertEquals(cmd.title(), updatedVideo.getTitle());
-        assertEquals(cmd.description(), updatedVideo.getDescription());
-        then(videoRepository).should(times(1)).findById(any());
-        then(videoRepository).should(times(1)).save(any());
+    assertNotNull(video);
+    assertEquals(video.getViewCount(), 1L);
+    then(videoRepository).should(times(1)).findById(any());
+    then(videoRepository).should(times(1)).save(any());
+  }
+
+  @DisplayName("[Video: remove: not exist video] 비디오 삭제 시 없는 비디오 테스트")
+  @Test
+  public void removeNotExistVideoTest() {
+    Long id = 1L;
+
+    given(videoRepository.existVideo(any())).willReturn(false);
+
+    try {
+      videoWriteService.remove(id);
+    } catch (Exception e) {
+      assertEquals(ErrorCode.NOT_EXIST_VIDEO.getMessage(), e.getMessage());
+      then(videoRepository).should(times(1)).existVideo(any());
+      then(videoRepository).should(times(0)).delete(any());
     }
+  }
 
-    @DisplayName("[Video: update: not exist video] 비디오 정보 업데이트시 없는 video id 테스트")
-    @Test
-    public void updateVideoNotExistVideoTest() {
-        // given
-        var cmd = UpdateVideoCommandFixtureFactory.create();
+  @DisplayName("[Video: remove: success] 비디오 삭제 성공 테스트")
+  @Test
+  public void removeVideoTest() {
+    Long id = 1L;
 
-        // mocking
-        given(videoRepository.findById(any())).willReturn(null);
-        try {
-            // when
-            videoWriteService.update(cmd);
-        } catch (Exception e) {
-            // then
-            assertEquals(e.getClass(), NullPointerException.class);
-            then(videoRepository).should(times(1)).findById(any());
-            then(videoRepository).should(times(0)).save(any());
-        }
+    given(videoRepository.existVideo(any())).willReturn(true);
+
+    videoWriteService.remove(id);
+
+    then(videoRepository).should(times(1)).existVideo(any());
+    then(videoRepository).should(times(1)).delete(any());
+  }
+
+  @DisplayName("[Video: update: not exist video] 비디오 정보 업데이트시 없는 video id 테스트")
+  @Test
+  public void updateVideoNotExistVideoTest() {
+    // given
+    var cmd = UpdateVideoCommandFixtureFactory.create();
+
+    // mocking
+    given(videoRepository.findById(any())).willReturn(null);
+    try {
+      // when
+      videoWriteService.update(cmd);
+    } catch (Exception e) {
+      // then
+      assertEquals(e.getClass(), NullPointerException.class);
+      then(videoRepository).should(times(1)).findById(any());
+      then(videoRepository).should(times(0)).save(any());
     }
+  }
 
-    @DisplayName("[Video: remove: success] 비디오 삭제 성공 테스트")
-    @Test
-    public void removeVideoTest() {
-        Long id = 1L;
+  @DisplayName("[Video: update: success] 비디오 정보 업데이트 성공 테스트")
+  @Test
+  public void updateVideoTest() {
+    // given
+    var video = VideoFixtureFactory.create();
+    var cmd = UpdateVideoCommandFixtureFactory.create();
+    var changedVideo = VideoFixtureFactory.create(cmd);
 
-        given(videoRepository.existVideo(any())).willReturn(true);
+    // mocking
+    given(videoRepository.findById(any())).willReturn(Optional.ofNullable(video));
+    given(videoRepository.save(any())).willReturn(changedVideo);
 
-        videoWriteService.remove(id);
+    // when
+    var updatedVideo = videoWriteService.update(cmd);
 
-        then(videoRepository).should(times(1)).existVideo(any());
-        then(videoRepository).should(times(1)).delete(any());
-    }
+    // then
+    assertNotNull(updatedVideo);
+    assertNotNull(updatedVideo.getId());
+    assertEquals(cmd.title(), updatedVideo.getTitle());
+    assertEquals(cmd.description(), updatedVideo.getDescription());
+    then(videoRepository).should(times(1)).findById(any());
+    then(videoRepository).should(times(1)).save(any());
+  }
 
-    @DisplayName("[Video: remove: not exist video] 비디오 삭제 시 없는 비디오 테스트")
-    @Test
-    public void removeNotExistVideoTest() {
-        Long id = 1L;
+  @DisplayName("[Video: upload: success] 비디오 업로드 성공 테스트")
+  @Test
+  // TODO: real upload video test
+  public void uploadVideoTest() {
+    // given
+    var cmd = UploadVideoCommandFixtureFactory.create();
+    var video = VideoFixtureFactory.create(cmd);
 
-        given(videoRepository.existVideo(any())).willReturn(false);
+    // mocking
+    given(videoRepository.save(any())).willReturn(video);
 
-        try {
-            videoWriteService.remove(id);
-        } catch (Exception e) {
-            assertEquals(ErrorCode.NOT_EXIST_VIDEO.getMessage(), e.getMessage());
-            then(videoRepository).should(times(1)).existVideo(any());
-            then(videoRepository).should(times(0)).delete(any());
-        }
-    }
+    // when
+    var uploadedVideo = videoWriteService.upload(cmd);
 
-    @DisplayName("[Video: incrementViewCount: success] 비디오 view count 증가 성공 테스트")
-    @Test
-    public void incrementViewCountTest() {
-        Long id = 1L;
-        var video = VideoFixtureFactory.create();
-
-        given(videoRepository.findById(any())).willReturn(Optional.ofNullable(video));
-
-        videoWriteService.increaseViewCount(id);
-
-        assertNotNull(video);
-        assertEquals(video.getViewCount(), 1L);
-        then(videoRepository).should(times(1)).findById(any());
-        then(videoRepository).should(times(1)).save(any());
-    }
-
-    @DisplayName("[Video: incrementViewCount: not exist video] 비디오 view count 증가 시 없는 비디오 테스트")
-    @Test
-    public void incrementViewCountNotExistVideTest() {
-        Long id = 1L;
-
-        given(videoRepository.findById(any())).willReturn(null);
-
-        try {
-            videoWriteService.increaseViewCount(id);
-        } catch (Exception e) {
-            assertEquals(NullPointerException.class, e.getClass());
-            then(videoRepository).should(times(1)).findById(any());
-            then(videoRepository).should(times(0)).save(any());
-        }
-    }
+    assertEquals(cmd.channelId(), uploadedVideo.getChannelId());
+    assertEquals(cmd.title(), uploadedVideo.getTitle());
+    assertEquals(cmd.description(), uploadedVideo.getDescription());
+    then(videoRepository).should(times(1)).save(any());
+  }
 }

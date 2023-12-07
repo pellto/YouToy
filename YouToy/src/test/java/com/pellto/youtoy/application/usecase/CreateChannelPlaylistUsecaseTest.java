@@ -1,5 +1,11 @@
 package com.pellto.youtoy.application.usecase;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
+
 import com.pellto.youtoy.domain.channel.service.ChannelReadService;
 import com.pellto.youtoy.domain.playlist.service.PlaylistReadService;
 import com.pellto.youtoy.domain.playlist.service.PlaylistWriteService;
@@ -14,58 +20,55 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.BDDMockito.*;
-
 @Tag("usecase")
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[CreateChannelPlaylistUsecase Test]")
 public class CreateChannelPlaylistUsecaseTest {
-    @InjectMocks
-    private CreateChannelPlaylistUsecase createChannelPlaylistUsecase;
-    @Mock
-    private PlaylistWriteService playlistWriteService;
-    @Mock
-    private PlaylistReadService playlistReadService;
-    @Mock
-    private ChannelReadService channelReadService;
 
-    @DisplayName("[execute: success] playlist 생성 성공 테스트")
-    @Test
-    public void executeTest() {
-        var cmd = CreatePlaylistCommandFixtureFactory.create();
-        var playlist = PlaylistFixtureFactory.create();
-        var playlistDto = PlaylistFixtureFactory.toDto(playlist);
+  @InjectMocks
+  private CreateChannelPlaylistUsecase createChannelPlaylistUsecase;
+  @Mock
+  private PlaylistWriteService playlistWriteService;
+  @Mock
+  private PlaylistReadService playlistReadService;
+  @Mock
+  private ChannelReadService channelReadService;
 
-        given(channelReadService.isExist(any())).willReturn(true);
-        given(playlistWriteService.create(any())).willReturn(playlist);
-        given(playlistReadService.toDto(any())).willReturn(playlistDto);
+  @DisplayName("[execute: not exist channel] 존재하지 않는 채널에 playlist 생성 실패 테스트")
+  @Test
+  public void executeNotExistChannelTest() {
+    var cmd = CreatePlaylistCommandFixtureFactory.create();
 
-        var createdPlaylist = createChannelPlaylistUsecase.execute(cmd);
+    given(channelReadService.isExist(any())).willReturn(false);
 
-        assertEquals(cmd.channelId(), createdPlaylist.channelId());
-        assertEquals(cmd.targetRange(), createdPlaylist.targetRange());
-        assertEquals(cmd.title(), createdPlaylist.title());
-        then(channelReadService).should(times(1)).isExist(any());
-        then(playlistWriteService).should(times(1)).create(any());
-        then(playlistReadService).should(times(1)).toDto(any());
+    try {
+      createChannelPlaylistUsecase.execute(cmd);
+    } catch (Exception e) {
+      assertEquals(ErrorCode.NOT_EXIST_CHANNEL.getMessage(), e.getMessage());
+      then(channelReadService).should(times(1)).isExist(any());
+      then(playlistWriteService).should(times(0)).create(any());
+      then(playlistReadService).should(times(0)).toDto(any());
     }
+  }
 
-    @DisplayName("[execute: not exist channel] 존재하지 않는 채널에 playlist 생성 실패 테스트")
-    @Test
-    public void executeNotExistChannelTest() {
-        var cmd = CreatePlaylistCommandFixtureFactory.create();
+  @DisplayName("[execute: success] playlist 생성 성공 테스트")
+  @Test
+  public void executeTest() {
+    var cmd = CreatePlaylistCommandFixtureFactory.create();
+    var playlist = PlaylistFixtureFactory.create();
+    var playlistDto = PlaylistFixtureFactory.toDto(playlist);
 
-        given(channelReadService.isExist(any())).willReturn(false);
+    given(channelReadService.isExist(any())).willReturn(true);
+    given(playlistWriteService.create(any())).willReturn(playlist);
+    given(playlistReadService.toDto(any())).willReturn(playlistDto);
 
-        try {
-            createChannelPlaylistUsecase.execute(cmd);
-        } catch (Exception e) {
-            assertEquals(ErrorCode.NOT_EXIST_CHANNEL.getMessage(), e.getMessage());
-            then(channelReadService).should(times(1)).isExist(any());
-            then(playlistWriteService).should(times(0)).create(any());
-            then(playlistReadService).should(times(0)).toDto(any());
-        }
-    }
+    var createdPlaylist = createChannelPlaylistUsecase.execute(cmd);
+
+    assertEquals(cmd.channelId(), createdPlaylist.channelId());
+    assertEquals(cmd.targetRange(), createdPlaylist.targetRange());
+    assertEquals(cmd.title(), createdPlaylist.title());
+    then(channelReadService).should(times(1)).isExist(any());
+    then(playlistWriteService).should(times(1)).create(any());
+    then(playlistReadService).should(times(1)).toDto(any());
+  }
 }

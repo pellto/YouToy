@@ -10,26 +10,27 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ShortReadService {
-    private final ShortRepository shortRepository;
 
-    public ShortsDto getShort(Long id) {
-        return toDto(shortRepository.findById(id).orElseThrow());
-    }
+  private final ShortRepository shortRepository;
 
-    public boolean existShort(Long id) {
-        return shortRepository.existShort(id);
-    }
+  public boolean existShort(Long id) {
+    return shortRepository.existShort(id);
+  }
 
-    public ShortsDto toDto(Shorts shorts) {
-        return new ShortsDto(
-                shorts.getId(),
-                shorts.getChannelId(),
-                shorts.getTitle(),
-                shorts.getViewCount(),
-                shorts.getDescription(),
-                shorts.getCreatedAt(),
-                shorts.getLikeCount(),
-                VideoTypes.SHORTS_TYPE.isVideo()
-        );
-    }
+  public ShortsDto getShort(Long id) {
+    return toDto(shortRepository.findById(id).orElseThrow());
+  }
+
+  public ShortsDto toDto(Shorts shorts) {
+    return new ShortsDto(
+        shorts.getId(),
+        shorts.getChannelId(),
+        shorts.getTitle(),
+        shorts.getViewCount(),
+        shorts.getDescription(),
+        shorts.getCreatedAt(),
+        shorts.getLikeCount(),
+        VideoTypes.SHORTS_TYPE.isVideo()
+    );
+  }
 }

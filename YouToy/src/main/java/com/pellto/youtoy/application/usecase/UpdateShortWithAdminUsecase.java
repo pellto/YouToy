@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UpdateShortWithAdminUsecase {
-    private final ShortWriteService shortWriteService;
-    private final AdminAuthorizeUsecase adminAuthorizeUsecase;
 
-    // TODO: entity to dto in usecase
-    public Shorts execute(UpdateShortCommand cmd) {
-        if (adminAuthorizeUsecase.execute(cmd))
-            return shortWriteService.update(cmd);
-        return null;
+  private final ShortWriteService shortWriteService;
+  private final AdminAuthorizeUsecase adminAuthorizeUsecase;
+
+  // TODO: entity to dto in usecase
+  public Shorts execute(UpdateShortCommand cmd) {
+    if (adminAuthorizeUsecase.execute(cmd)) {
+      return shortWriteService.update(cmd);
     }
+    return null;
+  }
 }

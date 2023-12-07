@@ -9,20 +9,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class PlaylistReadService {
-    private final PlaylistRepository playlistRepository;
 
-    public PlaylistDto getById(Long id) {
-        return toDto(playlistRepository.findById(id).orElseThrow());
-    }
+  private final PlaylistRepository playlistRepository;
 
-    public boolean existById(Long id) {
-        return playlistRepository.existById(id);
-    }
+  public boolean existById(Long id) {
+    return playlistRepository.existById(id);
+  }
 
-    public PlaylistDto toDto(Playlist playlist) {
-        return new PlaylistDto(
-                playlist.getId(), playlist.getChannelId(),
-                playlist.getTitle(), playlist.getTargetRange()
-        );
-    }
+  public PlaylistDto getById(Long id) {
+    return toDto(playlistRepository.findById(id).orElseThrow());
+  }
+
+  public PlaylistDto toDto(Playlist playlist) {
+    return new PlaylistDto(
+        playlist.getId(), playlist.getChannelId(),
+        playlist.getTitle(), playlist.getTargetRange()
+    );
+  }
 }

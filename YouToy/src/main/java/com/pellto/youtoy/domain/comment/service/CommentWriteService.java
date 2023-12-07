@@ -6,52 +6,52 @@ import com.pellto.youtoy.domain.comment.dto.UpdateCommentCommand;
 import com.pellto.youtoy.domain.comment.entity.Comment;
 import com.pellto.youtoy.domain.comment.repository.CommentRepository;
 import com.pellto.youtoy.util.error.ErrorCode;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.Objects;
-
 @RequiredArgsConstructor
 @Service
 public class CommentWriteService {
-    private final CommentRepository commentRepository;
-    private final CommentReadService commentReadService;
 
-    public CommentDto create(CreateCommentCommand cmd) {
-        var comment = Comment.builder()
-                .videoId(cmd.videoId())
-                .userId(cmd.userId())
-                .video(cmd.video())
-                .content(cmd.content())
-                .repliedCommentId(cmd.repliedCommentId())
-                .build();
-        return commentReadService.toDto(commentRepository.save(comment));
-    }
+  private final CommentRepository commentRepository;
+  private final CommentReadService commentReadService;
 
-    public CommentDto update(UpdateCommentCommand cmd) {
-        var comment = commentRepository.findById(cmd.id()).orElseThrow();
-        if (!Objects.equals(cmd.content(), comment.getContent())) {
-            comment.setContent(cmd.content());
-            commentRepository.save(comment);
-        }
-        return commentReadService.toDto(comment);
-    }
+  public CommentDto create(CreateCommentCommand cmd) {
+    var comment = Comment.builder()
+        .videoId(cmd.videoId())
+        .userId(cmd.userId())
+        .video(cmd.video())
+        .content(cmd.content())
+        .repliedCommentId(cmd.repliedCommentId())
+        .build();
+    return commentReadService.toDto(commentRepository.save(comment));
+  }
 
-    public void increaseLikeCount(Long id) {
-        Comment comment = commentRepository.findById(id).orElseThrow();
-        comment.increaseLikeCount();
-        commentRepository.save(comment);
-    }
+  public void decreaseLikeCount(Long id) {
+    Comment comment = commentRepository.findById(id).orElseThrow();
+    comment.decreaseLikeCount();
+    commentRepository.save(comment);
+  }
 
-    public void decreaseLikeCount(Long id) {
-        Comment comment = commentRepository.findById(id).orElseThrow();
-        comment.decreaseLikeCount();
-        commentRepository.save(comment);
-    }
+  public void delete(Long id) {
+    Assert.isTrue(commentRepository.existById(id), ErrorCode.NOT_EXIST_COMMENT.getMessage());
+    commentRepository.delete(id);
+  }
 
-    public void delete(Long id) {
-        Assert.isTrue(commentRepository.existById(id), ErrorCode.NOT_EXIST_COMMENT.getMessage());
-        commentRepository.delete(id);
+  public void increaseLikeCount(Long id) {
+    Comment comment = commentRepository.findById(id).orElseThrow();
+    comment.increaseLikeCount();
+    commentRepository.save(comment);
+  }
+
+  public CommentDto update(UpdateCommentCommand cmd) {
+    var comment = commentRepository.findById(cmd.id()).orElseThrow();
+    if (!Objects.equals(cmd.content(), comment.getContent())) {
+      comment.setContent(cmd.content());
+      commentRepository.save(comment);
     }
+    return commentReadService.toDto(comment);
+  }
 }

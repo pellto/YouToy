@@ -12,58 +12,60 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class ShortWriteService {
-    private final ShortRepository shortRepository;
 
-    public Shorts upload(UploadShortCommand cmd) {
-        var shorts = Shorts.builder()
-                .channelId(cmd.channelId())
-                .title(cmd.title())
-                .description(cmd.description())
-                .build();
+  private final ShortRepository shortRepository;
 
-        return shortRepository.save(shorts);
+  public void decreaseLikeCount(Long id) {
+    Shorts shorts = shortRepository.findById(id).orElseThrow();
+    shorts.decreaseLikeCount();
+    shortRepository.save(shorts);
+  }
+
+  public void increaseLikeCount(Long id) {
+    Shorts shorts = shortRepository.findById(id).orElseThrow();
+    shorts.increaseLikeCount();
+    shortRepository.save(shorts);
+  }
+
+  @Transactional
+  // TODO: Change Transactional
+  public void increaseViewCount(Long id) {
+    Shorts shorts = shortRepository.findById(id).orElseThrow();
+    shorts.increaseViewCount();
+    shortRepository.save(shorts);
+  }
+
+  public void remove(Long id) {
+    if (!shortRepository.existShort(id)) {
+      throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_SHORT.getMessage());
     }
+    shortRepository.delete(id);
+  }
 
-    public Shorts update(UpdateShortCommand cmd) {
-        var shorts = shortRepository.findById(cmd.id()).orElseThrow();
-        boolean changeChecker = false;
-        if (cmd.title() != null) {
-            shorts.setTitle(cmd.title());
-            changeChecker = true;
-        }
-        if (cmd.description() != null) {
-            shorts.setDescription(cmd.description());
-            changeChecker = true;
-        }
-        if (changeChecker) return shortRepository.save(shorts);
-        return shorts;
+  public Shorts update(UpdateShortCommand cmd) {
+    var shorts = shortRepository.findById(cmd.id()).orElseThrow();
+    boolean changeChecker = false;
+    if (cmd.title() != null) {
+      shorts.setTitle(cmd.title());
+      changeChecker = true;
     }
-
-
-    public void remove(Long id) {
-        if (!shortRepository.existShort(id)) {
-            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_SHORT.getMessage());
-        }
-        shortRepository.delete(id);
+    if (cmd.description() != null) {
+      shorts.setDescription(cmd.description());
+      changeChecker = true;
     }
-
-    @Transactional
-    // TODO: Change Transactional
-    public void increaseViewCount(Long id) {
-        Shorts shorts = shortRepository.findById(id).orElseThrow();
-        shorts.increaseViewCount();
-        shortRepository.save(shorts);
+    if (changeChecker) {
+      return shortRepository.save(shorts);
     }
+    return shorts;
+  }
 
-    public void increaseLikeCount(Long id) {
-        Shorts shorts = shortRepository.findById(id).orElseThrow();
-        shorts.increaseLikeCount();
-        shortRepository.save(shorts);
-    }
+  public Shorts upload(UploadShortCommand cmd) {
+    var shorts = Shorts.builder()
+        .channelId(cmd.channelId())
+        .title(cmd.title())
+        .description(cmd.description())
+        .build();
 
-    public void decreaseLikeCount(Long id) {
-        Shorts shorts = shortRepository.findById(id).orElseThrow();
-        shorts.decreaseLikeCount();
-        shortRepository.save(shorts);
-    }
+    return shortRepository.save(shorts);
+  }
 }

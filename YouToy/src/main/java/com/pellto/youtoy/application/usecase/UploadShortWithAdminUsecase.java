@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class UploadShortWithAdminUsecase {
-    private final ShortWriteService shortWriteService;
-    private final AdminAuthorizeUsecase adminAuthorizeUsecase;
 
-    // TODO: entity to dto in usecase
-    public Shorts execute(UploadShortCommand cmd) {
-        if (adminAuthorizeUsecase.execute(cmd))
-            return shortWriteService.upload(cmd);
-        return null;
+  private final ShortWriteService shortWriteService;
+  private final AdminAuthorizeUsecase adminAuthorizeUsecase;
+
+  // TODO: entity to dto in usecase
+  public Shorts execute(UploadShortCommand cmd) {
+    if (adminAuthorizeUsecase.execute(cmd)) {
+      return shortWriteService.upload(cmd);
     }
+    return null;
+  }
 }

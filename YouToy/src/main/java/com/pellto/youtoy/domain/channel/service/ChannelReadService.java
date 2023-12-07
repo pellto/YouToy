@@ -11,44 +11,45 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor
 @Service
 public class ChannelReadService {
-    private final ChannelRepository channelRepository;
 
-    public ChannelDto getChannel(Long id) {
-        var channel = channelRepository.findById(id).orElseThrow();
-        return toDto(channel);
-    }
+  private final ChannelRepository channelRepository;
 
-    public ChannelDto toDto(Channel channel) {
-        return new ChannelDto(
-                channel.getId(),
-                channel.getOwnerId(),
-                channel.getHandle(),
-                channel.getDisplayName()
-        );
-    }
+  public ChannelDto getByHandle(String handle) {
+    var channel = channelRepository.findByHandle(handle).orElse(null);
+    Assert.notNull(channel, ErrorCode.NOT_EXIST_CHANNEL_HANDLE.getMessage());
+    return toDto(channel);
+  }
 
-    public boolean isOwner(Long channelId, Long ownerId) {
-        try {
-            channelRepository.findByChannelIdAndOwnerId(channelId, ownerId).orElseThrow();
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+  public ChannelDto getChannel(Long id) {
+    var channel = channelRepository.findById(id).orElseThrow();
+    return toDto(channel);
+  }
 
-    public boolean isExist(Long id) {
-        var channel = channelRepository.findById(id);
-        return channel.isPresent();
-    }
+  public boolean isExist(Long id) {
+    var channel = channelRepository.findById(id);
+    return channel.isPresent();
+  }
 
-    public boolean isExistByHandle(String handle) {
-        var channel = channelRepository.findByHandle(handle);
-        return channel.isPresent();
-    }
+  public boolean isExistByHandle(String handle) {
+    var channel = channelRepository.findByHandle(handle);
+    return channel.isPresent();
+  }
 
-    public ChannelDto getByHandle(String handle) {
-        var channel = channelRepository.findByHandle(handle).orElse(null);
-        Assert.notNull(channel, ErrorCode.NOT_EXIST_CHANNEL_HANDLE.getMessage());
-        return toDto(channel);
+  public boolean isOwner(Long channelId, Long ownerId) {
+    try {
+      channelRepository.findByChannelIdAndOwnerId(channelId, ownerId).orElseThrow();
+    } catch (Exception e) {
+      return false;
     }
+    return true;
+  }
+
+  public ChannelDto toDto(Channel channel) {
+    return new ChannelDto(
+        channel.getId(),
+        channel.getOwnerId(),
+        channel.getHandle(),
+        channel.getDisplayName()
+    );
+  }
 }

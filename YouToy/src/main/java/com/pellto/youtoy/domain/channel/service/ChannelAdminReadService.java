@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ChannelAdminReadService {
-    private final ChannelAdminRepository channelAdminRepository;
 
-    public boolean isAdmin(Long channelId, Long userId) {
-        return channelAdminRepository.findByChannelIdAndUserId(channelId, userId).isPresent();
-    }
+  private final ChannelAdminRepository channelAdminRepository;
+
+  public boolean isAdmin(Long channelId, Long userId) {
+    return channelAdminRepository.findByChannelIdAndUserId(channelId, userId).isPresent();
+  }
 }

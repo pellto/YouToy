@@ -12,58 +12,60 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class VideoWriteService {
-    private final VideoRepository videoRepository;
 
-    public Video upload(UploadVideoCommand cmd) {
-        var video = Video.builder()
-                .channelId(cmd.channelId())
-                .title(cmd.title())
-                .description(cmd.description())
-                .build();
+  private final VideoRepository videoRepository;
 
-        return videoRepository.save(video);
+  public void decreaseLikeCount(Long id) {
+    Video video = videoRepository.findById(id).orElseThrow();
+    video.decreaseLikeCount();
+    videoRepository.save(video);
+  }
+
+  public void increaseLikeCount(Long id) {
+    Video video = videoRepository.findById(id).orElseThrow();
+    video.increaseLikeCount();
+    videoRepository.save(video);
+  }
+
+  @Transactional
+  // TODO: Change Transactional
+  public void increaseViewCount(Long id) {
+    Video video = videoRepository.findById(id).orElseThrow();
+    video.increaseViewCount();
+    videoRepository.save(video);
+  }
+
+  public void remove(Long id) {
+    if (!videoRepository.existVideo(id)) {
+      throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_VIDEO.getMessage());
     }
+    videoRepository.delete(id);
+  }
 
-    public Video update(UpdateVideoCommand cmd) {
-        var video = videoRepository.findById(cmd.id()).orElseThrow();
-        boolean changeChecker = false;
-        if (cmd.title() != null) {
-            video.setTitle(cmd.title());
-            changeChecker = true;
-        }
-        if (cmd.description() != null) {
-            video.setDescription(cmd.description());
-            changeChecker = true;
-        }
-        if (changeChecker) return videoRepository.save(video);
-        return video;
+  public Video update(UpdateVideoCommand cmd) {
+    var video = videoRepository.findById(cmd.id()).orElseThrow();
+    boolean changeChecker = false;
+    if (cmd.title() != null) {
+      video.setTitle(cmd.title());
+      changeChecker = true;
     }
-
-
-    public void remove(Long id) {
-        if (!videoRepository.existVideo(id)) {
-            throw new UnsupportedOperationException(ErrorCode.NOT_EXIST_VIDEO.getMessage());
-        }
-        videoRepository.delete(id);
+    if (cmd.description() != null) {
+      video.setDescription(cmd.description());
+      changeChecker = true;
     }
-
-    @Transactional
-    // TODO: Change Transactional
-    public void increaseViewCount(Long id) {
-        Video video = videoRepository.findById(id).orElseThrow();
-        video.increaseViewCount();
-        videoRepository.save(video);
+    if (changeChecker) {
+      return videoRepository.save(video);
     }
+    return video;
+  }
 
-    public void increaseLikeCount(Long id) {
-        Video video = videoRepository.findById(id).orElseThrow();
-        video.increaseLikeCount();
-        videoRepository.save(video);
-    }
+  public Video upload(UploadVideoCommand cmd) {
+    var video = Video.builder()
+        .channelId(cmd.channelId())
+        .title(cmd.title())
+        .description(cmd.description())
+        .build();
 
-    public void decreaseLikeCount(Long id) {
-        Video video = videoRepository.findById(id).orElseThrow();
-        video.decreaseLikeCount();
-        videoRepository.save(video);
-    }
+    return videoRepository.save(video);
+  }
 }
