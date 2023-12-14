@@ -22,13 +22,14 @@
 - [x] 도메인 설계
 - [x] 기능 -> API로 변환
 - [x] API 문서 작성
-- [ ] 프로젝트 코드 아키텍쳐 설계
-- [ ] 프로젝트 아키텍쳐 설계
-- [ ] 기능 구현 (with JDBC)
-- [ ] 유닛 테스트 구현
-- [ ] 통합 테스트 구현
+- [x] 프로젝트 코드 아키텍쳐 설계
+- [x] 프로젝트 아키텍쳐 설계
+- [x] 기능 구현 (with JDBC)
+- [x] 유닛 테스트 구현
+- [x] 통합 테스트 구현
+- [x] Github Actions를 이용해 feature 브랜치 CI
+- [x] Jenkins를 이용한 CI / CD 구현
+- [ ] v2로 코드 리팩토링
 - [ ] Code Coverage 측정 및 보완
-- [ ] Github Actions를 이용해 feature 브랜치 CI
-- [ ] Jenkins를 이용한 CI / CD 구현
 - [ ] JDBC -> JPA 변환
 - [ ] 서비스 traffic 측정 및 보완
