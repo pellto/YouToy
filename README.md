@@ -18,18 +18,26 @@
 ## TODO List
 - [x] 기능 정의
 - [x] 각 기능의 요구사항 정리
-- [x] 기능에 따라 DB Schema 설계
-- [x] 도메인 설계
-- [x] 기능 -> API로 변환
-- [x] API 문서 작성
-- [x] 프로젝트 코드 아키텍쳐 설계
-- [x] 프로젝트 아키텍쳐 설계
-- [x] 기능 구현 (with JDBC)
-- [x] 유닛 테스트 구현
-- [x] 통합 테스트 구현
-- [x] Github Actions를 이용해 feature 브랜치 CI
-- [x] Jenkins를 이용한 CI / CD 구현
-- [ ] v2로 코드 리팩토링
-- [ ] Code Coverage 측정 및 보완
-- [ ] JDBC -> JPA 변환
-- [ ] 서비스 traffic 측정 및 보완
+- [x] v1
+  - [x] 기능에 따라 DB Schema 설계
+  - [x] 도메인 설계
+  - [x] 기능 -> API로 변환
+  - [x] API 문서 작성
+  - [x] 프로젝트 코드 아키텍쳐 설계
+  - [x] 프로젝트 아키텍쳐 설계
+  - [x] 기능 구현 (with JDBC)
+  - [x] 유닛 테스트 구현
+  - [x] 통합 테스트 구현
+  - [x] Github Actions를 이용해 feature 브랜치 CI
+  - [x] Jenkins를 이용한 CI / CD 구현
+- [ ] v2
+  - [x] 기능에 따라 DB Schema 설계
+  - [ ] 도메인 설계
+  - [ ] 기능 -> API로 변환
+  - [ ] API 문서 작성
+  - [ ] 프로젝트 코드 아키텍쳐 설계
+  - [ ] 프로젝트 아키텍쳐 설계
+  - [ ] v2로 코드 리팩토링
+  - [ ] Code Coverage 측정 및 보완
+  - [ ] JDBC -> JPA 변환
+  - [ ] 서비스 traffic 측정 및 보완
