@@ -10,8 +10,8 @@
 - CI / CD를 적용한다.
 
 ## Docs
-- [기능 정의 및 요구사항 문서]()
-- [DB 설계 문서]()
+- [기능 정의 및 요구사항 문서](https://docs.google.com/document/d/1sMbos1mO1ZlB-pdBMWV12LEvUoQh_Z_zk3CZ9Kc4q9c/edit?usp=sharing)
+- [DB 설계 문서](https://www.erdcloud.com/d/AzgFHAhWiGxRnam4k)
 - [API 문서]()
 - [프로젝트 설계 문서]()
 
@@ -32,12 +32,12 @@
   - [x] Jenkins를 이용한 CI / CD 구현
 - [ ] v2
   - [x] 기능에 따라 DB Schema 설계
-  - [ ] 도메인 설계
+  - [x] 도메인 설계
   - [ ] 기능 -> API로 변환
   - [ ] API 문서 작성
+    - springdoc으로 대체
   - [ ] 프로젝트 코드 아키텍쳐 설계
   - [ ] 프로젝트 아키텍쳐 설계
   - [ ] v2로 코드 리팩토링
   - [ ] Code Coverage 측정 및 보완
-  - [ ] JDBC -> JPA 변환
   - [ ] 서비스 traffic 측정 및 보완
