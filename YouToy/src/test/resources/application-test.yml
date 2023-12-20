@@ -1,0 +1,25 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=MYSQL
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create        # DB 초기화 전략 (none, create, create-drop, update, validate)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true      # 쿼리 로그 포맷 (정렬)
+        show_sql: true        # 쿼리 로그 출력
+
+  h2:
+    console: # H2 DB를 웹에서 관리할 수 있는 기능
+      enabled: true           # H2 Console 사용 여부
+      path: /h2-console       # H2 Console 접속 주소
