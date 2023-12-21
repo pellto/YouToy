@@ -1,5 +1,6 @@
 package com.pellto.youtoy.domain.user.domain;
 
+import com.pellto.youtoy.global.util.General;
 import com.pellto.youtoy.global.util.Temporal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,7 +50,7 @@ public class User {
     this.birthDate = Temporal.createdAt(birthDate);
     this.pwd = Objects.requireNonNull(pwd);
     this.name = Objects.requireNonNull(name);
-    this.premiumLevel = premiumLevel == null ? PremiumLevel.NORMAL : premiumLevel;
+    this.premiumLevel = General.setNullInput(premiumLevel, PremiumLevel.NORMAL);
   }
 
   public void changePwd(String pwd, String repeatPwd) {

@@ -9,12 +9,14 @@ import com.pellto.youtoy.domain.user.dao.UserRepository;
 import com.pellto.youtoy.domain.user.util.UserUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+@Tag("service")
 @ExtendWith(MockitoExtension.class)
 class UserWriteServiceTest {
 

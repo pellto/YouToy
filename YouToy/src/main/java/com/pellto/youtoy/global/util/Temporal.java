@@ -5,6 +5,6 @@ import java.time.LocalDateTime;
 public class Temporal {
 
   public static LocalDateTime createdAt(LocalDateTime createdAt) {
-    return createdAt == null ? LocalDateTime.now() : createdAt;
+    return General.setNullInput(createdAt, LocalDateTime.now());
   }
 }
