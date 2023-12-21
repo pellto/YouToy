@@ -7,9 +7,9 @@ import static org.mockito.Mockito.times;
 
 import com.pellto.youtoy.domain.channel.domain.Subscribe;
 import com.pellto.youtoy.domain.channel.dto.SubscribeDto;
-import com.pellto.youtoy.domain.channel.exception.SubscribeException;
 import com.pellto.youtoy.domain.channel.repository.SubscribeRepository;
 import com.pellto.youtoy.domain.channel.util.SubscribeFactory;
+import com.pellto.youtoy.global.error.ErrorCode;
 import java.util.ArrayList;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -83,7 +83,7 @@ class SubscribeServiceTest {
       then(channelReadService).should(times(1)).existById(any());
       then(channelReadService).should(times(0)).getById(any());
       Assertions.assertThat(e.getMessage())
-          .isEqualTo(SubscribeException.NOT_EXIST_SUBSCRIBER_CHANNEL.getMessage());
+          .isEqualTo(ErrorCode.NOT_EXIST_SUBSCRIBER_CHANNEL.getMessage());
     }
   }
 
@@ -102,7 +102,7 @@ class SubscribeServiceTest {
       then(channelReadService).should(times(2)).existById(any());
       then(channelReadService).should(times(0)).getById(any());
       Assertions.assertThat(e.getMessage())
-          .isEqualTo(SubscribeException.NOT_EXIST_SUBSCRIBED_CHANNEL.getMessage());
+          .isEqualTo(ErrorCode.NOT_EXIST_SUBSCRIBED_CHANNEL.getMessage());
     }
   }
 

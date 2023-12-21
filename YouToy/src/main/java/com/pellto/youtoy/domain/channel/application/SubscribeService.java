@@ -3,8 +3,10 @@ package com.pellto.youtoy.domain.channel.application;
 import com.pellto.youtoy.domain.channel.domain.Subscribe;
 import com.pellto.youtoy.domain.channel.dto.CreateSubscribeRelRequest;
 import com.pellto.youtoy.domain.channel.dto.SubscribeDto;
-import com.pellto.youtoy.domain.channel.exception.SubscribeException;
+import com.pellto.youtoy.domain.channel.exception.NotExistSubscribedChannelException;
+import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelException;
 import com.pellto.youtoy.domain.channel.repository.SubscribeRepository;
+import com.pellto.youtoy.global.error.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,13 @@ public class SubscribeService {
 
   public SubscribeDto subscribe(CreateSubscribeRelRequest req) {
     if (!channelReadService.existById(req.subscriberId())) {
-      throw new UnsupportedOperationException(
-          SubscribeException.NOT_EXIST_SUBSCRIBER_CHANNEL.getMessage());
+      throw new NotExistSubscriberChannelException(
+          ErrorCode.NOT_EXIST_SUBSCRIBER_CHANNEL);
     }
     if (!channelReadService.existById(req.subscribedId())) {
-      throw new UnsupportedOperationException(
-          SubscribeException.NOT_EXIST_SUBSCRIBED_CHANNEL.getMessage());
+      throw new NotExistSubscribedChannelException(
+          ErrorCode.NOT_EXIST_SUBSCRIBED_CHANNEL);
+
     }
     var subscriber = channelReadService.getById(req.subscriberId());
     var subscribed = channelReadService.getById(req.subscribedId());

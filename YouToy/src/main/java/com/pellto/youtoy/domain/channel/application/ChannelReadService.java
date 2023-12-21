@@ -2,12 +2,12 @@ package com.pellto.youtoy.domain.channel.application;
 
 import com.pellto.youtoy.domain.channel.domain.Channel;
 import com.pellto.youtoy.domain.channel.dto.ChannelDto;
-import com.pellto.youtoy.domain.channel.exception.ChannelException;
+import com.pellto.youtoy.domain.channel.exception.NotExistChannelException;
 import com.pellto.youtoy.domain.channel.repository.ChannelRepository;
+import com.pellto.youtoy.global.error.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +21,9 @@ public class ChannelReadService {
 
   public ChannelDto findById(Long id) {
     var nullableChannel = channelRepository.findById(id).orElse(null);
-    Assert.notNull(nullableChannel, ChannelException.NOT_EXIST_CHANNEL.getMessage());
+    if (nullableChannel == null) {
+      throw new NotExistChannelException(ErrorCode.NOT_EXIST_CHANNEL);
+    }
     return toDto(nullableChannel);
   }
 
