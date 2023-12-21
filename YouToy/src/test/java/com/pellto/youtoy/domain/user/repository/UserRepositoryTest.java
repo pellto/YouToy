@@ -1,4 +1,4 @@
-package com.pellto.youtoy.domain.user.dao;
+package com.pellto.youtoy.domain.user.repository;
 
 import static com.pellto.youtoy.domain.user.util.UserUtil.createTestBeforeSavedUser;
 

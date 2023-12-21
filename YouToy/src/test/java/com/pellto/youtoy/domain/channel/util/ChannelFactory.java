@@ -4,8 +4,10 @@ import com.pellto.youtoy.domain.channel.domain.Channel;
 import com.pellto.youtoy.domain.channel.dto.ChannelDto;
 import com.pellto.youtoy.domain.channel.dto.CreateChannelRequest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ChannelUtil {
+public class ChannelFactory {
 
   private static final Long ID = 1L;
   private static final String HANDLE = "@test-handle";
@@ -13,8 +15,14 @@ public class ChannelUtil {
   private static final String DESCRIPTION = "description";
   private static final String BANNER = "banner";
   private static final String PROFILE = "profile";
+  private static final Long SUBSCRIBER_COUNT = 0L;
+  private static final List<Long> SUBSCRIBED_LIST = new ArrayList<>();
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final LocalDateTime MODIFIED_AT = CREATED_AT;
+
+  // for subscribe
+  private static final Long SUBSCRIBER_ID = 2L;
+  private static final Long SUBSCRIBED_ID = 3L;
 
   public static Channel createBeforeSavedChannel() {
     return Channel.builder()
@@ -60,6 +68,8 @@ public class ChannelUtil {
         DESCRIPTION,
         BANNER,
         PROFILE,
+        SUBSCRIBER_COUNT,
+        SUBSCRIBED_LIST,
         CREATED_AT
     );
   }
@@ -72,5 +82,31 @@ public class ChannelUtil {
         BANNER,
         PROFILE
     );
+  }
+
+  public static Channel createSubscriber() {
+    return Channel.builder()
+        .id(SUBSCRIBER_ID)
+        .handle(HANDLE)
+        .displayName(DISPLAY_NAME)
+        .description(DESCRIPTION)
+        .banner(BANNER)
+        .profile(PROFILE)
+        .createdAt(CREATED_AT)
+        .modifiedAt(MODIFIED_AT)
+        .build();
+  }
+
+  public static Channel createSubscribed() {
+    return Channel.builder()
+        .id(SUBSCRIBED_ID)
+        .handle(HANDLE)
+        .displayName(DISPLAY_NAME)
+        .description(DESCRIPTION)
+        .banner(BANNER)
+        .profile(PROFILE)
+        .createdAt(CREATED_AT)
+        .modifiedAt(MODIFIED_AT)
+        .build();
   }
 }

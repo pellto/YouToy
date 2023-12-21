@@ -1,8 +1,8 @@
 package com.pellto.youtoy.domain.user.application;
 
-import com.pellto.youtoy.domain.user.dao.UserRepository;
 import com.pellto.youtoy.domain.user.domain.User;
 import com.pellto.youtoy.domain.user.dto.UserDto;
+import com.pellto.youtoy.domain.user.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

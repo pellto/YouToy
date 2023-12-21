@@ -5,10 +5,10 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-import com.pellto.youtoy.domain.channel.dao.ChannelRepository;
 import com.pellto.youtoy.domain.channel.domain.Channel;
 import com.pellto.youtoy.domain.channel.dto.ChannelDto;
-import com.pellto.youtoy.domain.channel.util.ChannelUtil;
+import com.pellto.youtoy.domain.channel.repository.ChannelRepository;
+import com.pellto.youtoy.domain.channel.util.ChannelFactory;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
@@ -33,7 +33,7 @@ class ChannelReadServiceTest {
   @DisplayName("[channelReadService: findAll: success] 채널 전체 조회 테스트")
   @Test
   void findAllSuccess() {
-    var channel = ChannelUtil.createChannel();
+    var channel = ChannelFactory.createChannel();
     var channelList = new ArrayList<Channel>();
     channelList.add(channel);
 
@@ -51,7 +51,7 @@ class ChannelReadServiceTest {
   @Test
   void findByIdSuccess() {
     var channelId = 1L;
-    var channel = ChannelUtil.createChannel(channelId);
+    var channel = ChannelFactory.createChannel(channelId);
 
     given(channelRepository.findById(any())).willReturn(Optional.ofNullable(channel));
 

@@ -5,9 +5,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-import com.pellto.youtoy.domain.user.dao.UserRepository;
 import com.pellto.youtoy.domain.user.domain.User;
 import com.pellto.youtoy.domain.user.dto.UserDto;
+import com.pellto.youtoy.domain.user.repository.UserRepository;
 import com.pellto.youtoy.domain.user.util.UserUtil;
 import java.util.ArrayList;
 import java.util.Optional;

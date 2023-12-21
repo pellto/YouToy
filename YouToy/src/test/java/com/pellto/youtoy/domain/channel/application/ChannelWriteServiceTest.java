@@ -5,8 +5,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-import com.pellto.youtoy.domain.channel.dao.ChannelRepository;
-import com.pellto.youtoy.domain.channel.util.ChannelUtil;
+import com.pellto.youtoy.domain.channel.repository.ChannelRepository;
+import com.pellto.youtoy.domain.channel.util.ChannelFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -27,12 +27,12 @@ class ChannelWriteServiceTest {
   @Mock
   private ChannelReadService channelReadService;
 
-  @DisplayName("[channelWriteService: signUp: success] 채널 생성 성공 테스트")
+  @DisplayName("[channelWriteService: create: success] 채널 생성 성공 테스트")
   @Test
   void createSuccessTest() {
-    var req = ChannelUtil.createChannelRequest();
-    var channel = ChannelUtil.createChannel();
-    var channelDto = ChannelUtil.createChannelDto();
+    var req = ChannelFactory.createChannelRequest();
+    var channel = ChannelFactory.createChannel();
+    var channelDto = ChannelFactory.createChannelDto();
 
     given(channelRepository.save(any())).willReturn(channel);
     given(channelReadService.toDto(channel)).willReturn(channelDto);

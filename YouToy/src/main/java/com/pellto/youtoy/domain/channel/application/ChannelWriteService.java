@@ -1,9 +1,9 @@
 package com.pellto.youtoy.domain.channel.application;
 
-import com.pellto.youtoy.domain.channel.dao.ChannelRepository;
 import com.pellto.youtoy.domain.channel.domain.Channel;
 import com.pellto.youtoy.domain.channel.dto.ChannelDto;
 import com.pellto.youtoy.domain.channel.dto.CreateChannelRequest;
+import com.pellto.youtoy.domain.channel.repository.ChannelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +23,9 @@ public class ChannelWriteService {
         .profile(req.profile())
         .build();
     return channelReadService.toDto(channelRepository.save(channel));
+  }
+
+  public void delete(Long id) {
+    channelRepository.deleteById(id);
   }
 }

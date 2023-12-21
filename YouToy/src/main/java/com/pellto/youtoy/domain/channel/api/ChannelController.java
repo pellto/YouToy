@@ -6,6 +6,7 @@ import com.pellto.youtoy.domain.channel.dto.ChannelDto;
 import com.pellto.youtoy.domain.channel.dto.CreateChannelRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,11 @@ public class ChannelController {
   @PostMapping
   public ChannelDto createChannel(@RequestBody CreateChannelRequest req) {
     return channelWriteService.create(req);
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteChannel(@PathVariable Long id) {
+    channelWriteService.delete(id);
   }
 
 }

@@ -1,4 +1,4 @@
-package com.pellto.youtoy.domain.user.dao;
+package com.pellto.youtoy.domain.user.repository;
 
 import com.pellto.youtoy.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

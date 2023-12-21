@@ -1,6 +1,6 @@
-package com.pellto.youtoy.domain.channel.dao;
+package com.pellto.youtoy.domain.channel.repository;
 
-import static com.pellto.youtoy.domain.channel.util.ChannelUtil.createBeforeSavedChannel;
+import static com.pellto.youtoy.domain.channel.util.ChannelFactory.createBeforeSavedChannel;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,7 @@ class ChannelRepositoryTest {
   @Autowired
   private ChannelRepository channelRepository;
 
-  @DisplayName("[channerRepository: save: success] 저장 성공 테스트")
+  @DisplayName("[channelRepository: save: success] 저장 성공 테스트")
   @Test
   void saveSuccessTest() {
     var channel = createBeforeSavedChannel();
@@ -33,7 +33,7 @@ class ChannelRepositoryTest {
     Assertions.assertThat(savedChannel.getProfile()).isEqualTo(channel.getProfile());
   }
 
-  @DisplayName("[channerRepository: findAll: success] 채널 전체 조회 성공 테스트")
+  @DisplayName("[channelRepository: findAll: success] 채널 전체 조회 성공 테스트")
   @Test
   void findAllSuccessTest() {
     var channel = createBeforeSavedChannel();
@@ -44,7 +44,7 @@ class ChannelRepositoryTest {
     Assertions.assertThat(foundChannels.size()).isEqualTo(1);
   }
 
-  @DisplayName("[channerRepository: findById: success] id 조건 조회 성공 테스트")
+  @DisplayName("[channelRepository: findById: success] id 조건 조회 성공 테스트")
   @Test
   void findByIdSuccessTest() {
     var channel = createBeforeSavedChannel();

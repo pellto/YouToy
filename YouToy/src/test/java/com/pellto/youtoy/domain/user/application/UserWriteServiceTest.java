@@ -5,7 +5,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-import com.pellto.youtoy.domain.user.dao.UserRepository;
+import com.pellto.youtoy.domain.user.repository.UserRepository;
 import com.pellto.youtoy.domain.user.util.UserUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
