@@ -47,11 +47,10 @@ class ChannelRepositoryTest {
   @DisplayName("[channerRepository: findById: success] id 조건 조회 성공 테스트")
   @Test
   void findByIdSuccessTest() {
-    var channelId = 1L;
     var channel = createBeforeSavedChannel();
     var savedChannel = channelRepository.save(channel);
 
-    var nullableChannel = channelRepository.findById(channelId);
+    var nullableChannel = channelRepository.findById(savedChannel.getId());
 
     Assertions.assertThat(nullableChannel).isNotEmpty();
     var foundChannel = nullableChannel.get();
