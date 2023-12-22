@@ -2,15 +2,18 @@ package com.pellto.youtoy.domain.user.util;
 
 import com.pellto.youtoy.domain.user.domain.PremiumLevel;
 import com.pellto.youtoy.domain.user.domain.User;
+import com.pellto.youtoy.domain.user.domain.UserUUID;
 import com.pellto.youtoy.domain.user.dto.UserDto;
 import com.pellto.youtoy.domain.user.dto.UserSignUpRequest;
+import com.pellto.youtoy.global.util.RandomString;
 import java.time.LocalDateTime;
 
 
 public class UserUtil {
 
   private static final Long ID = 1L;
-  private static final String EMAIL = "testEmail";
+  private static final UserUUID USER_UUID = new UserUUID(RandomString.make());
+  private static final String EMAIL = "test@Email.email";
   private static final LocalDateTime BIRTH_DATE = LocalDateTime.now();
   private static final String PWD = "testPwd";
   private static final String NAME = "testName";
@@ -52,18 +55,7 @@ public class UserUtil {
 
   public static UserDto createTestUserDto() {
     return new UserDto(
-        ID,
-        EMAIL,
-        NAME,
-        PREMIUM_LEVEL,
-        BIRTH_DATE,
-        CREATED_AT
-    );
-  }
-
-  public static UserDto createTestUserDto(Long id) {
-    return new UserDto(
-        id,
+        USER_UUID,
         EMAIL,
         NAME,
         PREMIUM_LEVEL,

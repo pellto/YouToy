@@ -59,6 +59,6 @@ class UserReadServiceTest {
 
     then(userRepository).should(times(1)).findById(userId);
     Assertions.assertNotNull(foundUser);
-    Assertions.assertEquals(user.getId(), foundUser.id());
+    Assertions.assertEquals(user.getUuid(), foundUser.uuid());
   }
 }

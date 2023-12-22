@@ -1,8 +1,10 @@
 package com.pellto.youtoy.domain.user.domain;
 
 import com.pellto.youtoy.global.util.General;
+import com.pellto.youtoy.global.util.RandomString;
 import com.pellto.youtoy.global.util.Temporal;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.AccessLevel;
@@ -27,7 +30,10 @@ public class User {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "user_id")
   private final Long id;
+  @Embedded
+  private UserUUID uuid;
   @Column(name = "email")
+  @Email
   private final String email;
   @Column(name = "created_at")
   private final LocalDateTime createdAt;
@@ -42,9 +48,11 @@ public class User {
   private PremiumLevel premiumLevel;
 
   @Builder
-  public User(Long id, String email, LocalDateTime createdAt, LocalDateTime birthDate, String pwd,
+  public User(Long id, String email, LocalDateTime createdAt, LocalDateTime birthDate,
+      String pwd,
       String name, PremiumLevel premiumLevel) {
     this.id = id;
+    this.uuid = generateUserUUID();
     this.email = Objects.requireNonNull(email);
     this.createdAt = Temporal.createdAt(createdAt);
     this.birthDate = Temporal.createdAt(birthDate);
@@ -58,5 +66,11 @@ public class User {
       this.pwd = pwd;
     }
     throw new UnsupportedOperationException("비밀번호 틀림");
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private UserUUID generateUserUUID() {
+    int initLength = 20;
+    return new UserUUID(RandomString.make(initLength));
   }
 }

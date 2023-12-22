@@ -12,6 +12,10 @@ public class RandomString {
     return make(_INIT_LENGTH, _INIT_USE_LETTERS, _INIT_USE_NUMBERS);
   }
 
+  public static String make(int length) {
+    return make(length, _INIT_USE_LETTERS, _INIT_USE_NUMBERS);
+  }
+
   public static String make(int length, boolean useLetters, boolean useNumbers) {
     return RandomStringUtils.random(length, useLetters, useNumbers);
   }

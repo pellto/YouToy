@@ -64,11 +64,14 @@ public class Channel {
 
   private String generateRandomHandle() {
     String prefix = "@user-";
-    int initHandleLength = 10;
-    boolean useLetters = true;
-    boolean useNumbers = true;
+    return prefix + RandomString.make();
+  }
 
-    String handle = RandomString.make(initHandleLength, useLetters, useNumbers);
-    return prefix + handle;
+  public Long getSubscriberCount() {
+    return (long) this.subscribers.size();
+  }
+
+  public List<Long> getSubscribedList() {
+    return subscribeds.stream().map(Subscribe::getId).toList();
   }
 }

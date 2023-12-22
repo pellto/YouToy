@@ -36,9 +36,6 @@ public class ChannelReadService {
   }
 
   public ChannelDto toDto(Channel channel) {
-    Long subscriberCount = (long) channel.getSubscribers().size();
-    List<Long> subscribedList = channel.getSubscribeds().stream()
-        .map((subscribed) -> subscribed.getSubscribed().getId()).toList();
     return new ChannelDto(
         channel.getId(),
         channel.getHandle(),
@@ -46,8 +43,8 @@ public class ChannelReadService {
         channel.getDescription(),
         channel.getBanner(),
         channel.getProfile(),
-        subscriberCount,
-        subscribedList,
+        channel.getSubscriberCount(),
+        channel.getSubscribedList(),
         channel.getCreatedAt()
     );
   }

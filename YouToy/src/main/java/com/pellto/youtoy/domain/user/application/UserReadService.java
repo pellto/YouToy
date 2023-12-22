@@ -22,7 +22,7 @@ public class UserReadService {
   }
 
   public UserDto toDto(User user) {
-    return new UserDto(user.getId(), user.getEmail(), user.getName(), user.getPremiumLevel(),
+    return new UserDto(user.getUuid(), user.getEmail(), user.getName(), user.getPremiumLevel(),
         user.getBirthDate(), user.getCreatedAt());
   }
 }
