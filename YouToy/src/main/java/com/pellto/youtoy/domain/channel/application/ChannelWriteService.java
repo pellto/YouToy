@@ -16,11 +16,7 @@ public class ChannelWriteService {
 
   public ChannelDto create(CreateChannelRequest req) {
     var channel = Channel.builder()
-        .handle(req.handle())
-        .displayName(req.displayName())
-        .description(req.description())
-        .banner(req.banner())
-        .profile(req.profile())
+        .channelInfo(req.channelInfo())
         .build();
     return channelReadService.toDto(channelRepository.save(channel));
   }

@@ -38,11 +38,7 @@ public class ChannelReadService {
   public ChannelDto toDto(Channel channel) {
     return new ChannelDto(
         channel.getId(),
-        channel.getHandle(),
-        channel.getDisplayName(),
-        channel.getDescription(),
-        channel.getBanner(),
-        channel.getProfile(),
+        channel.getChannelInfo(),
         channel.getSubscriberCount(),
         channel.getSubscribedList(),
         channel.getCreatedAt()

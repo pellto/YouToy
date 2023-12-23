@@ -27,10 +27,7 @@ class ChannelRepositoryTest {
     var savedChannel = channelRepository.save(channel);
 
     Assertions.assertThat(savedChannel.getId()).isNotNull();
-    Assertions.assertThat(savedChannel.getHandle()).isEqualTo(channel.getHandle());
-    Assertions.assertThat(savedChannel.getDisplayName()).isEqualTo(channel.getDisplayName());
-    Assertions.assertThat(savedChannel.getBanner()).isEqualTo(channel.getBanner());
-    Assertions.assertThat(savedChannel.getProfile()).isEqualTo(channel.getProfile());
+    Assertions.assertThat(savedChannel.getChannelInfo()).isEqualTo(channel.getChannelInfo());
   }
 
   @DisplayName("[channelRepository: findAll: success] 채널 전체 조회 성공 테스트")

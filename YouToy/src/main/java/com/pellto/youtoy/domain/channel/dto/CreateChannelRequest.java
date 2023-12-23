@@ -1,11 +1,9 @@
 package com.pellto.youtoy.domain.channel.dto;
 
+import com.pellto.youtoy.domain.channel.domain.ChannelInfo;
+
 public record CreateChannelRequest(
-    String handle,
-    String displayName,
-    String description,
-    String banner,
-    String profile
+    ChannelInfo channelInfo
 ) {
 
 }
