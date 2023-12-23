@@ -9,6 +9,11 @@ public class NotExistSubscribedChannelException extends RuntimeException {
   private final String handleMsg = "handleNotNotExistSubscribedChannelException";
   private final ErrorCode errorCode;
 
+  public NotExistSubscribedChannelException() {
+    super(ErrorCode.NOT_EXIST_SUBSCRIBED_CHANNEL.getMessage());
+    this.errorCode = ErrorCode.NOT_EXIST_SUBSCRIBED_CHANNEL;
+  }
+
   public NotExistSubscribedChannelException(ErrorCode errorCode) {
     super(errorCode.getMessage());
     this.errorCode = errorCode;

@@ -6,6 +6,8 @@ import lombok.Getter;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @Getter
 public enum ErrorCode {
+  // User
+  WRONG_REPEAT_PASSWORD(404, "US001", "재입력한 비밀번호가 틀립니다."),
   // Subscribe
   NOT_EXIST_SUBSCRIBER_CHANNEL(404, "SB001", "구독자 채널이 존재하지 않습니다."),
   NOT_EXIST_SUBSCRIBED_CHANNEL(404, "SB002", "구독할 채널이 존재하지 않습니다."),

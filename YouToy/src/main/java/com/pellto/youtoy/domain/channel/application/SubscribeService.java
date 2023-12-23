@@ -6,7 +6,6 @@ import com.pellto.youtoy.domain.channel.dto.SubscribeDto;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscribedChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelException;
 import com.pellto.youtoy.domain.channel.repository.SubscribeRepository;
-import com.pellto.youtoy.global.error.ErrorCode;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,13 +23,10 @@ public class SubscribeService {
 
   public SubscribeDto subscribe(CreateSubscribeRelRequest req) {
     if (!channelReadService.existById(req.subscriberId())) {
-      throw new NotExistSubscriberChannelException(
-          ErrorCode.NOT_EXIST_SUBSCRIBER_CHANNEL);
+      throw new NotExistSubscriberChannelException();
     }
     if (!channelReadService.existById(req.subscribedId())) {
-      throw new NotExistSubscribedChannelException(
-          ErrorCode.NOT_EXIST_SUBSCRIBED_CHANNEL);
-
+      throw new NotExistSubscribedChannelException();
     }
     var subscriber = channelReadService.getById(req.subscriberId());
     var subscribed = channelReadService.getById(req.subscribedId());
