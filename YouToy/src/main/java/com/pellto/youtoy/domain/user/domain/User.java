@@ -59,7 +59,16 @@ public class User {
 
   @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   private UserUUID generateUserUUID() {
-    int initLength = 20;
-    return new UserUUID(RandomString.make(initLength));
+    int initLength = 10;
+    int middleLength = 10;
+    int lastLength = 20;
+    return new UserUUID(
+        String.format(
+            "%s-%s-%s",
+            RandomString.make(initLength),
+            RandomString.make(middleLength),
+            RandomString.make(lastLength)
+        )
+    );
   }
 }

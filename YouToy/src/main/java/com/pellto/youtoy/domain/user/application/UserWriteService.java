@@ -22,6 +22,7 @@ public class UserWriteService {
     var user = User.builder()
         .userInfo(req.userInfo())
         .build();
+    // TODO: call channel domain create API
     return userReadService.toDto(userRepository.save(user));
   }
 }

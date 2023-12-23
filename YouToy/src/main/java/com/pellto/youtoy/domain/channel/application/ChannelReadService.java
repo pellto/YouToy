@@ -24,6 +24,7 @@ public class ChannelReadService {
     if (nullableChannel == null) {
       throw new NotExistChannelException(ErrorCode.NOT_EXIST_CHANNEL);
     }
+    System.out.println("nullableChannel = " + nullableChannel);
     return toDto(nullableChannel);
   }
 
@@ -38,6 +39,7 @@ public class ChannelReadService {
   public ChannelDto toDto(Channel channel) {
     return new ChannelDto(
         channel.getId(),
+        channel.getOwnerUuid(),
         channel.getChannelInfo(),
         channel.getSubscriberCount(),
         channel.getSubscribedList(),

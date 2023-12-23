@@ -4,6 +4,8 @@ import com.pellto.youtoy.domain.channel.domain.Channel;
 import com.pellto.youtoy.domain.channel.domain.ChannelInfo;
 import com.pellto.youtoy.domain.channel.dto.ChannelDto;
 import com.pellto.youtoy.domain.channel.dto.CreateChannelRequest;
+import com.pellto.youtoy.domain.user.domain.UserUUID;
+import com.pellto.youtoy.global.util.RandomString;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class ChannelFactory {
   private static final List<Long> SUBSCRIBED_LIST = new ArrayList<>();
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final LocalDateTime MODIFIED_AT = CREATED_AT;
+  private static final UserUUID OWNER_UUID = new UserUUID(RandomString.make());
 
   // for subscribe
   private static final Long SUBSCRIBER_ID = 2L;
@@ -31,6 +34,7 @@ public class ChannelFactory {
   public static Channel createBeforeSavedChannel() {
     return Channel.builder()
         .channelInfo(CHANNEL_INFO)
+        .ownerUuid(OWNER_UUID)
         .build();
   }
 
@@ -38,6 +42,7 @@ public class ChannelFactory {
     return Channel.builder()
         .id(ID)
         .channelInfo(CHANNEL_INFO)
+        .ownerUuid(OWNER_UUID)
         .createdAt(CREATED_AT)
         .modifiedAt(MODIFIED_AT)
         .build();
@@ -47,6 +52,7 @@ public class ChannelFactory {
     return Channel.builder()
         .id(id)
         .channelInfo(CHANNEL_INFO)
+        .ownerUuid(OWNER_UUID)
         .createdAt(CREATED_AT)
         .modifiedAt(MODIFIED_AT)
         .build();
@@ -55,6 +61,7 @@ public class ChannelFactory {
   public static ChannelDto createChannelDto() {
     return new ChannelDto(
         ID,
+        OWNER_UUID,
         CHANNEL_INFO,
         SUBSCRIBER_COUNT,
         SUBSCRIBED_LIST,
@@ -64,6 +71,7 @@ public class ChannelFactory {
 
   public static CreateChannelRequest createChannelRequest() {
     return new CreateChannelRequest(
+        OWNER_UUID.getValue(),
         CHANNEL_INFO
     );
   }
@@ -72,6 +80,7 @@ public class ChannelFactory {
     return Channel.builder()
         .id(SUBSCRIBER_ID)
         .channelInfo(CHANNEL_INFO)
+        .ownerUuid(OWNER_UUID)
         .createdAt(CREATED_AT)
         .modifiedAt(MODIFIED_AT)
         .build();
@@ -81,6 +90,7 @@ public class ChannelFactory {
     return Channel.builder()
         .id(SUBSCRIBED_ID)
         .channelInfo(CHANNEL_INFO)
+        .ownerUuid(OWNER_UUID)
         .createdAt(CREATED_AT)
         .modifiedAt(MODIFIED_AT)
         .build();
