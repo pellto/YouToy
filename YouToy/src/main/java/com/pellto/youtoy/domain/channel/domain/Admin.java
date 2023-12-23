@@ -71,14 +71,4 @@ public class Admin {
   public void changeAuthLevel(AuthLevel authLevel) {
     this.authLevel = authLevel;
   }
-
-  @Override
-  public String toString() {
-    return "Admin{" +
-        "id=" + id +
-        ", createdAt=" + createdAt +
-        ", adminUuid=" + adminUuid +
-        ", authLevel=" + authLevel +
-        '}';
-  }
 }

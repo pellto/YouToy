@@ -3,6 +3,7 @@ package com.pellto.youtoy.domain.channel.api;
 import com.pellto.youtoy.domain.channel.application.SubscribeService;
 import com.pellto.youtoy.domain.channel.dto.CreateSubscribeRelRequest;
 import com.pellto.youtoy.domain.channel.dto.SubscribeDto;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +27,7 @@ public class SubscribeController {
   }
 
   @PostMapping
-  public SubscribeDto subscribe(@RequestBody CreateSubscribeRelRequest req) {
+  public SubscribeDto subscribe(@RequestBody @Valid CreateSubscribeRelRequest req) {
     return subscribeService.subscribe(req);
   }
 

@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.channel.application.ChannelReadService;
 import com.pellto.youtoy.domain.channel.application.ChannelWriteService;
 import com.pellto.youtoy.domain.channel.dto.ChannelDto;
 import com.pellto.youtoy.domain.channel.dto.CreateChannelRequest;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +34,7 @@ public class ChannelController {
   }
 
   @PostMapping
-  public ChannelDto createChannel(@RequestBody CreateChannelRequest req) {
+  public ChannelDto createChannel(@RequestBody @Valid CreateChannelRequest req) {
     return channelWriteService.create(req);
   }
 

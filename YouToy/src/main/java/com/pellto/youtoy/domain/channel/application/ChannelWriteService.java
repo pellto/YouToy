@@ -21,7 +21,6 @@ public class ChannelWriteService {
         .ownerUuid(ownerUuid)
         .channelInfo(req.channelInfo())
         .build();
-    System.out.println("channel = " + channel);
     return channelReadService.toDto(channelRepository.save(channel));
   }
 

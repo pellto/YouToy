@@ -38,7 +38,6 @@ class AdminRepositoryTest {
   @Test
   void findAllSuccessTest() {
     var admin = createBeforeSavedAdmin();
-    System.out.println("admin = " + admin);
     channelRepository.save(admin.getTargetChannel());
     adminRepository.save(admin);
 

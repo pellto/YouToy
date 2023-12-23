@@ -3,6 +3,8 @@ package com.pellto.youtoy.domain.channel.util;
 import com.pellto.youtoy.domain.channel.domain.Admin;
 import com.pellto.youtoy.domain.channel.domain.AuthLevel;
 import com.pellto.youtoy.domain.channel.domain.Channel;
+import com.pellto.youtoy.domain.channel.dto.AdminDto;
+import com.pellto.youtoy.domain.channel.dto.InviteAdminRequest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import com.pellto.youtoy.global.util.RandomString;
 import java.time.LocalDateTime;
@@ -26,6 +28,10 @@ public class AdminFactory {
         .build();
   }
 
+  public static AdminDto createAdminDto() {
+    return new AdminDto(ID, TARGET_CHANNEL.getId(), ADMIN_UUID.getValue(), AUTH_LEVEL);
+  }
+
   public static Admin createBeforeSavedAdmin() {
     return Admin.builder()
         .targetChannel(TARGET_CHANNEL)
@@ -33,5 +39,9 @@ public class AdminFactory {
         .authLevel(AUTH_LEVEL)
         .createdAt(CREATED_AT)
         .build();
+  }
+
+  public static InviteAdminRequest createInviteAdminRequest() {
+    return new InviteAdminRequest(ADMIN_UUID.getValue(), TARGET_CHANNEL.getId(), AUTH_LEVEL);
   }
 }

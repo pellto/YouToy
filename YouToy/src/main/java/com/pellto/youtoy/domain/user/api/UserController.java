@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.user.application.UserReadService;
 import com.pellto.youtoy.domain.user.application.UserWriteService;
 import com.pellto.youtoy.domain.user.dto.UserDto;
 import com.pellto.youtoy.domain.user.dto.UserSignUpRequest;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class UserController {
   private final UserReadService userReadService;
 
   @PostMapping
-  public UserDto signUp(@RequestBody UserSignUpRequest req) {
+  public UserDto signUp(@RequestBody @Valid UserSignUpRequest req) {
     return userWriteService.signUp(req);
   }
 

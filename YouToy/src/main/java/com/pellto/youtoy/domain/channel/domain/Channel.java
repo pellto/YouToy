@@ -22,11 +22,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Getter
-@ToString
 @Table(name = "channel")
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class Channel {

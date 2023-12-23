@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.channel.application.AdminReadService;
 import com.pellto.youtoy.domain.channel.application.AdminWriteService;
 import com.pellto.youtoy.domain.channel.dto.AdminDto;
 import com.pellto.youtoy.domain.channel.dto.InviteAdminRequest;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +29,7 @@ public class AdminController {
   }
 
   @PostMapping
-  public AdminDto invite(@RequestBody InviteAdminRequest req) {
+  public AdminDto invite(@RequestBody @Valid InviteAdminRequest req) {
     return adminWriteService.invite(req);
   }
 

@@ -7,13 +7,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 import lombok.Getter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @MappedSuperclass
 @SuperBuilder
-@ToString
 public abstract class Interest {
 
   @Id
