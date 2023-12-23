@@ -30,10 +30,8 @@ class UserRepositoryTest {
     User savedUser = userRepository.save(user);
 
     Assertions.assertThat(savedUser.getId()).isNotNull();
-    Assertions.assertThat(savedUser.getEmail()).isEqualTo(user.getEmail());
-    Assertions.assertThat(savedUser.getBirthDate()).isEqualTo(user.getBirthDate());
-    Assertions.assertThat(savedUser.getPwd()).isEqualTo(user.getPwd());
-    Assertions.assertThat(savedUser.getName()).isEqualTo(user.getName());
+    Assertions.assertThat(savedUser.getUserInfo()).isEqualTo(user.getUserInfo());
+    Assertions.assertThat(savedUser.getUuid()).isEqualTo(user.getUuid());
   }
 
   @DisplayName("[userRepository: findById: success] id 조건 조회 잘 되는지 테스트")

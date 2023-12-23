@@ -1,13 +1,10 @@
 package com.pellto.youtoy.domain.user.dto;
 
-import java.time.LocalDateTime;
+import com.pellto.youtoy.domain.user.domain.UserInfo;
 
 public record UserSignUpRequest(
-    String email,
-    LocalDateTime birthDate,
-    String pwd,
-    String repeatPwd,
-    String name
+    UserInfo userInfo,
+    String repeatPwd
 ) {
 
 }

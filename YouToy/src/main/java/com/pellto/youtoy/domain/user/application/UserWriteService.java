@@ -15,14 +15,11 @@ public class UserWriteService {
   private final UserReadService userReadService;
 
   public UserDto signUp(UserSignUpRequest req) {
-    if (!req.pwd().equals(req.repeatPwd())) {
+    if (!req.userInfo().getPwd().equals(req.repeatPwd())) {
       throw new UnsupportedOperationException("비밀번호 틀림");
     }
     var user = User.builder()
-        .email(req.email())
-        .birthDate(req.birthDate())
-        .pwd(req.pwd())
-        .name(req.name())
+        .userInfo(req.userInfo())
         .build();
     return userReadService.toDto(userRepository.save(user));
   }
