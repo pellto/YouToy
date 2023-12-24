@@ -7,7 +7,7 @@ import static org.mockito.Mockito.times;
 
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
 import com.pellto.youtoy.domain.community.repository.CommunityCommentRepository;
-import com.pellto.youtoy.domain.community.util.CommentCommentFactory;
+import com.pellto.youtoy.domain.community.util.CommunityCommentFactory;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -35,9 +35,9 @@ class CommunityCommentWriteServiceTest {
   @DisplayName("[commentWriteService: write: success]: 댓글 작성 성공 테스트")
   @Test
   void writeSuccessTest() {
-    var req = CommentCommentFactory.createWriteCommentRequest();
-    var communityComment = CommentCommentFactory.createCommunityComment();
-    var communityCommentDto = CommentCommentFactory.createCommunityCommentDto();
+    var req = CommunityCommentFactory.createWriteCommentRequest();
+    var communityComment = CommunityCommentFactory.createCommunityComment();
+    var communityCommentDto = CommunityCommentFactory.createCommunityCommentDto();
 
     given(commentPostReadService.getById(any())).willReturn(communityComment.getCommunityPost());
     given(commentRepository.save(any())).willReturn(communityComment);
@@ -54,10 +54,10 @@ class CommunityCommentWriteServiceTest {
   @DisplayName("[commentWriteService: modify: success]: 댓글 수정 성공 테스트")
   @Test
   void modifySuccessTest() {
-    var alreadyComment = CommentCommentFactory.createCommunityComment();
+    var alreadyComment = CommunityCommentFactory.createCommunityComment();
     var changedContent = "CHANGED_CONTENT";
-    var changedCommentDto = CommentCommentFactory.createCommunityCommentDto(changedContent);
-    var req = CommentCommentFactory.createModifyCommentRequest(alreadyComment.getId(),
+    var changedCommentDto = CommunityCommentFactory.createCommunityCommentDto(changedContent);
+    var req = CommunityCommentFactory.createModifyCommentRequest(alreadyComment.getId(),
         changedContent);
 
     given(commentRepository.findById(req.id())).willReturn(Optional.of(alreadyComment));

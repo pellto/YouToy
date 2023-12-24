@@ -40,7 +40,8 @@ public class CommunityPost {
 
   @OneToMany(mappedBy = "communityPost", cascade = CascadeType.REMOVE)
   private final List<CommunityComment> comments = new ArrayList<>();
-
+  @OneToMany(mappedBy = "interestedPost", cascade = CascadeType.REMOVE)
+  private final List<PostInterest> postInterests = new ArrayList<>();
 
   @Builder
   public CommunityPost(Long id, Long channelId, LocalDateTime createdAt, String content,

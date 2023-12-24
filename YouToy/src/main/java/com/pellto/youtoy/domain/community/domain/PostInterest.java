@@ -1,7 +1,7 @@
 package com.pellto.youtoy.domain.community.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pellto.youtoy.domain.base.Comment;
+import com.pellto.youtoy.domain.base.Interest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -21,57 +21,44 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
-@Table(name = "community_comment")
+@ToString
+@Table(name = "community_post_interest")
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public class CommunityComment extends Comment {
+public class PostInterest extends Interest {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "community_comment_id")
+  @Column(name = "community_post_interest_id")
   private Long id;
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
-  @JoinColumn(referencedColumnName = "community_post_id", name = "community_post_id")
-  private CommunityPost communityPost;
+  @JoinColumn(referencedColumnName = "community_post_id", name = "interesting_post_id")
+  private CommunityPost interestedPost;
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(
           name = "value",
           column = @Column(
-              name = "commenter_uuid", nullable = false
+              name = "interesting_user_uuid", nullable = false
           )
       )
   })
-  private UserUUID commenterUuid;
+  private UserUUID interestingUserUuid;
 
   @Builder
-  public CommunityComment(
-      Long likeCount, String content, boolean modified,
-      LocalDateTime createdAt, LocalDateTime modifiedAt, Long id,
-      CommunityPost communityPost, UserUUID commenterUuid
-  ) {
-    super(likeCount, content, modified, createdAt, modifiedAt);
+  public PostInterest(boolean dislike, LocalDateTime createdAt, Long id,
+      CommunityPost interestedPost, UserUUID interestingUserUuid) {
+    super(dislike, createdAt);
     this.id = id;
-    this.communityPost = Objects.requireNonNull(communityPost);
-    this.commenterUuid = Objects.requireNonNull(commenterUuid);
+    this.interestedPost = Objects.requireNonNull(interestedPost);
+    this.interestingUserUuid = Objects.requireNonNull(interestingUserUuid);
   }
 
-  @Override
-  public void increaseLikeCount() {
-    super.increaseLikeCount();
-  }
-
-  @Override
-  public void decreaseLikeCount() {
-    super.decreaseLikeCount();
-  }
-
-  @Override
-  public String changeContent(String s) {
-    return super.changeContent(s);
+  public void toggleInterest() {
+    super.changeDislike(!this.dislike);
   }
 }

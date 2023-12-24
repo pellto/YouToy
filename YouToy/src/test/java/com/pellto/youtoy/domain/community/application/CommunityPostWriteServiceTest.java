@@ -6,7 +6,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
 import com.pellto.youtoy.domain.community.repository.CommunityPostRepository;
-import com.pellto.youtoy.domain.community.util.CommentPostFactory;
+import com.pellto.youtoy.domain.community.util.CommunityPostFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -30,9 +30,9 @@ class CommunityPostWriteServiceTest {
   @DisplayName("[communityPostWriteService: writePost: success] 게시글 생성 성공 테스트")
   @Test
   void writePostSuccessTest() {
-    var req = CommentPostFactory.createWritePostRequest();
-    var post = CommentPostFactory.createPost();
-    var postDto = CommentPostFactory.createPostDto();
+    var req = CommunityPostFactory.createWritePostRequest();
+    var post = CommunityPostFactory.createPost();
+    var postDto = CommunityPostFactory.createPostDto();
 
     given(postRepository.save(any())).willReturn(post);
     given(postReadService.toDto(post)).willReturn(postDto);

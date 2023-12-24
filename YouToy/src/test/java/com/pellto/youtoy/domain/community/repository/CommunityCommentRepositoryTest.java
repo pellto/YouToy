@@ -1,7 +1,8 @@
 package com.pellto.youtoy.domain.community.repository;
 
-import com.pellto.youtoy.domain.community.util.CommentCommentFactory;
-import com.pellto.youtoy.domain.community.util.CommentPostFactory;
+import com.pellto.youtoy.domain.community.domain.CommunityPost;
+import com.pellto.youtoy.domain.community.util.CommunityCommentFactory;
+import com.pellto.youtoy.domain.community.util.CommunityPostFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -21,10 +22,16 @@ class CommunityCommentRepositoryTest {
   @Autowired
   private CommunityPostRepository postRepository;
 
+  private CommunityPost postSetting() {
+    var post = CommunityPostFactory.createPost();
+    return postRepository.save(post);
+  }
+
   @DisplayName("[commentRepository: save: success] 커뮤니티 댓글 저장 성공 테스트")
   @Test
   void saveSuccessTest() {
-    var communityComment = CommentCommentFactory.createBeforeSavedCommunityComment();
+    var post = postSetting();
+    var communityComment = CommunityCommentFactory.createBeforeSavedCommunityComment(post);
 
     var savedComment = commentRepository.save(communityComment);
 
@@ -45,9 +52,8 @@ class CommunityCommentRepositoryTest {
   @DisplayName("[commentRepository: findAll: success] 커뮤니티 댓글 전체 조회 성공 테스트")
   @Test
   void findAllSuccessTest() {
-    var communityPost = CommentPostFactory.createBeforeSavedPost();
-    postRepository.save(communityPost);
-    var communityComment = CommentCommentFactory.createCommunityComment(communityPost);
+    var communityPost = postSetting();
+    var communityComment = CommunityCommentFactory.createCommunityComment(communityPost);
     commentRepository.save(communityComment);
 
     var foundCommentList = commentRepository.findAll();
@@ -60,9 +66,8 @@ class CommunityCommentRepositoryTest {
   @DisplayName("[commentRepository: findById: success] 커뮤니티 댓글 id 조건 조회 성공 테스트")
   @Test
   void findByIdSuccessTest() {
-    var communityPost = CommentPostFactory.createBeforeSavedPost();
-    postRepository.save(communityPost);
-    var communityComment = CommentCommentFactory.createCommunityComment(communityPost);
+    var communityPost = postSetting();
+    var communityComment = CommunityCommentFactory.createCommunityComment(communityPost);
     commentRepository.save(communityComment);
 
     var nullableComment = commentRepository.findById(communityComment.getId());

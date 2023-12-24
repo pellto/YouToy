@@ -1,35 +1,29 @@
 package com.pellto.youtoy.domain.base;
 
+import com.pellto.youtoy.global.util.General;
+import com.pellto.youtoy.global.util.Temporal;
 import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import lombok.NoArgsConstructor;
 
 @Getter
 @MappedSuperclass
-@SuperBuilder
+@NoArgsConstructor
 public abstract class Interest {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id")
-  private Long id;
   @Column(name = "created_at")
-  private LocalDateTime createdAt;
+  protected LocalDateTime createdAt;
   @Column(name = "dislike")
-  private boolean dislike;
+  protected boolean dislike;
 
-  public void changeDislike(boolean b) {
+  protected void changeDislike(boolean b) {
     this.dislike = b;
   }
 
-  public Interest(boolean dislike, LocalDateTime createdAt) {
-    this.id = id;
-    this.dislike = dislike;
-    this.createdAt = createdAt;
+  protected Interest(boolean dislike, LocalDateTime createdAt) {
+    this.dislike = General.setNullInput(dislike, false);
+    this.createdAt = Temporal.createdAt(createdAt);
   }
 }

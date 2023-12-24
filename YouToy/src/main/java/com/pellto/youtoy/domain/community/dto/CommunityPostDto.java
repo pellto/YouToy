@@ -8,6 +8,7 @@ public record CommunityPostDto(
     String content,
     boolean modified,
     int commentCount,
+    int likeCount,
     LocalDateTime createdAt
 ) {
 

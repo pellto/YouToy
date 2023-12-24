@@ -36,6 +36,7 @@ public class CommentPostReadService {
         post.getContent(),
         post.isModified(),
         post.getComments().size(),
+        post.getPostInterests().size(),
         post.getCreatedAt()
     );
   }

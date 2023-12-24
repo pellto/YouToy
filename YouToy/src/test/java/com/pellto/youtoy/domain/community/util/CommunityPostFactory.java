@@ -2,13 +2,14 @@ package com.pellto.youtoy.domain.community.util;
 
 import com.pellto.youtoy.domain.community.domain.CommunityComment;
 import com.pellto.youtoy.domain.community.domain.CommunityPost;
+import com.pellto.youtoy.domain.community.domain.PostInterest;
 import com.pellto.youtoy.domain.community.dto.CommunityPostDto;
 import com.pellto.youtoy.domain.community.dto.WritePostRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentPostFactory {
+public class CommunityPostFactory {
 
   private static final Long ID = 1L;
   private static final Long CHANNEL_ID = 1L;
@@ -17,6 +18,7 @@ public class CommentPostFactory {
   private static final boolean MODIFIED = false;
   private static final LocalDateTime MODIFIED_AT = CREATED_AT;
   private static final List<CommunityComment> COMMENTS = new ArrayList<>();
+  private static final List<PostInterest> INTERESTS = new ArrayList<>();
 
   public static CommunityPost createBeforeSavedPost() {
     return CommunityPost.builder()
@@ -36,7 +38,8 @@ public class CommentPostFactory {
   }
 
   public static CommunityPostDto createPostDto() {
-    return new CommunityPostDto(ID, CHANNEL_ID, CONTENT, MODIFIED, COMMENTS.size(), CREATED_AT);
+    return new CommunityPostDto(ID, CHANNEL_ID, CONTENT, MODIFIED, COMMENTS.size(),
+        INTERESTS.size(), CREATED_AT);
   }
 
   public static WritePostRequest createWritePostRequest() {

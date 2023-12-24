@@ -8,10 +8,10 @@ import com.pellto.youtoy.domain.community.dto.WriteCommentRequest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import java.time.LocalDateTime;
 
-public class CommentCommentFactory {
+public class CommunityCommentFactory {
 
   private static final Long ID = 1L;
-  private static final CommunityPost COMMUNITY_POST = CommentPostFactory.createPost();
+  private static final CommunityPost COMMUNITY_POST = CommunityPostFactory.createPost();
   private static final UserUUID COMMENTER_UUID = new UserUUID("commenter_uuid");
   private static final String CONTENT = "content";
   private static final Long LIKE_COUNT = 0L;
@@ -57,6 +57,14 @@ public class CommentCommentFactory {
         .commenterUuid(COMMENTER_UUID)
         .content(CONTENT)
         .communityPost(COMMUNITY_POST)
+        .build();
+  }
+
+  public static CommunityComment createBeforeSavedCommunityComment(CommunityPost post) {
+    return CommunityComment.builder()
+        .commenterUuid(COMMENTER_UUID)
+        .content(CONTENT)
+        .communityPost(post)
         .build();
   }
 
