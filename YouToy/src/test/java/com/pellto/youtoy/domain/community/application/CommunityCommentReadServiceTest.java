@@ -7,7 +7,7 @@ import static org.mockito.Mockito.times;
 import com.pellto.youtoy.domain.community.domain.CommunityComment;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
 import com.pellto.youtoy.domain.community.repository.CommunityCommentRepository;
-import com.pellto.youtoy.domain.community.util.CommentUtil;
+import com.pellto.youtoy.domain.community.util.CommentCommentFactory;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
@@ -32,7 +32,7 @@ class CommunityCommentReadServiceTest {
   @DisplayName("[commentReadService: findAll: success] 댓글 전체 조회 테스트")
   @Test
   void findAllSuccessTest() {
-    var comment = CommentUtil.createCommunityComment();
+    var comment = CommentCommentFactory.createCommunityComment();
     var commentList = new ArrayList<CommunityComment>();
     commentList.add(comment);
 
@@ -50,7 +50,7 @@ class CommunityCommentReadServiceTest {
   @DisplayName("[commentReadService: findById: success] 댓글 id 조건 조회 테스트")
   @Test
   void findByIdSuccessTest() {
-    var comment = CommentUtil.createCommunityComment();
+    var comment = CommentCommentFactory.createCommunityComment();
 
     given(commentRepository.findById(comment.getId())).willReturn(Optional.of(comment));
 

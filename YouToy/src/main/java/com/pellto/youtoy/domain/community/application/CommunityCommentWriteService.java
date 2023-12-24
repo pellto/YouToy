@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.community.domain.CommunityComment;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
 import com.pellto.youtoy.domain.community.dto.ModifyCommentRequest;
 import com.pellto.youtoy.domain.community.dto.WriteCommentRequest;
+import com.pellto.youtoy.domain.community.exception.NotExistCommentException;
 import com.pellto.youtoy.domain.community.repository.CommunityCommentRepository;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +16,13 @@ public class CommunityCommentWriteService {
 
   private final CommunityCommentRepository commentRepository;
   private final CommunityCommentReadService commentReadService;
+  private final CommentPostReadService commentPostReadService;
 
   public CommunityCommentDto write(WriteCommentRequest req) {
     var commenterUuid = new UserUUID(req.commenterUuid());
+    var post = commentPostReadService.getById(req.commentPostId());
     var communityComment = CommunityComment.builder()
-        .communityPostId(req.commentPostId())
+        .communityPost(post)
         .content(req.content())
         .commenterUuid(commenterUuid)
         .build();
@@ -28,8 +31,13 @@ public class CommunityCommentWriteService {
   }
 
   public CommunityCommentDto modify(ModifyCommentRequest req) {
-    var alreadyComment = commentRepository.getReferenceById(req.id());
+    var alreadyComment = commentRepository.findById(req.id())
+        .orElseThrow(NotExistCommentException::new);
     alreadyComment.changeContent(req.content());
     return commentReadService.toDto(alreadyComment);
+  }
+
+  public void deleteById(Long id) {
+    commentRepository.deleteById(id);
   }
 }

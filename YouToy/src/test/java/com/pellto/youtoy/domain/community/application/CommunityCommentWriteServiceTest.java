@@ -7,7 +7,8 @@ import static org.mockito.Mockito.times;
 
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
 import com.pellto.youtoy.domain.community.repository.CommunityCommentRepository;
-import com.pellto.youtoy.domain.community.util.CommentUtil;
+import com.pellto.youtoy.domain.community.util.CommentCommentFactory;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -28,19 +29,23 @@ class CommunityCommentWriteServiceTest {
   private CommunityCommentReadService commentReadService;
   @Mock
   private CommunityCommentRepository commentRepository;
+  @Mock
+  private CommentPostReadService commentPostReadService;
 
   @DisplayName("[commentWriteService: write: success]: 댓글 작성 성공 테스트")
   @Test
   void writeSuccessTest() {
-    var req = CommentUtil.createWriteCommentRequest();
-    var communityComment = CommentUtil.createCommunityComment();
-    var communityCommentDto = CommentUtil.createCommunityCommentDto();
+    var req = CommentCommentFactory.createWriteCommentRequest();
+    var communityComment = CommentCommentFactory.createCommunityComment();
+    var communityCommentDto = CommentCommentFactory.createCommunityCommentDto();
 
+    given(commentPostReadService.getById(any())).willReturn(communityComment.getCommunityPost());
     given(commentRepository.save(any())).willReturn(communityComment);
     given(commentReadService.toDto(communityComment)).willReturn(communityCommentDto);
 
     var writtenComment = commentWriteService.write(req);
 
+    then(commentPostReadService).should(times(1)).getById(any());
     then(commentRepository).should(times(1)).save(any());
     then(commentReadService).should(times(1)).toDto(communityComment);
     Assertions.assertThat(writtenComment).isEqualTo(communityCommentDto);
@@ -49,17 +54,18 @@ class CommunityCommentWriteServiceTest {
   @DisplayName("[commentWriteService: modify: success]: 댓글 수정 성공 테스트")
   @Test
   void modifySuccessTest() {
-    var alreadyComment = CommentUtil.createCommunityComment();
+    var alreadyComment = CommentCommentFactory.createCommunityComment();
     var changedContent = "CHANGED_CONTENT";
-    var changedCommentDto = CommentUtil.createCommunityCommentDto(changedContent);
-    var req = CommentUtil.createModifyCommentRequest(alreadyComment.getId(), changedContent);
+    var changedCommentDto = CommentCommentFactory.createCommunityCommentDto(changedContent);
+    var req = CommentCommentFactory.createModifyCommentRequest(alreadyComment.getId(),
+        changedContent);
 
-    given(commentRepository.getReferenceById(req.id())).willReturn(alreadyComment);
+    given(commentRepository.findById(req.id())).willReturn(Optional.of(alreadyComment));
     given(commentReadService.toDto(any())).willReturn(changedCommentDto);
 
     var changedComment = commentWriteService.modify(req);
 
-    then(commentRepository).should(times(1)).getReferenceById(req.id());
+    then(commentRepository).should(times(1)).findById(req.id());
     then(commentReadService).should(times(1)).toDto(any());
     Assertions.assertThat(changedComment).isNotNull();
     Assertions.assertThat(changedComment.content()).isEqualTo(changedContent);

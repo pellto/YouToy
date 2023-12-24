@@ -3,6 +3,7 @@ package com.pellto.youtoy.global.error;
 import com.pellto.youtoy.domain.channel.exception.NotExistChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscribedChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelException;
+import com.pellto.youtoy.domain.community.exception.NotExistCommentException;
 import com.pellto.youtoy.domain.user.exception.WrongRepeatPasswordException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,16 @@ public class GlobalExceptionHandler {
     ex.getBindingResult().getAllErrors()
         .forEach(c -> errors.put(((FieldError) c).getField(), c.getDefaultMessage()));
     return ResponseEntity.badRequest().body(errors);
+  }
+
+  // Community Comment
+  @ExceptionHandler(NotExistCommentException.class)
+  public ResponseEntity<ErrorResponse> handleNotExistCommentException(
+      NotExistCommentException ex
+  ) {
+    log.error(ex.getHandleMsg(), ex);
+    ErrorResponse response = new ErrorResponse(ex.getErrorCode());
+    return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
   }
 
   // User

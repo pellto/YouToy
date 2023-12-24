@@ -28,7 +28,7 @@ public class CommunityCommentReadService {
   public CommunityCommentDto toDto(CommunityComment comment) {
     return new CommunityCommentDto(
         comment.getId(),
-        comment.getCommunityPostId(),
+        comment.getCommunityPost().getId(),
         comment.getCommenterUuid().getValue(),
         comment.getLikeCount(),
         comment.getContent(),

@@ -1,6 +1,7 @@
 package com.pellto.youtoy.domain.community.repository;
 
-import com.pellto.youtoy.domain.community.util.CommentUtil;
+import com.pellto.youtoy.domain.community.util.CommentCommentFactory;
+import com.pellto.youtoy.domain.community.util.CommentPostFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -17,11 +18,13 @@ class CommunityCommentRepositoryTest {
 
   @Autowired
   private CommunityCommentRepository commentRepository;
+  @Autowired
+  private CommunityPostRepository postRepository;
 
   @DisplayName("[commentRepository: save: success] 커뮤니티 댓글 저장 성공 테스트")
   @Test
   void saveSuccessTest() {
-    var communityComment = CommentUtil.createBeforeSavedCommunityComment();
+    var communityComment = CommentCommentFactory.createBeforeSavedCommunityComment();
 
     var savedComment = commentRepository.save(communityComment);
 
@@ -33,8 +36,8 @@ class CommunityCommentRepositoryTest {
     Assertions.assertThat(savedComment.getModifiedAt()).isEqualTo(savedComment.getCreatedAt());
     Assertions.assertThat(savedComment.getCommenterUuid())
         .isEqualTo(communityComment.getCommenterUuid());
-    Assertions.assertThat(savedComment.getCommunityPostId())
-        .isEqualTo(communityComment.getCommunityPostId());
+    Assertions.assertThat(savedComment.getCommunityPost())
+        .isEqualTo(communityComment.getCommunityPost());
     Assertions.assertThat(savedComment.getContent())
         .isEqualTo(communityComment.getContent());
   }
@@ -42,7 +45,9 @@ class CommunityCommentRepositoryTest {
   @DisplayName("[commentRepository: findAll: success] 커뮤니티 댓글 전체 조회 성공 테스트")
   @Test
   void findAllSuccessTest() {
-    var communityComment = CommentUtil.createCommunityComment();
+    var communityPost = CommentPostFactory.createBeforeSavedPost();
+    postRepository.save(communityPost);
+    var communityComment = CommentCommentFactory.createCommunityComment(communityPost);
     commentRepository.save(communityComment);
 
     var foundCommentList = commentRepository.findAll();
@@ -55,7 +60,9 @@ class CommunityCommentRepositoryTest {
   @DisplayName("[commentRepository: findById: success] 커뮤니티 댓글 id 조건 조회 성공 테스트")
   @Test
   void findByIdSuccessTest() {
-    var communityComment = CommentUtil.createCommunityComment();
+    var communityPost = CommentPostFactory.createBeforeSavedPost();
+    postRepository.save(communityPost);
+    var communityComment = CommentCommentFactory.createCommunityComment(communityPost);
     commentRepository.save(communityComment);
 
     var nullableComment = commentRepository.findById(communityComment.getId());
@@ -64,8 +71,8 @@ class CommunityCommentRepositoryTest {
     Assertions.assertThat(nullableComment).isNotEmpty();
     var foundComment = nullableComment.get();
     Assertions.assertThat(foundComment.getId()).isEqualTo(communityComment.getId());
-    Assertions.assertThat(foundComment.getCommunityPostId())
-        .isEqualTo(communityComment.getCommunityPostId());
+    Assertions.assertThat(foundComment.getCommunityPost())
+        .isEqualTo(communityComment.getCommunityPost());
     Assertions.assertThat(foundComment.getCommenterUuid().getValue())
         .isEqualTo(communityComment.getCommenterUuid().getValue());
   }

@@ -13,7 +13,9 @@ public enum ErrorCode {
   NOT_EXIST_SUBSCRIBED_CHANNEL(404, "SB002", "구독할 채널이 존재하지 않습니다."),
   // Channel
   NOT_EXIST_CHANNEL(404, "CH001", "해당 채널이 존재하지 않습니다."),
-  NOT_EXIST_ADMIN(404, "CA001", "해당 어드민이 존재하지 않습니다.");
+  NOT_EXIST_ADMIN(404, "CA001", "해당 어드민이 존재하지 않습니다."),
+  // Community Comment
+  NOT_EXIST_COMMUNITY_COMMENT(404, "CM001", "해당 댓글이 존재하지 않습니다.");
 
   private final int status;
   private final String code;

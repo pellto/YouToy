@@ -1,5 +1,6 @@
 package com.pellto.youtoy.domain.community.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pellto.youtoy.domain.base.Comment;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import jakarta.persistence.AttributeOverride;
@@ -7,9 +8,12 @@ import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -20,7 +24,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table
+@Table(name = "community_comment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class CommunityComment extends Comment {
 
@@ -30,8 +34,10 @@ public class CommunityComment extends Comment {
   private Long id;
 
   // TODO: change community domain FK
-  @Column(name = "community_post_id")
-  private Long communityPostId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JsonIgnore
+  @JoinColumn(referencedColumnName = "community_post_id", name = "community_post_id")
+  private CommunityPost communityPost;
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(
@@ -47,11 +53,11 @@ public class CommunityComment extends Comment {
   public CommunityComment(
       Long likeCount, String content, boolean modified,
       LocalDateTime createdAt, LocalDateTime modifiedAt, Long id,
-      Long communityPostId, UserUUID commenterUuid
+      CommunityPost communityPost, UserUUID commenterUuid
   ) {
     super(likeCount, content, modified, createdAt, modifiedAt);
     this.id = id;
-    this.communityPostId = Objects.requireNonNull(communityPostId);
+    this.communityPost = Objects.requireNonNull(communityPost);
     this.commenterUuid = Objects.requireNonNull(commenterUuid);
   }
 
