@@ -1,5 +1,6 @@
 package com.pellto.youtoy.domain.base;
 
+import com.pellto.youtoy.global.util.General;
 import com.pellto.youtoy.global.util.Numeric;
 import com.pellto.youtoy.global.util.Temporal;
 import jakarta.persistence.Column;
@@ -16,35 +17,37 @@ import lombok.NoArgsConstructor;
 public abstract class Comment {
 
   @Column(name = "like_count")
-  private Long likeCount;
+  protected Long likeCount;
   @Column(name = "content")
-  private String content;
+  protected String content;
   @Column(name = "modified")
-  private boolean modified;
+  protected boolean modified;
   @Column(name = "created_at")
-  private LocalDateTime createdAt;
+  protected LocalDateTime createdAt;
   @Column(name = "modified_at")
-  private LocalDateTime modifiedAt;
+  protected LocalDateTime modifiedAt;
 
-  public Comment(Long likeCount, String content, boolean modified, LocalDateTime createdAt,
+  protected Comment(Long likeCount, String content, boolean modified, LocalDateTime createdAt,
       LocalDateTime modifiedAt) {
     this.likeCount = Numeric.initCount(likeCount);
-    this.modified = modified;
+    this.modified = General.setNullInput(modified, false);
     this.content = Objects.requireNonNull(content);
     this.createdAt = Temporal.createdAt(createdAt);
     this.modifiedAt = Temporal.createdAt(modifiedAt);
   }
 
-  public void increaseLikeCount() {
+  protected void increaseLikeCount() {
     this.likeCount += 1;
   }
 
-  public void decreaseLikeCount() {
+  protected void decreaseLikeCount() {
     this.likeCount -= 1;
   }
 
-  public String changeContent(String s) {
+  protected String changeContent(String s) {
     this.content = s;
+    this.modified = true;
+    this.modifiedAt = LocalDateTime.now();
     return this.content;
   }
 }
