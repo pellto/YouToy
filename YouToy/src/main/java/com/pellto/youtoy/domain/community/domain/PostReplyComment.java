@@ -1,11 +1,10 @@
 package com.pellto.youtoy.domain.community.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pellto.youtoy.domain.base.Comment;
+import com.pellto.youtoy.domain.base.ReplyComment;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -15,11 +14,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,42 +24,36 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "community_comment")
+@Table(name = "community_post_reply")
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public class CommunityComment extends Comment {
+public class PostReplyComment extends ReplyComment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "community_comment_id")
+  @Column(name = "post_reply_comment")
   private Long id;
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
-  @JoinColumn(referencedColumnName = "community_post_id", name = "community_post_id")
-  private CommunityPost communityPost;
+  @JoinColumn(referencedColumnName = "community_comment_id", name = "parrent_comment_id")
+  private CommunityComment parentComment;
+
   @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(
-          name = "value",
-          column = @Column(
-              name = "commenter_uuid", nullable = false
-          )
+  @AttributeOverrides(@AttributeOverride(
+      name = "value",
+      column = @Column(
+          name = "commenter_uuid", nullable = false
       )
-  })
+  ))
   private UserUUID commenterUuid;
 
-  @OneToMany(mappedBy = "parentComment", cascade = CascadeType.REMOVE)
-  private final List<PostReplyComment> replies = new ArrayList<>();
-
   @Builder
-  public CommunityComment(
-      Long likeCount, String content, boolean modified,
-      LocalDateTime createdAt, LocalDateTime modifiedAt, Long id,
-      CommunityPost communityPost, UserUUID commenterUuid
+  public PostReplyComment(Long likeCount, String content, boolean modified,
+      LocalDateTime createdAt, LocalDateTime modifiedAt, boolean mentioned,
+      Long id, CommunityComment parentComment, UserUUID commenterUuid
   ) {
-    super(likeCount, content, modified, createdAt, modifiedAt);
+    super(likeCount, content, modified, createdAt, modifiedAt, mentioned);
     this.id = id;
-    this.communityPost = Objects.requireNonNull(communityPost);
+    this.parentComment = Objects.requireNonNull(parentComment);
     this.commenterUuid = Objects.requireNonNull(commenterUuid);
   }
 

@@ -2,13 +2,12 @@ package com.pellto.youtoy.domain.community.dto;
 
 import java.time.LocalDateTime;
 
-public record CommunityCommentDto(
+public record PostReplyCommentDto(
     Long id,
-    Long communityPostId,
+    Long parentCommentId,
     String commenterUuid,
     Long likeCount,
     String content,
-    int replyCount,
     boolean modified,
     LocalDateTime createdAt
 ) {

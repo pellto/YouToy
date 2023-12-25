@@ -5,13 +5,17 @@ import com.pellto.youtoy.domain.community.application.CommunityCommentReadServic
 import com.pellto.youtoy.domain.community.application.CommunityCommentWriteService;
 import com.pellto.youtoy.domain.community.application.CommunityPostWriteService;
 import com.pellto.youtoy.domain.community.application.PostInterestService;
+import com.pellto.youtoy.domain.community.application.PostReplyCommentReadService;
+import com.pellto.youtoy.domain.community.application.PostReplyCommentWriteService;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
 import com.pellto.youtoy.domain.community.dto.CommunityPostDto;
 import com.pellto.youtoy.domain.community.dto.InterestPostRequest;
 import com.pellto.youtoy.domain.community.dto.ModifyCommentRequest;
 import com.pellto.youtoy.domain.community.dto.PostInterestDto;
+import com.pellto.youtoy.domain.community.dto.PostReplyCommentDto;
 import com.pellto.youtoy.domain.community.dto.WriteCommentRequest;
 import com.pellto.youtoy.domain.community.dto.WritePostRequest;
+import com.pellto.youtoy.domain.community.dto.WriteReplyRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -37,6 +41,9 @@ public class CommunityController {
   private final CommunityCommentWriteService commentWriteService;
   private final CommunityPostWriteService postWriteService;
   private final PostInterestService postInterestService;
+  private final PostReplyCommentWriteService postReplyCommentWriteService;
+  private final PostReplyCommentReadService postReplyCommentReadService;
+
 
   @GetMapping("/comments")
   public List<CommunityCommentDto> findAllComments() {
@@ -61,6 +68,21 @@ public class CommunityController {
   @DeleteMapping("/comments/{id}")
   public void deleteCommentById(@PathVariable Long id) {
     commentWriteService.deleteById(id);
+  }
+
+  @PostMapping("/comments/replies")
+  public PostReplyCommentDto writeReply(@RequestBody @Valid WriteReplyRequest req) {
+    return postReplyCommentWriteService.write(req);
+  }
+
+  @GetMapping("/comment/replies")
+  public List<PostReplyCommentDto> findAllReply() {
+    return postReplyCommentReadService.findAll();
+  }
+
+  @GetMapping("/comment/{parentCommentId}/replies")
+  public List<PostReplyCommentDto> findAllByParentCommentId(@PathVariable Long parentCommentId) {
+    return postReplyCommentReadService.findAllByParentId(parentCommentId);
   }
 
   @GetMapping("/posts")

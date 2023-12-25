@@ -21,11 +21,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Getter
-@ToString
 @Table(name = "community_post_interest")
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public class PostInterest extends Interest {

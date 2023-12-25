@@ -2,11 +2,14 @@ package com.pellto.youtoy.domain.community.util;
 
 import com.pellto.youtoy.domain.community.domain.CommunityComment;
 import com.pellto.youtoy.domain.community.domain.CommunityPost;
+import com.pellto.youtoy.domain.community.domain.PostReplyComment;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
 import com.pellto.youtoy.domain.community.dto.ModifyCommentRequest;
 import com.pellto.youtoy.domain.community.dto.WriteCommentRequest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommunityCommentFactory {
 
@@ -18,6 +21,7 @@ public class CommunityCommentFactory {
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final boolean MODIFIED = false;
   private static final LocalDateTime MODIFIED_AT = CREATED_AT;
+  private static final List<PostReplyComment> REPLIES = new ArrayList<>();
 
   public static CommunityCommentDto createCommunityCommentDto() {
     return new CommunityCommentDto(
@@ -26,6 +30,7 @@ public class CommunityCommentFactory {
         COMMENTER_UUID.getValue(),
         LIKE_COUNT,
         CONTENT,
+        REPLIES.size(),
         MODIFIED,
         CREATED_AT
     );
@@ -38,6 +43,7 @@ public class CommunityCommentFactory {
         COMMENTER_UUID.getValue(),
         LIKE_COUNT,
         content,
+        REPLIES.size(),
         true,
         CREATED_AT
     );

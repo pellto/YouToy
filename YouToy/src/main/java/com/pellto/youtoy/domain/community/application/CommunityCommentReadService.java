@@ -25,6 +25,10 @@ public class CommunityCommentReadService {
     return toDto(nullableComment.get());
   }
 
+  public CommunityComment getById(Long id) {
+    return communityCommentRepository.getReferenceById(id);
+  }
+
   public CommunityCommentDto toDto(CommunityComment comment) {
     return new CommunityCommentDto(
         comment.getId(),
@@ -32,6 +36,7 @@ public class CommunityCommentReadService {
         comment.getCommenterUuid().getValue(),
         comment.getLikeCount(),
         comment.getContent(),
+        comment.getReplies().size(),
         comment.isModified(),
         comment.getCreatedAt()
     );
