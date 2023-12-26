@@ -16,6 +16,8 @@ public enum ErrorCode {
   NOT_EXIST_ADMIN(404, "CA001", "해당 어드민이 존재하지 않습니다."),
   // Community Comment
   NOT_EXIST_COMMUNITY_COMMENT(404, "CM001", "해당 댓글이 존재하지 않습니다."),
+
+  NOT_EXIST_COMMUNITY_COMMENT_INTEREST(404, "CMI001", "해당 관심이 존재하지 않습니다."),
   // Community Post
   NOT_EXIST_COMMUNITY_POST_INTEREST(404, "CPI001", "해당 관심이 존재하지 않습니다.");
 

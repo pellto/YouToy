@@ -36,14 +36,6 @@ public abstract class Comment {
     this.modifiedAt = Temporal.createdAt(modifiedAt);
   }
 
-  protected void increaseLikeCount() {
-    this.likeCount += 1;
-  }
-
-  protected void decreaseLikeCount() {
-    this.likeCount -= 1;
-  }
-
   protected String changeContent(String s) {
     this.content = s;
     this.modified = true;

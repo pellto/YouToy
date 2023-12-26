@@ -37,7 +37,7 @@ class CommunityCommentRepositoryTest {
 
     Assertions.assertThat(savedComment).isNotNull();
     Assertions.assertThat(savedComment.getId()).isNotNull();
-    Assertions.assertThat(savedComment.getLikeCount()).isEqualTo(0);
+    Assertions.assertThat(savedComment.getLikeInterestCount()).isEqualTo(0);
     Assertions.assertThat(savedComment.getCreatedAt()).isNotNull();
     Assertions.assertThat(savedComment.getModifiedAt()).isNotNull();
     Assertions.assertThat(savedComment.getModifiedAt()).isEqualTo(savedComment.getCreatedAt());

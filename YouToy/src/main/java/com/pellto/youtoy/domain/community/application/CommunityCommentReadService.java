@@ -34,7 +34,7 @@ public class CommunityCommentReadService {
         comment.getId(),
         comment.getCommunityPost().getId(),
         comment.getCommenterUuid().getValue(),
-        comment.getLikeCount(),
+        comment.getLikeInterestCount(),
         comment.getContent(),
         comment.getReplies().size(),
         comment.isModified(),

@@ -1,7 +1,7 @@
 package com.pellto.youtoy.domain.community.application;
 
 import com.pellto.youtoy.domain.community.domain.PostInterest;
-import com.pellto.youtoy.domain.community.dto.InterestPostRequest;
+import com.pellto.youtoy.domain.community.dto.InterestRequest;
 import com.pellto.youtoy.domain.community.dto.PostInterestDto;
 import com.pellto.youtoy.domain.community.exception.NotExistPostInterestException;
 import com.pellto.youtoy.domain.community.repository.CommunityPostInterestRepository;
@@ -17,11 +17,12 @@ public class PostInterestService {
   private final CommunityPostInterestRepository postInterestRepository;
   private final CommentPostReadService postReadService;
 
-  public PostInterestDto interest(Long postId, InterestPostRequest req) {
+  public PostInterestDto interest(Long postId, InterestRequest req) {
     var post = postReadService.getById(postId);
+    var userUuid = new UserUUID(req.userUuid());
     var postInterest = PostInterest.builder()
         .interestedPost(post)
-        .interestingUserUuid(req.userUuid())
+        .interestingUserUuid(userUuid)
         .dislike(req.dislike())
         .build();
     return toDto(postInterestRepository.save(postInterest));

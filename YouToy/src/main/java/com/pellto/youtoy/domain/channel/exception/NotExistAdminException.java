@@ -1,21 +1,22 @@
 package com.pellto.youtoy.domain.channel.exception;
 
+import com.pellto.youtoy.global.error.CustomRuntimeException;
 import com.pellto.youtoy.global.error.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class NotExistAdminException extends RuntimeException {
+public class NotExistAdminException extends CustomRuntimeException {
 
-  private final String handleMsg = "handleNotExistAdminException";
+  private static final String HANDLE_MSG = "handleNotExistAdminException";
   private final ErrorCode errorCode;
 
   public NotExistAdminException() {
-    super(ErrorCode.NOT_EXIST_ADMIN.getMessage());
+    super(HANDLE_MSG, ErrorCode.NOT_EXIST_ADMIN);
     this.errorCode = ErrorCode.NOT_EXIST_ADMIN;
   }
 
   public NotExistAdminException(ErrorCode errorCode) {
-    super(errorCode.getMessage());
+    super(HANDLE_MSG, errorCode);
     this.errorCode = errorCode;
   }
 }

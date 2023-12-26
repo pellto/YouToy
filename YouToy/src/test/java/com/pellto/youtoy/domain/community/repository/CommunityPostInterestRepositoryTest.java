@@ -31,7 +31,6 @@ class CommunityPostInterestRepositoryTest {
   @DisplayName("[postInterestRepository: save: success] 포스트 관심 저장 성공 테스트")
   @Test
   void saveSuccessTest() {
-    var post = postSetting();
     var postInterest = PostInterestFactory.createBeforeSavedPostInterest();
 
     var savedPostInterest = postInterestRepository.save(postInterest);

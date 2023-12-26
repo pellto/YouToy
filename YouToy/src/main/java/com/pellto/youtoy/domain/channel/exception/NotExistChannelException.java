@@ -1,21 +1,22 @@
 package com.pellto.youtoy.domain.channel.exception;
 
+import com.pellto.youtoy.global.error.CustomRuntimeException;
 import com.pellto.youtoy.global.error.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class NotExistChannelException extends RuntimeException {
+public class NotExistChannelException extends CustomRuntimeException {
 
-  private final String handleMsg = "handleNotNotExistChannelException";
+  private static final String HANDLE_MSG = "handleNotNotExistChannelException";
   private final ErrorCode errorCode;
 
   public NotExistChannelException() {
-    super(ErrorCode.NOT_EXIST_CHANNEL.getMessage());
+    super(HANDLE_MSG, ErrorCode.NOT_EXIST_CHANNEL);
     this.errorCode = ErrorCode.NOT_EXIST_CHANNEL;
   }
 
   public NotExistChannelException(ErrorCode errorCode) {
-    super(errorCode.getMessage());
+    super(HANDLE_MSG, errorCode);
     this.errorCode = errorCode;
   }
 }

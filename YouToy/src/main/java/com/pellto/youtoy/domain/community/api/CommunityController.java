@@ -1,6 +1,7 @@
 package com.pellto.youtoy.domain.community.api;
 
 import com.pellto.youtoy.domain.community.application.CommentPostReadService;
+import com.pellto.youtoy.domain.community.application.CommunityCommentInterestService;
 import com.pellto.youtoy.domain.community.application.CommunityCommentReadService;
 import com.pellto.youtoy.domain.community.application.CommunityCommentWriteService;
 import com.pellto.youtoy.domain.community.application.CommunityPostWriteService;
@@ -8,8 +9,9 @@ import com.pellto.youtoy.domain.community.application.PostInterestService;
 import com.pellto.youtoy.domain.community.application.PostReplyCommentReadService;
 import com.pellto.youtoy.domain.community.application.PostReplyCommentWriteService;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
+import com.pellto.youtoy.domain.community.dto.CommunityCommentInterestDto;
 import com.pellto.youtoy.domain.community.dto.CommunityPostDto;
-import com.pellto.youtoy.domain.community.dto.InterestPostRequest;
+import com.pellto.youtoy.domain.community.dto.InterestRequest;
 import com.pellto.youtoy.domain.community.dto.ModifyCommentRequest;
 import com.pellto.youtoy.domain.community.dto.PostInterestDto;
 import com.pellto.youtoy.domain.community.dto.PostReplyCommentDto;
@@ -41,6 +43,7 @@ public class CommunityController {
   private final CommunityCommentWriteService commentWriteService;
   private final CommunityPostWriteService postWriteService;
   private final PostInterestService postInterestService;
+  private final CommunityCommentInterestService commentInterestService;
   private final PostReplyCommentWriteService postReplyCommentWriteService;
   private final PostReplyCommentReadService postReplyCommentReadService;
 
@@ -111,7 +114,7 @@ public class CommunityController {
       @PathVariable
       @Positive(message = "유효한 post id 유형이 아닙니다.")
       Long postId,
-      @RequestBody @Valid InterestPostRequest req
+      @RequestBody @Valid InterestRequest req
   ) {
     return postInterestService.interest(postId, req);
   }
@@ -142,17 +145,67 @@ public class CommunityController {
   }
 
   @DeleteMapping("/post/{postId}/interests")
-  @Valid
   public void deletePostInterest(
       @PathVariable
+      @Valid
       @Positive(message = "유효한 post id 유형이 아닙니다.")
       Long postId,
+      @RequestParam
+      @Valid @Pattern(
+          regexp = "^[a-zA-Z0-9]{10}-[a-zA-Z0-9]{10}-[a-zA-Z0-9]{20}$",
+          message = "유효하지 않은 uuid 패턴 입니다."
+      )
+      String userUUID
+  ) {
+    postInterestService.deleteInterestByPostIdAndUserUuid(postId, userUUID);
+  }
+
+
+  @PostMapping("/comments/{commentId}/interesting")
+  public CommunityCommentInterestDto interestCommunityComment(
+      @PathVariable
+      @Valid
+      @Positive(message = "유효한 comment id 유형이 아닙니다.")
+      Long commentId,
+      @RequestBody @Valid InterestRequest req
+  ) {
+    return commentInterestService.interest(commentId, req);
+  }
+
+  @GetMapping("/comments/interests")
+  @Valid
+  public List<CommunityCommentInterestDto> findAllCommunityCommentInterests() {
+    return commentInterestService.findAll();
+  }
+
+  @GetMapping("/comments/{commentId}/interests")
+  @Valid
+  public CommunityCommentInterestDto findCommunityCommentInterest(
+      @PathVariable
+      @Positive(message = "유효한 comment id 유형이 아닙니다.")
+      Long commentId,
       @Pattern(
           regexp = "^[a-zA-Z0-9]{10}-[a-zA-Z0-9]{10}-[a-zA-Z0-9]{20}$",
           message = "유효하지 않은 uuid 패턴 입니다."
       )
       @RequestParam String userUUID
   ) {
-    postInterestService.deleteInterestByPostIdAndUserUuid(postId, userUUID);
+    return commentInterestService.findByCommentIdAndUserUuid(commentId, userUUID);
+  }
+
+  @DeleteMapping("/comments/{commentId}/interests")
+  public void deleteCommunityCommentInterest(
+      @PathVariable
+      @Valid
+      @Positive(message = "유효한 comment id 유형이 아닙니다.")
+      Long commentId,
+      @Valid
+      @Pattern(
+          regexp = "^[a-zA-Z0-9]{10}-[a-zA-Z0-9]{10}-[a-zA-Z0-9]{20}$",
+          message = "유효하지 않은 uuid 패턴 입니다."
+      )
+      @RequestParam String userUUID
+  ) {
+    commentInterestService.deleteInterestByCommunityCommentIdAndUserUuid(commentId, userUUID);
   }
 }

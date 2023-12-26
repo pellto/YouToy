@@ -1,16 +1,17 @@
 package com.pellto.youtoy.domain.community.exception;
 
+import com.pellto.youtoy.global.error.CustomRuntimeException;
 import com.pellto.youtoy.global.error.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class NotExistPostInterestException extends RuntimeException {
+public class NotExistPostInterestException extends CustomRuntimeException {
 
-  private final String handleMsg = "handleNotExistPostInterestException";
+  private static final String HANDLE_MSG = "handleNotExistPostInterestException";
   private final ErrorCode errorCode;
 
   public NotExistPostInterestException() {
-    super(ErrorCode.NOT_EXIST_COMMUNITY_POST_INTEREST.getMessage());
+    super(HANDLE_MSG, ErrorCode.NOT_EXIST_COMMUNITY_POST_INTEREST);
     this.errorCode = ErrorCode.NOT_EXIST_COMMUNITY_POST_INTEREST;
   }
 }

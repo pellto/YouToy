@@ -54,6 +54,8 @@ public class CommunityComment extends Comment {
 
   @OneToMany(mappedBy = "parentComment", cascade = CascadeType.REMOVE)
   private final List<PostReplyComment> replies = new ArrayList<>();
+  @OneToMany(mappedBy = "interestedCommunityComment", cascade = CascadeType.REMOVE)
+  private final List<CommunityCommentInterest> commentInterests = new ArrayList<>();
 
   @Builder
   public CommunityComment(
@@ -68,17 +70,14 @@ public class CommunityComment extends Comment {
   }
 
   @Override
-  public void increaseLikeCount() {
-    super.increaseLikeCount();
-  }
-
-  @Override
-  public void decreaseLikeCount() {
-    super.decreaseLikeCount();
-  }
-
-  @Override
   public String changeContent(String s) {
     return super.changeContent(s);
+  }
+
+  public Long getLikeInterestCount() {
+    return this.commentInterests
+        .stream()
+        .filter((interest) -> !interest.isDislike())
+        .count();
   }
 }

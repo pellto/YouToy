@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.channel.exception.NotExistChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscribedChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelException;
 import com.pellto.youtoy.domain.community.exception.NotExistCommentException;
+import com.pellto.youtoy.domain.community.exception.NotExistCommentInterestException;
 import com.pellto.youtoy.domain.community.exception.NotExistPostInterestException;
 import com.pellto.youtoy.domain.user.exception.WrongRepeatPasswordException;
 import java.util.HashMap;
@@ -19,6 +20,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+  private <T extends CustomRuntimeException> ResponseEntity<ErrorResponse> postProcess(T ex) {
+    log.error(ex.getHandleMsg(), ex);
+    ErrorResponse response = new ErrorResponse(ex.getErrorCode());
+    return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+  }
 
   // Request Validation
   @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -37,9 +44,15 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ErrorResponse> handleNotExistPostInterestException(
       NotExistPostInterestException ex
   ) {
-    log.error(ex.getHandleMsg(), ex);
-    ErrorResponse response = new ErrorResponse(ex.getErrorCode());
-    return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    return this.postProcess(ex);
+  }
+
+  // Community Comment Interest
+  @ExceptionHandler(NotExistCommentInterestException.class)
+  public ResponseEntity<ErrorResponse> handleNotExistCommentInterestException(
+      NotExistCommentInterestException ex
+  ) {
+    return this.postProcess(ex);
   }
 
   // Community Comment
@@ -47,9 +60,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ErrorResponse> handleNotExistCommentException(
       NotExistCommentException ex
   ) {
-    log.error(ex.getHandleMsg(), ex);
-    ErrorResponse response = new ErrorResponse(ex.getErrorCode());
-    return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    return this.postProcess(ex);
   }
 
   // User
@@ -57,9 +68,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ErrorResponse> handleWrongRepeatPasswordException(
       WrongRepeatPasswordException ex
   ) {
-    log.error(ex.getHandleMsg(), ex);
-    ErrorResponse response = new ErrorResponse(ex.getErrorCode());
-    return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    return this.postProcess(ex);
   }
 
   // Channel
@@ -67,26 +76,20 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ErrorResponse> handleNotExistSubscriberChannelException(
       NotExistSubscriberChannelException ex
   ) {
-    log.error(ex.getHandleMsg(), ex);
-    ErrorResponse response = new ErrorResponse(ex.getErrorCode());
-    return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    return this.postProcess(ex);
   }
 
   @ExceptionHandler(NotExistSubscribedChannelException.class)
   public ResponseEntity<ErrorResponse> handleNotExistSubscribedChannelException(
       NotExistSubscribedChannelException ex
   ) {
-    log.error(ex.getHandleMsg(), ex);
-    ErrorResponse response = new ErrorResponse(ex.getErrorCode());
-    return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    return this.postProcess(ex);
   }
 
   @ExceptionHandler(NotExistChannelException.class)
   public ResponseEntity<ErrorResponse> handleNotExistChannelException(
       NotExistChannelException ex
   ) {
-    log.error(ex.getHandleMsg(), ex);
-    ErrorResponse response = new ErrorResponse(ex.getErrorCode());
-    return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    return this.postProcess(ex);
   }
 }

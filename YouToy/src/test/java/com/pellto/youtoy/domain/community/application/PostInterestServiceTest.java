@@ -11,6 +11,7 @@ import com.pellto.youtoy.domain.community.exception.NotExistPostInterestExceptio
 import com.pellto.youtoy.domain.community.repository.CommunityPostInterestRepository;
 import com.pellto.youtoy.domain.community.util.CommunityPostFactory;
 import com.pellto.youtoy.domain.community.util.PostInterestFactory;
+import com.pellto.youtoy.domain.user.domain.UserUUID;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
@@ -39,7 +40,8 @@ class PostInterestServiceTest {
   void interestSuccessTest() {
     var req = PostInterestFactory.createInterestPostRequest();
     var post = CommunityPostFactory.createPost();
-    var postInterest = PostInterestFactory.createInterest(post, req.userUuid());
+    var userUuid = new UserUUID(req.userUuid());
+    var postInterest = PostInterestFactory.createInterest(post, userUuid);
 
     given(postReadService.getById(any())).willReturn(post);
     given(postInterestRepository.save(any())).willReturn(postInterest);

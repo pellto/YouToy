@@ -58,16 +58,6 @@ public class PostReplyComment extends ReplyComment {
   }
 
   @Override
-  public void increaseLikeCount() {
-    super.increaseLikeCount();
-  }
-
-  @Override
-  public void decreaseLikeCount() {
-    super.decreaseLikeCount();
-  }
-
-  @Override
   public String changeContent(String s) {
     return super.changeContent(s);
   }

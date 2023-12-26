@@ -1,14 +1,13 @@
 package com.pellto.youtoy.domain.community.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pellto.youtoy.domain.base.Interest;
+import com.pellto.youtoy.domain.base.CommentInterest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,18 +23,18 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "community_post_interest")
+@Table(name = "community_comment_interest")
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public class PostInterest extends Interest {
+public class CommunityCommentInterest extends CommentInterest {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "community_post_interest_id")
+  @Column(name = "community_comment_interest_id")
   private Long id;
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JsonIgnore
-  @JoinColumn(referencedColumnName = "community_post_id", name = "interested_post_id")
-  private CommunityPost interestedPost;
+  @JoinColumn(referencedColumnName = "community_comment_id", name = "interested_community_comment_id")
+  private CommunityComment interestedCommunityComment;
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(
@@ -48,11 +47,11 @@ public class PostInterest extends Interest {
   private UserUUID interestingUserUuid;
 
   @Builder
-  public PostInterest(boolean dislike, LocalDateTime createdAt, Long id,
-      CommunityPost interestedPost, UserUUID interestingUserUuid) {
+  public CommunityCommentInterest(boolean dislike, LocalDateTime createdAt, Long id,
+      CommunityComment interestedCommunityComment, UserUUID interestingUserUuid) {
     super(dislike, createdAt);
     this.id = id;
-    this.interestedPost = Objects.requireNonNull(interestedPost);
+    this.interestedCommunityComment = Objects.requireNonNull(interestedCommunityComment);
     this.interestingUserUuid = Objects.requireNonNull(interestingUserUuid);
   }
 
