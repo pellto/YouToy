@@ -5,12 +5,14 @@ import com.pellto.youtoy.domain.community.application.CommunityCommentInterestSe
 import com.pellto.youtoy.domain.community.application.CommunityCommentReadService;
 import com.pellto.youtoy.domain.community.application.CommunityCommentWriteService;
 import com.pellto.youtoy.domain.community.application.CommunityPostWriteService;
+import com.pellto.youtoy.domain.community.application.CommunityReplyCommentInterestService;
 import com.pellto.youtoy.domain.community.application.PostInterestService;
 import com.pellto.youtoy.domain.community.application.PostReplyCommentReadService;
 import com.pellto.youtoy.domain.community.application.PostReplyCommentWriteService;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentInterestDto;
 import com.pellto.youtoy.domain.community.dto.CommunityPostDto;
+import com.pellto.youtoy.domain.community.dto.CommunityReplyCommentInterestDto;
 import com.pellto.youtoy.domain.community.dto.InterestRequest;
 import com.pellto.youtoy.domain.community.dto.ModifyCommentRequest;
 import com.pellto.youtoy.domain.community.dto.PostInterestDto;
@@ -44,6 +46,7 @@ public class CommunityController {
   private final CommunityPostWriteService postWriteService;
   private final PostInterestService postInterestService;
   private final CommunityCommentInterestService commentInterestService;
+  private final CommunityReplyCommentInterestService replyCommentInterestService;
   private final PostReplyCommentWriteService postReplyCommentWriteService;
   private final PostReplyCommentReadService postReplyCommentReadService;
 
@@ -207,5 +210,54 @@ public class CommunityController {
       @RequestParam String userUUID
   ) {
     commentInterestService.deleteInterestByCommunityCommentIdAndUserUuid(commentId, userUUID);
+  }
+
+  @PostMapping("/comments/replies/{replyId}/interesting")
+  public CommunityReplyCommentInterestDto interestCommunityReplyIdComment(
+      @PathVariable
+      @Valid
+      @Positive(message = "유효한 reply id 유형이 아닙니다.")
+      Long replyId,
+      @RequestBody @Valid InterestRequest req
+  ) {
+    return replyCommentInterestService.interest(replyId, req);
+  }
+
+  @GetMapping("/comments/replies/interests")
+  @Valid
+  public List<CommunityReplyCommentInterestDto> findAllCommunityReplyCommentInterests() {
+    return replyCommentInterestService.findAll();
+  }
+
+  @GetMapping("/comments/replies/{replyId}/interests")
+  @Valid
+  public CommunityReplyCommentInterestDto findCommunityReplyCommentInterest(
+      @PathVariable
+      @Positive(message = "유효한 reply id 유형이 아닙니다.")
+      Long replyId,
+      @Pattern(
+          regexp = "^[a-zA-Z0-9]{10}-[a-zA-Z0-9]{10}-[a-zA-Z0-9]{20}$",
+          message = "유효하지 않은 uuid 패턴 입니다."
+      )
+      @RequestParam String userUUID
+  ) {
+    return replyCommentInterestService.findByReplyCommentIdAndUserUuid(replyId, userUUID);
+  }
+
+  @DeleteMapping("/comments/replies/{replyId}/interests")
+  public void deleteCommunityReplyCommentInterest(
+      @PathVariable
+      @Valid
+      @Positive(message = "유효한 reply id 유형이 아닙니다.")
+      Long replyId,
+      @Valid
+      @Pattern(
+          regexp = "^[a-zA-Z0-9]{10}-[a-zA-Z0-9]{10}-[a-zA-Z0-9]{20}$",
+          message = "유효하지 않은 uuid 패턴 입니다."
+      )
+      @RequestParam String userUUID
+  ) {
+    replyCommentInterestService.deleteInterestByCommunityReplyCommentIdAndUserUuid(replyId,
+        userUUID);
   }
 }

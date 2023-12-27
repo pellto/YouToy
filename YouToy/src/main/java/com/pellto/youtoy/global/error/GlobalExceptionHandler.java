@@ -6,6 +6,7 @@ import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelExcep
 import com.pellto.youtoy.domain.community.exception.NotExistCommentException;
 import com.pellto.youtoy.domain.community.exception.NotExistCommentInterestException;
 import com.pellto.youtoy.domain.community.exception.NotExistPostInterestException;
+import com.pellto.youtoy.domain.community.exception.NotExistReplyCommentInterestException;
 import com.pellto.youtoy.domain.user.exception.WrongRepeatPasswordException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +52,13 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(NotExistCommentInterestException.class)
   public ResponseEntity<ErrorResponse> handleNotExistCommentInterestException(
       NotExistCommentInterestException ex
+  ) {
+    return this.postProcess(ex);
+  }
+
+  @ExceptionHandler(NotExistReplyCommentInterestException.class)
+  public ResponseEntity<ErrorResponse> handleNotExistReplyCommentInterestException(
+      NotExistReplyCommentInterestException ex
   ) {
     return this.postProcess(ex);
   }

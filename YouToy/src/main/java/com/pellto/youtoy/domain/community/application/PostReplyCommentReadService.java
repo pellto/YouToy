@@ -23,6 +23,10 @@ public class PostReplyCommentReadService {
     return replyRepository.findAll().stream().map(this::toDto).toList();
   }
 
+  public PostReplyComment getById(Long id) {
+    return replyRepository.getReferenceById(id);
+  }
+
   public PostReplyCommentDto toDto(PostReplyComment replyComment) {
     return new PostReplyCommentDto(
         replyComment.getId(),

@@ -63,15 +63,15 @@ class CommunityCommentInterestRepositoryTest {
 
     Assertions.assertThat(nullableCommentInterest).isNotNull();
     Assertions.assertThat(nullableCommentInterest).isNotEmpty();
-    var fountCommentInterest = nullableCommentInterest.get();
-    Assertions.assertThat(fountCommentInterest.getId()).isEqualTo(commentInterest.getId());
-    Assertions.assertThat(fountCommentInterest.getInterestedCommunityComment())
+    var foundCommentInterest = nullableCommentInterest.get();
+    Assertions.assertThat(foundCommentInterest.getId()).isEqualTo(commentInterest.getId());
+    Assertions.assertThat(foundCommentInterest.getInterestedCommunityComment())
         .isEqualTo(commentInterest.getInterestedCommunityComment());
-    Assertions.assertThat(fountCommentInterest.getInterestingUserUuid().getValue())
+    Assertions.assertThat(foundCommentInterest.getInterestingUserUuid().getValue())
         .isEqualTo(commentInterest.getInterestingUserUuid().getValue());
-    Assertions.assertThat(fountCommentInterest.getCreatedAt())
+    Assertions.assertThat(foundCommentInterest.getCreatedAt())
         .isEqualTo(commentInterest.getCreatedAt());
-    Assertions.assertThat(fountCommentInterest.isDislike()).isEqualTo(commentInterest.isDislike());
+    Assertions.assertThat(foundCommentInterest.isDislike()).isEqualTo(commentInterest.isDislike());
   }
 
   @DisplayName("[commentInterestRepository: findAllByInterestedCommunityComment: success] 댓글 관심 commentId 전체 조회 성공 테스트")
