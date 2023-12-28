@@ -1,7 +1,7 @@
 package com.pellto.youtoy.domain.community.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pellto.youtoy.domain.base.Comment;
+import com.pellto.youtoy.domain.deprecated.base.Comment;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;

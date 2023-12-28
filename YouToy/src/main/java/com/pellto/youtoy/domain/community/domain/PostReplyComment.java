@@ -1,7 +1,7 @@
 package com.pellto.youtoy.domain.community.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pellto.youtoy.domain.base.ReplyComment;
+import com.pellto.youtoy.domain.deprecated.base.ReplyComment;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -40,7 +40,7 @@ public class PostReplyComment extends ReplyComment {
   @JsonIgnore
   @JoinColumn(referencedColumnName = "community_comment_id", name = "parrent_comment_id")
   private CommunityComment parentComment;
-  
+
   @OneToMany(mappedBy = "interestedReplyComment", cascade = CascadeType.REMOVE)
   private final List<CommunityReplyCommentInterest> interests = new ArrayList<>();
 

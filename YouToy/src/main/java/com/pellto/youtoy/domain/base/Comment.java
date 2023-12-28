@@ -1,9 +1,17 @@
 package com.pellto.youtoy.domain.base;
 
-import com.pellto.youtoy.global.util.General;
-import com.pellto.youtoy.global.util.Numeric;
-import com.pellto.youtoy.global.util.Temporal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pellto.youtoy.domain.user.domain.UserUUID;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -14,32 +22,41 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 @Getter
 @NoArgsConstructor
-public abstract class Comment {
+public abstract class Comment<C> extends BaseComment {
 
-  @Column(name = "like_count")
-  protected Long likeCount;
-  @Column(name = "content")
-  protected String content;
-  @Column(name = "modified")
-  protected boolean modified;
-  @Column(name = "created_at")
-  protected LocalDateTime createdAt;
-  @Column(name = "modified_at")
-  protected LocalDateTime modifiedAt;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "comment_id")
+  private Long id;
 
-  protected Comment(Long likeCount, String content, boolean modified, LocalDateTime createdAt,
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JsonIgnore
+  @JoinColumn(referencedColumnName = "contents_id", name = "contents_id")
+  private C contents;
+  @Embedded
+  @AttributeOverrides({
+      @AttributeOverride(
+          name = "value",
+          column = @Column(
+              name = "commenter_uuid", nullable = false
+          )
+      )
+  })
+  private UserUUID commenterUuid;
+
+  protected Comment(C contents, UserUUID commenterUuid, Long likeCount, String commentContent,
+      boolean modified,
+      LocalDateTime createdAt,
       LocalDateTime modifiedAt) {
-    this.likeCount = Numeric.initCount(likeCount);
-    this.modified = General.setNullInput(modified, false);
-    this.content = Objects.requireNonNull(content);
-    this.createdAt = Temporal.createdAt(createdAt);
-    this.modifiedAt = Temporal.createdAt(modifiedAt);
+    super(likeCount, commentContent, modified, createdAt, modifiedAt);
+    this.commenterUuid = Objects.requireNonNull(commenterUuid);
+    this.contents = Objects.requireNonNull(contents);
   }
 
-  protected String changeContent(String s) {
-    this.content = s;
+  protected String changeCommentContent(String s) {
+    var changedCommentContent = super.changeCommentContent(s);
     this.modified = true;
     this.modifiedAt = LocalDateTime.now();
-    return this.content;
+    return changedCommentContent;
   }
 }
