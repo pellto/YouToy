@@ -14,14 +14,15 @@ public enum ErrorCode {
   // Channel
   NOT_EXIST_CHANNEL(404, "CH001", "해당 채널이 존재하지 않습니다."),
   NOT_EXIST_ADMIN(404, "CA001", "해당 어드민이 존재하지 않습니다."),
-  // Community Comment
-  NOT_EXIST_COMMUNITY_COMMENT(404, "CM001", "해당 댓글이 존재하지 않습니다."),
-
-  NOT_EXIST_COMMUNITY_COMMENT_INTEREST(404, "CMI001", "해당 관심이 존재하지 않습니다."),
-  NOT_EXIST_COMMUNITY_REPLY_COMMENT_INTEREST(404, "CRI", "해당 관심이 존재하지 않습니다."),
   // Community Post
   NOT_EXIST_COMMUNITY_POST_INTEREST(404, "CPI001", "해당 관심이 존재하지 않습니다."),
-  ;
+
+  // Base
+  NOT_EXIST_COMMENT(404, "CM001", "해당 댓글이 존재하지 않습니다."),
+  NOT_EXIST_COMMENT_INTEREST(404, "RC001", "해당 관심이 존재하지 않습니다."),
+  NOT_EXIST_REPLY_COMMENT(404, "CR001", "해당 답글이 존재하지 않습니다."),
+  NOT_EXIST_REPLY_COMMENT_INTEREST(404, "CRI001", "해당 관심이 존재하지 않습니다."),
+  NOT_EXIST_CONTENTS_INTEREST(404, "CI001", "해당 관심이 존재하지 않습니다.");
 
   private final int status;
   private final String code;

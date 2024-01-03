@@ -4,9 +4,9 @@ import com.pellto.youtoy.domain.community.domain.CommunityComment;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentDto;
 import com.pellto.youtoy.domain.community.dto.ModifyCommentRequest;
 import com.pellto.youtoy.domain.community.dto.WriteCommentRequest;
-import com.pellto.youtoy.domain.community.exception.NotExistCommentException;
 import com.pellto.youtoy.domain.community.repository.CommunityCommentRepository;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
+import com.pellto.youtoy.global.exception.NotExistCommentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

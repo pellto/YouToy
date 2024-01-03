@@ -1,7 +1,7 @@
 package com.pellto.youtoy.domain.community.exception;
 
-import com.pellto.youtoy.global.error.CustomRuntimeException;
 import com.pellto.youtoy.global.error.ErrorCode;
+import com.pellto.youtoy.global.exception.CustomRuntimeException;
 import lombok.Getter;
 
 @Getter

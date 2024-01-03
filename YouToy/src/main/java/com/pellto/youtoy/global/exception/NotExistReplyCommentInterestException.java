@@ -1,6 +1,5 @@
-package com.pellto.youtoy.domain.community.exception;
+package com.pellto.youtoy.global.exception;
 
-import com.pellto.youtoy.global.error.CustomRuntimeException;
 import com.pellto.youtoy.global.error.ErrorCode;
 import lombok.Getter;
 
@@ -11,7 +10,7 @@ public class NotExistReplyCommentInterestException extends CustomRuntimeExceptio
   private final ErrorCode errorCode;
 
   public NotExistReplyCommentInterestException() {
-    super(HANDLE_MSG, ErrorCode.NOT_EXIST_COMMUNITY_REPLY_COMMENT_INTEREST);
-    this.errorCode = ErrorCode.NOT_EXIST_COMMUNITY_REPLY_COMMENT_INTEREST;
+    super(HANDLE_MSG, ErrorCode.NOT_EXIST_REPLY_COMMENT_INTEREST);
+    this.errorCode = ErrorCode.NOT_EXIST_REPLY_COMMENT_INTEREST;
   }
 }

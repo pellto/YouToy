@@ -37,10 +37,9 @@ public abstract class BaseComment {
     this.modifiedAt = Temporal.createdAt(modifiedAt);
   }
 
-  protected String changeCommentContent(String s) {
+  protected void changeCommentContent(String s) {
     this.commentContent = s;
     this.modified = true;
     this.modifiedAt = LocalDateTime.now();
-    return this.commentContent;
   }
 }

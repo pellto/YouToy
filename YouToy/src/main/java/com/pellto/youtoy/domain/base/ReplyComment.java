@@ -53,4 +53,9 @@ public abstract class ReplyComment<CM> extends BaseComment {
     this.parentComment = Objects.requireNonNull(parentComment);
     this.commenterUuid = Objects.requireNonNull(commenterUuid);
   }
+
+  @Override
+  protected void changeCommentContent(String s) {
+    super.changeCommentContent(s);
+  }
 }

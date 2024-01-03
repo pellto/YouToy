@@ -22,4 +22,9 @@ public class VideoInterest extends ContentsInterest<Video> {
       LocalDateTime createdAt) {
     super(interestedContents, interestingUserUuid, id, dislike, createdAt);
   }
+
+  @Override
+  public void changeDislike() {
+    super.changeDislike();
+  }
 }

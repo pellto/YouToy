@@ -1,6 +1,6 @@
 package com.pellto.youtoy.domain.video.application;
 
-import com.pellto.youtoy.domain.base.application.WriteService;
+import com.pellto.youtoy.domain.base.application.WriteUpdateDeleteService;
 import com.pellto.youtoy.domain.base.dto.ModifyCommentRequest;
 import com.pellto.youtoy.domain.base.dto.WriteCommentRequest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class VideoCommentWriteService implements
-    WriteService<VideoCommentDto, WriteCommentRequest, ModifyCommentRequest> {
+    WriteUpdateDeleteService<VideoCommentDto, WriteCommentRequest, ModifyCommentRequest> {
 
   private final VideoCommentRepository videoCommentRepository;
   private final VideoCommentReadService videoCommentReadService;

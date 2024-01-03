@@ -24,4 +24,9 @@ public class VideoReplyComment extends ReplyComment<VideoComment> {
     super(parentComment, commenterUuid, id, likeCount, content, modified, createdAt, modifiedAt,
         mentioned);
   }
+
+  @Override
+  public void changeCommentContent(String s) {
+    super.changeCommentContent(s);
+  }
 }

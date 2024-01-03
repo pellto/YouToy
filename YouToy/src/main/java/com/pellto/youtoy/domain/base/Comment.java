@@ -55,10 +55,9 @@ public abstract class Comment<C> extends BaseComment {
     this.contents = Objects.requireNonNull(contents);
   }
 
-  protected String changeCommentContent(String s) {
-    var changedCommentContent = super.changeCommentContent(s);
+  protected void changeCommentContent(String s) {
+    super.changeCommentContent(s);
     this.modified = true;
     this.modifiedAt = LocalDateTime.now();
-    return changedCommentContent;
   }
 }

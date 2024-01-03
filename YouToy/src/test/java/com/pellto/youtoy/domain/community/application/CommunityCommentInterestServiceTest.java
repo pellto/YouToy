@@ -7,11 +7,11 @@ import static org.mockito.Mockito.times;
 
 import com.pellto.youtoy.domain.community.domain.CommunityCommentInterest;
 import com.pellto.youtoy.domain.community.dto.CommunityCommentInterestDto;
-import com.pellto.youtoy.domain.community.exception.NotExistCommentInterestException;
 import com.pellto.youtoy.domain.community.repository.CommunityCommentInterestRepository;
 import com.pellto.youtoy.domain.community.util.CommunityCommentFactory;
 import com.pellto.youtoy.domain.community.util.CommunityCommentInterestFactory;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
+import com.pellto.youtoy.global.exception.NotExistCommentInterestException;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;

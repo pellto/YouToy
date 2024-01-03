@@ -23,7 +23,6 @@ public class VideoFactory {
         .title(TITLE)
         .viewCount(VIEW_COUNT)
         .description(DESCRIPTION)
-        .likeCount(LIKE_COUNT)
         .createdAt(CREATED_AT)
         .modifiedAt(MODIFIED_AT)
         .build();
@@ -36,7 +35,6 @@ public class VideoFactory {
         .title(req.title())
         .viewCount(VIEW_COUNT)
         .description(req.description())
-        .likeCount(LIKE_COUNT)
         .createdAt(CREATED_AT)
         .modifiedAt(MODIFIED_AT)
         .build();
@@ -49,7 +47,6 @@ public class VideoFactory {
         .title(TITLE)
         .viewCount(VIEW_COUNT)
         .description(DESCRIPTION)
-        .likeCount(LIKE_COUNT)
         .createdAt(CREATED_AT)
         .modifiedAt(MODIFIED_AT)
         .build();

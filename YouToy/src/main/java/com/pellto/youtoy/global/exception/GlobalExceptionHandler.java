@@ -1,13 +1,11 @@
-package com.pellto.youtoy.global.error;
+package com.pellto.youtoy.global.exception;
 
 import com.pellto.youtoy.domain.channel.exception.NotExistChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscribedChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelException;
-import com.pellto.youtoy.domain.community.exception.NotExistCommentException;
-import com.pellto.youtoy.domain.community.exception.NotExistCommentInterestException;
 import com.pellto.youtoy.domain.community.exception.NotExistPostInterestException;
-import com.pellto.youtoy.domain.community.exception.NotExistReplyCommentInterestException;
 import com.pellto.youtoy.domain.user.exception.WrongRepeatPasswordException;
+import com.pellto.youtoy.global.error.ErrorResponse;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +46,7 @@ public class GlobalExceptionHandler {
     return this.postProcess(ex);
   }
 
-  // Community Comment Interest
+  // Comment Interest
   @ExceptionHandler(NotExistCommentInterestException.class)
   public ResponseEntity<ErrorResponse> handleNotExistCommentInterestException(
       NotExistCommentInterestException ex
@@ -56,6 +54,7 @@ public class GlobalExceptionHandler {
     return this.postProcess(ex);
   }
 
+  // Reply Interest
   @ExceptionHandler(NotExistReplyCommentInterestException.class)
   public ResponseEntity<ErrorResponse> handleNotExistReplyCommentInterestException(
       NotExistReplyCommentInterestException ex
@@ -63,7 +62,15 @@ public class GlobalExceptionHandler {
     return this.postProcess(ex);
   }
 
-  // Community Comment
+  // Contents Interest
+  @ExceptionHandler(NotExistContentsInterestException.class)
+  public ResponseEntity<ErrorResponse> handleNotExistContentsInterestException(
+      NotExistContentsInterestException ex
+  ) {
+    return this.postProcess(ex);
+  }
+
+  // Comment
   @ExceptionHandler(NotExistCommentException.class)
   public ResponseEntity<ErrorResponse> handleNotExistCommentException(
       NotExistCommentException ex

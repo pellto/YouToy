@@ -26,28 +26,31 @@ public class Video extends Contents {
   private String title;
   private Long viewCount;
   private String description;
-  private int likeCount;
   private LocalDateTime createdAt;
   private LocalDateTime modifiedAt;
 
   @OneToMany(mappedBy = "contents", cascade = CascadeType.REMOVE)
   private final List<VideoComment> comments = new ArrayList<>();
+  @OneToMany(mappedBy = "interestedContents", cascade = CascadeType.REMOVE)
+  private final List<VideoInterest> interests = new ArrayList<>();
 
   @Builder
   public Video(Long id, Long channelId, String title, Long viewCount, String description,
-      int likeCount,
       LocalDateTime createdAt, LocalDateTime modifiedAt) {
     super(id);
     this.channelId = Objects.requireNonNull(channelId);
     this.title = Objects.requireNonNull(title);
     this.viewCount = General.setNullInput(viewCount, 0L);
     this.description = Objects.requireNonNull(description);
-    this.likeCount = General.setNullInput(likeCount, 0);
     this.createdAt = Temporal.createdAt(createdAt);
     this.modifiedAt = General.setNullInput(modifiedAt, this.createdAt);
   }
 
   public int getCommentCount() {
     return this.comments.size();
+  }
+
+  public int getLikeCount() {
+    return (int) this.interests.stream().filter((interest) -> !interest.isDislike()).count();
   }
 }

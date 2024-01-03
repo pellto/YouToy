@@ -35,6 +35,19 @@ public class VideoCommentFactory {
         .build();
   }
 
+  public static VideoComment create(Long commentId) {
+    return VideoComment.builder()
+        .id(commentId)
+        .contents(CONTENT)
+        .commenterUuid(COMMENTER)
+        .commentContent(COMMENT_CONTENT)
+        .likeCount(LIKE_COUNT)
+        .createdAt(CREATED_AT)
+        .modified(MODIFIED)
+        .modifiedAt(MODIFIED_AT)
+        .build();
+  }
+
   public static VideoCommentDto createCommentDto() {
     return new VideoCommentDto(ID, CONTENT.getId(), COMMENTER.getValue(), LIKE_COUNT,
         COMMENT_CONTENT, REPLIES.size(), MODIFIED, CREATED_AT);

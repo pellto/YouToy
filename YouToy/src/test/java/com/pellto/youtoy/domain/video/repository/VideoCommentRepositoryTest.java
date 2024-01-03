@@ -33,7 +33,7 @@ class VideoCommentRepositoryTest {
     return videoRepository.save(video);
   }
 
-  @DisplayName("[videoCommentRepository: save: success] 비디오 댓글 삭제 성공 테스트")
+  @DisplayName("[videoCommentRepository: save: success] 비디오 댓글 저장 성공 테스트")
   @Test
   void saveSuccessTest() {
     var video = videoSetting();

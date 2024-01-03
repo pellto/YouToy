@@ -1,5 +1,6 @@
-package com.pellto.youtoy.global.error;
+package com.pellto.youtoy.global.exception;
 
+import com.pellto.youtoy.global.error.ErrorCode;
 import lombok.Getter;
 
 @Getter

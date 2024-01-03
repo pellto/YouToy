@@ -18,8 +18,8 @@ public abstract class Interest {
   @Column(name = "dislike")
   protected boolean dislike;
 
-  protected void changeDislike(boolean b) {
-    this.dislike = b;
+  protected void changeDislike() {
+    this.dislike = !this.dislike;
   }
 
   protected Interest(boolean dislike, LocalDateTime createdAt) {
