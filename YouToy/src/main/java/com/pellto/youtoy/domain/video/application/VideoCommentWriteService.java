@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class VideoCommentWriteService extends
+public class VideoCommentWriteService implements
     WriteService<VideoCommentDto, WriteCommentRequest, ModifyCommentRequest> {
 
   private final VideoCommentRepository videoCommentRepository;

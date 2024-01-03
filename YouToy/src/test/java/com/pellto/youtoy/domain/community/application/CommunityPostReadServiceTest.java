@@ -23,7 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @Tag("service")
 @ExtendWith(MockitoExtension.class)
-class CommentPostReadServiceTest {
+class CommunityPostReadServiceTest {
 
   @InjectMocks
   private CommentPostReadService postReadService;

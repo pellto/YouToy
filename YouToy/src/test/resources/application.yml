@@ -1,3 +1,6 @@
+server:
+  port: 8080 # 내장 톰캣 포트번호
+
 spring:
   config:
     activate:
@@ -16,8 +19,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        format_sql: true      # 쿼리 로그 포맷 (정렬)
-        show_sql: true        # 쿼리 로그 출력
+        format_sql: false      # 쿼리 로그 포맷 (정렬)
+  #        show_sql: false        # 쿼리 로그 출력
 
   h2:
     console: # H2 DB를 웹에서 관리할 수 있는 기능

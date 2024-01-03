@@ -44,8 +44,9 @@ public abstract class ReplyCommentInterest<RC> extends
   private UserUUID interestingUserUuid;
 
   public ReplyCommentInterest(RC interestedReplyComment, UserUUID interestingUserUuid,
-      boolean dislike, LocalDateTime createdAt) {
+      Long id, boolean dislike, LocalDateTime createdAt) {
     super(dislike, createdAt);
+    this.id = id;
     this.interestedReplyComment = Objects.requireNonNull(interestedReplyComment);
     this.interestingUserUuid = Objects.requireNonNull(interestingUserUuid);
   }

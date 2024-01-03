@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class VideoCommentReadService extends ReadService<VideoComment, VideoCommentDto> {
+public class VideoCommentReadService implements ReadService<VideoComment, VideoCommentDto> {
 
   private final VideoCommentRepository videoCommentRepository;
 

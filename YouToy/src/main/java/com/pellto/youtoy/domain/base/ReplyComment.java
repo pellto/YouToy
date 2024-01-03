@@ -43,10 +43,12 @@ public abstract class ReplyComment<CM> extends BaseComment {
   ))
   private UserUUID commenterUuid;
 
-  public ReplyComment(CM parentComment, UserUUID commenterUuid, Long likeCount, String content,
+  public ReplyComment(CM parentComment, UserUUID commenterUuid, Long id, Long likeCount,
+      String content,
       boolean modified, LocalDateTime createdAt,
       LocalDateTime modifiedAt, boolean mentioned) {
     super(likeCount, content, modified, createdAt, modifiedAt);
+    this.id = id;
     this.mentioned = General.setNullInput(mentioned, false);
     this.parentComment = Objects.requireNonNull(parentComment);
     this.commenterUuid = Objects.requireNonNull(commenterUuid);

@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class Contents {
 
-  public Contents(Long id) {
-    this.id = id;
-  }
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "contents_id")
   private Long id;
+
+  public Contents(Long id) {
+    this.id = id;
+  }
 }

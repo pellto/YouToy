@@ -42,7 +42,8 @@ public abstract class CommentInterest<CM> extends Interest {
   })
   private UserUUID interestingUserUuid;
 
-  public CommentInterest(CM interestedComment, UserUUID interestingUserUuid, boolean dislike,
+  public CommentInterest(CM interestedComment, UserUUID interestingUserUuid, Long id,
+      boolean dislike,
       LocalDateTime createdAt) {
     super(dislike, createdAt);
     this.interestedComment = Objects.requireNonNull(interestedComment);

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class VideoReadService extends ReadService<Video, VideoDto> {
+public class VideoReadService implements ReadService<Video, VideoDto> {
 
   private final VideoRepository videoRepository;
 

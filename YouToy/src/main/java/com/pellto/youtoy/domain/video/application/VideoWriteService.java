@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class VideoWriteService extends
+public class VideoWriteService implements
     WriteService<VideoDto, VideoUploadRequest, VideoModifyRequest> {
 
   private final VideoRepository videoRepository;
