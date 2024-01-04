@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommunityCommentFactory {
+public class PostCommentFactory {
 
   private static final Long ID = 1L;
-  private static final Post COMMUNITY_POST = CommunityPostFactory.createPost();
+  private static final Post COMMUNITY_POST = PostFactory.createPost();
   private static final UserUUID COMMENTER_UUID = new UserUUID("commenter_uuid");
   private static final String CONTENT = "content";
   private static final int LIKE_COUNT = 0;

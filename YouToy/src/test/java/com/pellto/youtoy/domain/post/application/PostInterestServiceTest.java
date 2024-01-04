@@ -8,7 +8,7 @@ import static org.mockito.Mockito.times;
 import com.pellto.youtoy.domain.post.domain.PostInterest;
 import com.pellto.youtoy.domain.post.dto.PostInterestDto;
 import com.pellto.youtoy.domain.post.repository.PostInterestRepository;
-import com.pellto.youtoy.domain.post.util.CommunityPostFactory;
+import com.pellto.youtoy.domain.post.util.PostFactory;
 import com.pellto.youtoy.domain.post.util.PostInterestFactory;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ class PostInterestServiceTest {
   @Test
   void interestSuccessTest() {
     var req = PostInterestFactory.createInterestPostRequest();
-    var post = CommunityPostFactory.createPost();
+    var post = PostFactory.createPost();
     var userUuid = new UserUUID(req.interestingUserUuid());
     var postInterest = PostInterestFactory.createInterest(post, userUuid);
 
@@ -55,7 +55,7 @@ class PostInterestServiceTest {
   @DisplayName("[postInterestService: findAllByPostId: success] 게시글 관심 postId 전체 조회 성공 테스트")
   @Test
   void findAllByPostIdSuccessTest() {
-    var post = CommunityPostFactory.createPost();
+    var post = PostFactory.createPost();
     var postInterest = PostInterestFactory.createInterest(post);
     var postInterestList = new ArrayList<PostInterest>();
     postInterestList.add(postInterest);

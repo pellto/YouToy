@@ -2,9 +2,9 @@ package com.pellto.youtoy.domain.post.repository;
 
 import com.pellto.youtoy.domain.post.domain.Post;
 import com.pellto.youtoy.domain.post.domain.PostComment;
-import com.pellto.youtoy.domain.post.util.CommunityCommentFactory;
-import com.pellto.youtoy.domain.post.util.CommunityPostFactory;
-import com.pellto.youtoy.domain.post.util.PostReplyCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostFactory;
+import com.pellto.youtoy.domain.post.util.PostReplyFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -27,13 +27,13 @@ class PostReplyRepositoryTest {
   private PostReplyRepository postReplyRepository;
 
   private Post postSetting() {
-    var post = CommunityPostFactory.createPost();
+    var post = PostFactory.createPost();
     return postRepository.save(post);
   }
 
   private PostComment commentSetting() {
     var post = postSetting();
-    var comment = CommunityCommentFactory.createCommunityComment(post);
+    var comment = PostCommentFactory.createCommunityComment(post);
     return commentRepository.save(comment);
   }
 
@@ -41,9 +41,9 @@ class PostReplyRepositoryTest {
   @Test
   void saveSuccessTest() {
     var post = commentSetting();
-    var replyComment = PostReplyCommentFactory.createBeforeSavedReplyComment(post);
+    var reply = PostReplyFactory.createBeforeSaved(post);
 
-    var savedReply = postReplyRepository.save(replyComment);
+    var savedReply = postReplyRepository.save(reply);
 
     Assertions.assertThat(savedReply).isNotNull();
     Assertions.assertThat(savedReply.getId()).isNotNull();
@@ -52,19 +52,19 @@ class PostReplyRepositoryTest {
     Assertions.assertThat(savedReply.getModifiedAt()).isNotNull();
     Assertions.assertThat(savedReply.getModifiedAt()).isEqualTo(savedReply.getCreatedAt());
     Assertions.assertThat(savedReply.getCommenterUuid())
-        .isEqualTo(replyComment.getCommenterUuid());
+        .isEqualTo(reply.getCommenterUuid());
     Assertions.assertThat(savedReply.getParentComment())
-        .isEqualTo(replyComment.getParentComment());
+        .isEqualTo(reply.getParentComment());
     Assertions.assertThat(savedReply.getCommentContent())
-        .isEqualTo(replyComment.getCommentContent());
+        .isEqualTo(reply.getCommentContent());
   }
 
   @DisplayName("[postReplyRepository: findAll: success] 커뮤니티 답글 전체 조회 성공 테스트")
   @Test
   void findAllSuccessTest() {
     var parentComment = commentSetting();
-    var replyComment = PostReplyCommentFactory.createBeforeSavedReplyComment(parentComment);
-    postReplyRepository.save(replyComment);
+    var reply = PostReplyFactory.createBeforeSaved(parentComment);
+    postReplyRepository.save(reply);
 
     var foundReplyList = postReplyRepository.findAll();
 
@@ -77,11 +77,11 @@ class PostReplyRepositoryTest {
   @Test
   void findByIdSuccessTest() {
     var parentComment = commentSetting();
-    var replyComment = PostReplyCommentFactory.createBeforeSavedReplyComment(parentComment);
-    postReplyRepository.save(replyComment);
+    var reply = PostReplyFactory.createBeforeSaved(parentComment);
+    postReplyRepository.save(reply);
     var parentComment_2 = commentSetting();
-    var replyComment_2 = PostReplyCommentFactory.createBeforeSavedReplyComment(parentComment_2);
-    postReplyRepository.save(replyComment_2);
+    var reply_2 = PostReplyFactory.createBeforeSaved(parentComment_2);
+    postReplyRepository.save(reply_2);
 
     var replies = postReplyRepository.findAllByParentComment(parentComment);
 

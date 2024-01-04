@@ -4,7 +4,7 @@ import com.pellto.youtoy.domain.base.application.ReadService;
 import com.pellto.youtoy.domain.post.domain.PostReply;
 import com.pellto.youtoy.domain.post.dto.PostReplyDto;
 import com.pellto.youtoy.domain.post.repository.PostReplyRepository;
-import com.pellto.youtoy.global.exception.NotExistReplyCommentException;
+import com.pellto.youtoy.global.exception.NotExistReplyException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class PostReplyReadService implements ReadService<PostReply, PostReplyDto
   @Override
   public PostReplyDto findById(Long id) {
     var reply = replyRepository.findById(id)
-        .orElseThrow(NotExistReplyCommentException::new);
+        .orElseThrow(NotExistReplyException::new);
     return toDto(reply);
   }
 
@@ -40,15 +40,15 @@ public class PostReplyReadService implements ReadService<PostReply, PostReplyDto
   }
 
   @Override
-  public PostReplyDto toDto(PostReply replyComment) {
+  public PostReplyDto toDto(PostReply reply) {
     return new PostReplyDto(
-        replyComment.getId(),
-        replyComment.getParentComment().getId(),
-        replyComment.getCommenterUuid().getValue(),
-        replyComment.getLikeCount(),
-        replyComment.getCommentContent(),
-        replyComment.isModified(),
-        replyComment.getCreatedAt()
+        reply.getId(),
+        reply.getParentComment().getId(),
+        reply.getCommenterUuid().getValue(),
+        reply.getLikeCount(),
+        reply.getCommentContent(),
+        reply.isModified(),
+        reply.getCreatedAt()
     );
   }
 }

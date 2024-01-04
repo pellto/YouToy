@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.base.application.ReadService;
 import com.pellto.youtoy.domain.post.domain.Post;
 import com.pellto.youtoy.domain.post.dto.PostDto;
 import com.pellto.youtoy.domain.post.repository.PostRepository;
+import com.pellto.youtoy.global.exception.NotExistPostException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,8 @@ public class PostReadService implements ReadService<Post, PostDto> {
 
   @Override
   public PostDto findById(Long id) {
-    return toDto(
-        postRepository.findById(id).orElseThrow(
-            () -> new UnsupportedOperationException("없다")
-        )
+    return toDto(postRepository.findById(id)
+        .orElseThrow(NotExistPostException::new)
     );
   }
 

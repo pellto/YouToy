@@ -7,7 +7,7 @@ import static org.mockito.Mockito.times;
 
 import com.pellto.youtoy.domain.post.dto.PostCommentDto;
 import com.pellto.youtoy.domain.post.repository.PostCommentRepository;
-import com.pellto.youtoy.domain.post.util.CommunityCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentFactory;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -35,9 +35,9 @@ class PostCommentWriteServiceTest {
   @DisplayName("[commentWriteService: write: success]: 댓글 작성 성공 테스트")
   @Test
   void writeSuccessTest() {
-    var req = CommunityCommentFactory.createWriteCommentRequest();
-    var communityComment = CommunityCommentFactory.createCommunityComment();
-    var communityCommentDto = CommunityCommentFactory.createCommunityCommentDto();
+    var req = PostCommentFactory.createWriteCommentRequest();
+    var communityComment = PostCommentFactory.createCommunityComment();
+    var communityCommentDto = PostCommentFactory.createCommunityCommentDto();
 
     given(postReadService.getById(any())).willReturn(communityComment.getContents());
     given(commentRepository.save(any())).willReturn(communityComment);
@@ -54,10 +54,10 @@ class PostCommentWriteServiceTest {
   @DisplayName("[commentWriteService: modify: success]: 댓글 수정 성공 테스트")
   @Test
   void modifySuccessTest() {
-    var alreadyComment = CommunityCommentFactory.createCommunityComment();
+    var alreadyComment = PostCommentFactory.createCommunityComment();
     var changedContent = "CHANGED_CONTENT";
-    var changedCommentDto = CommunityCommentFactory.createCommunityCommentDto(changedContent);
-    var req = CommunityCommentFactory.createModifyCommentRequest(alreadyComment.getId(),
+    var changedCommentDto = PostCommentFactory.createCommunityCommentDto(changedContent);
+    var req = PostCommentFactory.createModifyCommentRequest(alreadyComment.getId(),
         changedContent);
 
     given(commentRepository.findById(req.id())).willReturn(Optional.of(alreadyComment));

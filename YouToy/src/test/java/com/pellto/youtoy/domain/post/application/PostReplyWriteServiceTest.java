@@ -6,8 +6,8 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
 import com.pellto.youtoy.domain.post.repository.PostReplyRepository;
-import com.pellto.youtoy.domain.post.util.CommunityCommentFactory;
-import com.pellto.youtoy.domain.post.util.PostReplyCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostReplyFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -22,31 +22,31 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class PostReplyWriteServiceTest {
 
   @InjectMocks
-  private PostReplyWriteService replyCommentWriteService;
+  private PostReplyWriteService replyWriteService;
   @Mock
   private PostReplyRepository replyRepository;
   @Mock
-  private PostReplyReadService replyCommentReadService;
+  private PostReplyReadService replyReadService;
   @Mock
   private PostCommentReadService commentReadService;
 
-  @DisplayName("[replyCommentWriteService: save: success] 답글 저장 테스트")
+  @DisplayName("[replyWriteService: save: success] 답글 저장 테스트")
   @Test
   void writeSuccessTest() {
-    var parentComment = CommunityCommentFactory.createCommunityComment();
-    var req = PostReplyCommentFactory.createWriteReplyRequest();
-    var reply = PostReplyCommentFactory.createReplyComment();
-    var replyDto = PostReplyCommentFactory.createReplyCommentDto();
+    var parentComment = PostCommentFactory.createCommunityComment();
+    var req = PostReplyFactory.createWriteReplyRequest();
+    var reply = PostReplyFactory.create();
+    var replyDto = PostReplyFactory.createDto();
 
     given(commentReadService.getById(any())).willReturn(parentComment);
     given(replyRepository.save(any())).willReturn(reply);
-    given(replyCommentReadService.toDto(reply)).willReturn(replyDto);
+    given(replyReadService.toDto(reply)).willReturn(replyDto);
 
-    var writtenReply = replyCommentWriteService.write(req);
+    var writtenReply = replyWriteService.write(req);
 
     then(commentReadService).should(times(1)).getById(any());
     then(replyRepository).should(times(1)).save(any());
-    then(replyCommentReadService).should(times(1)).toDto(reply);
+    then(replyReadService).should(times(1)).toDto(reply);
     Assertions.assertThat(writtenReply).isEqualTo(replyDto);
   }
 }

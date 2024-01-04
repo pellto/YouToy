@@ -1,5 +1,6 @@
 package com.pellto.youtoy.domain.base;
 
+import com.pellto.youtoy.global.exception.UnsupportedInterestChangeException;
 import com.pellto.youtoy.global.util.General;
 import com.pellto.youtoy.global.util.Temporal;
 import jakarta.persistence.Column;
@@ -24,7 +25,7 @@ public abstract class Interest {
 
   protected void changeCheck(boolean b) {
     if (b == this.dislike) {
-      throw new UnsupportedOperationException("지원 안함");
+      throw new UnsupportedInterestChangeException();
     }
   }
 

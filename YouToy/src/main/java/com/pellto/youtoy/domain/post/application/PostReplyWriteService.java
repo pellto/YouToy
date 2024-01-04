@@ -16,7 +16,7 @@ public class PostReplyWriteService implements
     WriteUpdateDeleteService<PostReplyDto, WriteCommentRequest, ModifyCommentRequest> {
 
   private final PostReplyRepository replyRepository;
-  private final PostReplyReadService replyCommentReadService;
+  private final PostReplyReadService replyReadService;
   private final PostCommentReadService commentReadService;
 
   @Override
@@ -28,14 +28,14 @@ public class PostReplyWriteService implements
         .content(writeRequest.content())
         .commenterUuid(commenter)
         .build();
-    return replyCommentReadService.toDto(replyRepository.save(reply));
+    return replyReadService.toDto(replyRepository.save(reply));
   }
 
   @Override
   public PostReplyDto modify(ModifyCommentRequest modifyRequest) {
     var reply = replyRepository.getReferenceById(modifyRequest.id());
     reply.changeCommentContent(modifyRequest.content());
-    return replyCommentReadService.toDto(reply);
+    return replyReadService.toDto(reply);
   }
 
   @Override

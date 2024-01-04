@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommunityPostFactory {
+public class PostFactory {
 
   private static final Long ID = 1L;
   private static final Long CHANNEL_ID = 1L;

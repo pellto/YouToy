@@ -4,7 +4,7 @@ import com.pellto.youtoy.domain.base.application.ReadService;
 import com.pellto.youtoy.domain.video.domain.VideoReply;
 import com.pellto.youtoy.domain.video.dto.VideoReplyDto;
 import com.pellto.youtoy.domain.video.repository.VideoReplyRepository;
-import com.pellto.youtoy.global.exception.NotExistReplyCommentException;
+import com.pellto.youtoy.global.exception.NotExistReplyException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class VideoReplyReadService implements
   @Override
   public VideoReplyDto findById(Long id) {
     var reply = videoReplyRepository.findById(id)
-        .orElseThrow(NotExistReplyCommentException::new);
+        .orElseThrow(NotExistReplyException::new);
     return toDto(reply);
   }
 

@@ -6,10 +6,10 @@ import com.pellto.youtoy.domain.post.domain.PostCommentInterest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import java.time.LocalDateTime;
 
-public class CommunityCommentInterestFactory {
+public class PostCommentInterestFactory {
 
   private static final Long ID = 1L;
-  private static final PostComment INTERESTED_COMMENT = CommunityCommentFactory.createCommunityComment();
+  private static final PostComment INTERESTED_COMMENT = PostCommentFactory.createCommunityComment();
   private static final String INTERESTING_USER_UUID_VALUE = "test-uuid";
   private static final UserUUID INTERESTING_USER_UUID = new UserUUID(INTERESTING_USER_UUID_VALUE);
   private static final boolean DISLIKE = false;

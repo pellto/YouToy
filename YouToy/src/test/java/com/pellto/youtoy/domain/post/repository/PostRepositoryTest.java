@@ -1,7 +1,7 @@
 package com.pellto.youtoy.domain.post.repository;
 
 import com.pellto.youtoy.domain.post.domain.Post;
-import com.pellto.youtoy.domain.post.util.CommunityPostFactory;
+import com.pellto.youtoy.domain.post.util.PostFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -22,7 +22,7 @@ class PostRepositoryTest {
   @DisplayName("[commentPostRepository: save: success] 커뮤니티 포스트 저장 성공 테스트")
   @Test
   void saveSuccessTest() {
-    var post = CommunityPostFactory.createBeforeSavedPost();
+    var post = PostFactory.createBeforeSavedPost();
 
     var savedPost = postRepository.save(post);
 
@@ -37,7 +37,7 @@ class PostRepositoryTest {
   @DisplayName("[commentPostRepository: findAll: success] 커뮤니티 포스트 전체 조회 성공 테스트")
   @Test
   void findAllSuccessTest() {
-    var post = CommunityPostFactory.createBeforeSavedPost();
+    var post = PostFactory.createBeforeSavedPost();
     postRepository.save(post);
 
     var foundPosts = postRepository.findAll();
@@ -51,7 +51,7 @@ class PostRepositoryTest {
   @DisplayName("[commentPostRepository: findById: success] 커뮤니티 포스트 id 조건 조회 성공 테스트")
   @Test
   void findByIdSuccessTest() {
-    var post = CommunityPostFactory.createBeforeSavedPost();
+    var post = PostFactory.createBeforeSavedPost();
     postRepository.save(post);
 
     var nullablePost = postRepository.findById(post.getId());

@@ -1,7 +1,7 @@
 package com.pellto.youtoy.domain.post.repository;
 
 import com.pellto.youtoy.domain.post.domain.Post;
-import com.pellto.youtoy.domain.post.util.CommunityPostFactory;
+import com.pellto.youtoy.domain.post.util.PostFactory;
 import com.pellto.youtoy.domain.post.util.PostInterestFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ class PostInterestRepositoryTest {
   private PostRepository postRepository;
 
   private Post postSetting() {
-    var post = CommunityPostFactory.createPost();
+    var post = PostFactory.createPost();
     return postRepository.save(post);
   }
 

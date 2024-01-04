@@ -1,8 +1,8 @@
 package com.pellto.youtoy.domain.post.repository;
 
 import com.pellto.youtoy.domain.post.domain.Post;
-import com.pellto.youtoy.domain.post.util.CommunityCommentFactory;
-import com.pellto.youtoy.domain.post.util.CommunityPostFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -23,7 +23,7 @@ class PostCommentRepositoryTest {
   private PostRepository postRepository;
 
   private Post postSetting() {
-    var post = CommunityPostFactory.createPost();
+    var post = PostFactory.createPost();
     return postRepository.save(post);
   }
 
@@ -31,7 +31,7 @@ class PostCommentRepositoryTest {
   @Test
   void saveSuccessTest() {
     var post = postSetting();
-    var communityComment = CommunityCommentFactory.createBeforeSavedCommunityComment(post);
+    var communityComment = PostCommentFactory.createBeforeSavedCommunityComment(post);
 
     var savedComment = commentRepository.save(communityComment);
 
@@ -53,7 +53,7 @@ class PostCommentRepositoryTest {
   @Test
   void findAllSuccessTest() {
     var communityPost = postSetting();
-    var communityComment = CommunityCommentFactory.createCommunityComment(communityPost);
+    var communityComment = PostCommentFactory.createCommunityComment(communityPost);
     commentRepository.save(communityComment);
 
     var foundCommentList = commentRepository.findAll();
@@ -67,7 +67,7 @@ class PostCommentRepositoryTest {
   @Test
   void findByIdSuccessTest() {
     var communityPost = postSetting();
-    var communityComment = CommunityCommentFactory.createCommunityComment(communityPost);
+    var communityComment = PostCommentFactory.createCommunityComment(communityPost);
     commentRepository.save(communityComment);
 
     var nullableComment = commentRepository.findById(communityComment.getId());

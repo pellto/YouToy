@@ -8,7 +8,7 @@ import com.pellto.youtoy.domain.post.domain.PostReplyInterest;
 import com.pellto.youtoy.domain.post.dto.PostReplyInterestDto;
 import com.pellto.youtoy.domain.post.repository.PostReplyInterestRepository;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
-import com.pellto.youtoy.global.exception.NotExistReplyCommentInterestException;
+import com.pellto.youtoy.global.exception.NotExistReplyInterestException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,30 +19,30 @@ public class PostReplyInterestService implements
     WriteUpdateDeleteService<PostReplyInterestDto, WriteInterestRequest, ModifyInterestRequest>,
     ReadService<PostReplyInterest, PostReplyInterestDto> {
 
-  private final PostReplyInterestRepository replyCommentInterestRepository;
-  private final PostReplyReadService replyCommentReadService;
+  private final PostReplyInterestRepository replyInterestRepository;
+  private final PostReplyReadService replyReadService;
 
   public List<PostReplyInterestDto> findAllByInterestedReplyId(Long replyId) {
-    var reply = replyCommentReadService.getById(replyId);
-    return replyCommentInterestRepository.findAllByInterestedReply(reply).stream()
+    var reply = replyReadService.getById(replyId);
+    return replyInterestRepository.findAllByInterestedReply(reply).stream()
         .map(this::toDto).toList();
   }
 
   @Override
   public List<PostReplyInterestDto> findAll() {
-    return replyCommentInterestRepository.findAll().stream().map(this::toDto).toList();
+    return replyInterestRepository.findAll().stream().map(this::toDto).toList();
   }
 
   @Override
   public PostReplyInterestDto findById(Long id) {
-    var interest = replyCommentInterestRepository.findById(id)
-        .orElseThrow(NotExistReplyCommentInterestException::new);
+    var interest = replyInterestRepository.findById(id)
+        .orElseThrow(NotExistReplyInterestException::new);
     return toDto(interest);
   }
 
   @Override
   public PostReplyInterest getById(Long id) {
-    return replyCommentInterestRepository.getReferenceById(id);
+    return replyInterestRepository.getReferenceById(id);
   }
 
   public PostReplyInterestDto toDto(
@@ -57,20 +57,20 @@ public class PostReplyInterestService implements
 
   @Override
   public PostReplyInterestDto write(WriteInterestRequest writeRequest) {
-    var reply = replyCommentReadService.getById(writeRequest.contentsId());
+    var reply = replyReadService.getById(writeRequest.contentsId());
     var userUuid = new UserUUID(writeRequest.interestingUserUuid());
     var replyInterest = PostReplyInterest.builder()
         .interestedReply(reply)
         .interestingUserUuid(userUuid)
         .dislike(writeRequest.dislike())
         .build();
-    return toDto(replyCommentInterestRepository.save(replyInterest));
+    return toDto(replyInterestRepository.save(replyInterest));
   }
 
   @Override
   public PostReplyInterestDto modify(ModifyInterestRequest modifyRequest) {
-    var interest = replyCommentInterestRepository.findById(modifyRequest.id())
-        .orElseThrow(NotExistReplyCommentInterestException::new);
+    var interest = replyInterestRepository.findById(modifyRequest.id())
+        .orElseThrow(NotExistReplyInterestException::new);
 
     interest.changeCheck(modifyRequest.dislike());
     interest.changeDislike();
@@ -80,6 +80,6 @@ public class PostReplyInterestService implements
 
   @Override
   public void deleteById(Long id) {
-    replyCommentInterestRepository.deleteById(id);
+    replyInterestRepository.deleteById(id);
   }
 }

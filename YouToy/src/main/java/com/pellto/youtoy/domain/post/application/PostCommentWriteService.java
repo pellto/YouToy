@@ -7,7 +7,7 @@ import com.pellto.youtoy.domain.post.domain.PostComment;
 import com.pellto.youtoy.domain.post.dto.PostCommentDto;
 import com.pellto.youtoy.domain.post.repository.PostCommentRepository;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
-import com.pellto.youtoy.global.exception.NotExistCommentException;
+import com.pellto.youtoy.global.exception.NotExistPostException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public class PostCommentWriteService implements
   @Override
   public PostCommentDto modify(ModifyCommentRequest modifyRequest) {
     var comment = commentRepository.findById(modifyRequest.id())
-        .orElseThrow(NotExistCommentException::new);
+        .orElseThrow(NotExistPostException::new);
 
     comment.changeCommentContent(modifyRequest.content());
 

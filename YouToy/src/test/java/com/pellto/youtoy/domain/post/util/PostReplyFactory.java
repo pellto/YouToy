@@ -7,10 +7,10 @@ import com.pellto.youtoy.domain.post.dto.PostReplyDto;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import java.time.LocalDateTime;
 
-public class PostReplyCommentFactory {
+public class PostReplyFactory {
 
   private static final Long ID = 1L;
-  private static final PostComment PARENT_COMMENT = CommunityCommentFactory.createCommunityComment();
+  private static final PostComment PARENT_COMMENT = PostCommentFactory.createCommunityComment();
   private static final UserUUID COMMENTER_UUID = new UserUUID("commenter_uuid");
   private static final String CONTENT = "content";
   private static final int LIKE_COUNT = 0;
@@ -19,7 +19,7 @@ public class PostReplyCommentFactory {
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final LocalDateTime MODIFIED_AT = CREATED_AT;
 
-  public static PostReply createBeforeSavedReplyComment() {
+  public static PostReply createBeforeSaved() {
     return PostReply.builder()
         .parentComment(PARENT_COMMENT)
         .content(CONTENT)
@@ -27,7 +27,7 @@ public class PostReplyCommentFactory {
         .build();
   }
 
-  public static PostReply createBeforeSavedReplyComment(PostComment parentComment) {
+  public static PostReply createBeforeSaved(PostComment parentComment) {
     return PostReply.builder()
         .parentComment(parentComment)
         .content(CONTENT)
@@ -35,7 +35,7 @@ public class PostReplyCommentFactory {
         .build();
   }
 
-  public static PostReply createReplyComment() {
+  public static PostReply create() {
     return PostReply.builder()
         .id(ID)
         .parentComment(PARENT_COMMENT)
@@ -48,7 +48,7 @@ public class PostReplyCommentFactory {
         .build();
   }
 
-  public static PostReply createReplyComment(PostComment parentComment) {
+  public static PostReply create(PostComment parentComment) {
     return PostReply.builder()
         .id(ID)
         .parentComment(parentComment)
@@ -61,7 +61,7 @@ public class PostReplyCommentFactory {
         .build();
   }
 
-  public static PostReplyDto createReplyCommentDto() {
+  public static PostReplyDto createDto() {
     return new PostReplyDto(
         ID,
         PARENT_COMMENT.getId(),

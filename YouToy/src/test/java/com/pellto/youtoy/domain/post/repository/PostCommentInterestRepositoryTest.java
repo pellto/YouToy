@@ -2,9 +2,9 @@ package com.pellto.youtoy.domain.post.repository;
 
 import com.pellto.youtoy.domain.post.domain.Post;
 import com.pellto.youtoy.domain.post.domain.PostComment;
-import com.pellto.youtoy.domain.post.util.CommunityCommentFactory;
-import com.pellto.youtoy.domain.post.util.CommunityCommentInterestFactory;
-import com.pellto.youtoy.domain.post.util.CommunityPostFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentInterestFactory;
+import com.pellto.youtoy.domain.post.util.PostFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -28,20 +28,20 @@ class PostCommentInterestRepositoryTest {
   private PostCommentRepository commentRepository;
 
   private Post postSetting() {
-    var post = CommunityPostFactory.createPost();
+    var post = PostFactory.createPost();
     return postRepository.save(post);
   }
 
   private PostComment commentSetting() {
     var post = postSetting();
-    var comment = CommunityCommentFactory.createCommunityComment(post);
+    var comment = PostCommentFactory.createCommunityComment(post);
     return commentRepository.save(comment);
   }
 
   @DisplayName("[commentInterestRepository: save: success] 댓글 관심 저장 성공 테스트")
   @Test
   void saveSuccessTest() {
-    var commentInterest = CommunityCommentInterestFactory.createBeforeSavedCommentInterest();
+    var commentInterest = PostCommentInterestFactory.createBeforeSavedCommentInterest();
 
     var savedCommentInterest = commentInterestRepository.save(commentInterest);
 
@@ -54,7 +54,7 @@ class PostCommentInterestRepositoryTest {
   @Test
   void findAllByInterestedCommunityCommentSuccessTest() {
     var comment = commentSetting();
-    var commentInterest = CommunityCommentInterestFactory.createInterest(comment);
+    var commentInterest = PostCommentInterestFactory.createInterest(comment);
     commentInterestRepository.save(commentInterest);
 
     var commentInterests = commentInterestRepository.findAllByInterestedComment(comment);
@@ -68,7 +68,7 @@ class PostCommentInterestRepositoryTest {
   @Test
   void deleteByIdSuccessTest() {
     var comment = commentSetting();
-    var commentInterest = CommunityCommentInterestFactory.createInterest(comment);
+    var commentInterest = PostCommentInterestFactory.createInterest(comment);
     commentInterestRepository.save(commentInterest);
     var foundCommentInterest = commentInterestRepository
         .findById(commentInterest.getId())

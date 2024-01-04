@@ -172,19 +172,19 @@ public class PostController {
   }
 
   @PostMapping("/comments/replies/interests")
-  public PostReplyInterestDto interestPostReplyIdComment(
+  public PostReplyInterestDto writePostCommentReplyInterest(
       @RequestBody @Valid WriteInterestRequest req
   ) {
     return replyInterestService.write(req);
   }
 
   @GetMapping("/comments/replies/interests")
-  public List<PostReplyInterestDto> findAllPostReplyCommentInterests() {
+  public List<PostReplyInterestDto> findAllPostReplyInterests() {
     return replyInterestService.findAll();
   }
 
   @GetMapping("/comments/replies/{replyId}/interests")
-  public List<PostReplyInterestDto> findPostReplyCommentInterest(
+  public List<PostReplyInterestDto> findPostReplyInterest(
       @PathVariable
       @Positive(message = "유효한 reply id 유형이 아닙니다.")
       Long replyId
@@ -193,7 +193,7 @@ public class PostController {
   }
 
   @DeleteMapping("/comments/replies/interests/{interestId}")
-  public void deletePostReplyCommentInterest(
+  public void deletePostReplyInterest(
       @PathVariable
       @Valid
       @Positive(message = "유효한 interest id 유형이 아닙니다.")

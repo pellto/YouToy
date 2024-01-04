@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @DataJpaTest
 class VideoReplyRepositoryTest {
 
-  private static final String TEST_NAME = "VideoReplyCommentRepository";
+  private static final String TEST_NAME = "VideoReplyRepository";
 
   @Autowired
   private VideoReplyRepository videoReplyRepository;

@@ -9,7 +9,7 @@ import static org.mockito.Mockito.times;
 import com.pellto.youtoy.domain.post.domain.Post;
 import com.pellto.youtoy.domain.post.dto.PostDto;
 import com.pellto.youtoy.domain.post.repository.PostRepository;
-import com.pellto.youtoy.domain.post.util.CommunityPostFactory;
+import com.pellto.youtoy.domain.post.util.PostFactory;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
@@ -34,7 +34,7 @@ class PostReadServiceTest {
   @DisplayName("[commentPostReadService: findAll: success] 게시글 전체 조회 성공 테스트")
   @Test
   void findAllSuccessTest() {
-    var post = CommunityPostFactory.createPost();
+    var post = PostFactory.createPost();
     var postList = new ArrayList<Post>();
     postList.add(post);
 
@@ -52,7 +52,7 @@ class PostReadServiceTest {
   @DisplayName("[commentPostReadService: findById: success] 게시글 전체 조회 성공 테스트")
   @Test
   void findByIdSuccessTest() {
-    var post = CommunityPostFactory.createPost();
+    var post = PostFactory.createPost();
 
     given(postRepository.findById(any())).willReturn(Optional.ofNullable(post));
 

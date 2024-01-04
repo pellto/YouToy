@@ -8,7 +8,7 @@ import com.pellto.youtoy.domain.user.domain.UserUUID;
 import com.pellto.youtoy.domain.video.domain.VideoReplyInterest;
 import com.pellto.youtoy.domain.video.dto.VideoReplyInterestDto;
 import com.pellto.youtoy.domain.video.repository.VideoReplyInterestRepository;
-import com.pellto.youtoy.global.exception.NotExistReplyCommentInterestException;
+import com.pellto.youtoy.global.exception.NotExistReplyInterestException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class VideoReplyInterestService implements
   @Override
   public VideoReplyInterestDto findById(Long id) {
     var interest = videoReplyInterestRepository.findById(id).orElseThrow(
-        NotExistReplyCommentInterestException::new);
+        NotExistReplyInterestException::new);
     return toDto(interest);
   }
 
@@ -70,7 +70,7 @@ public class VideoReplyInterestService implements
   @Override
   public VideoReplyInterestDto modify(ModifyInterestRequest modifyRequest) {
     var interest = videoReplyInterestRepository.findById(modifyRequest.id())
-        .orElseThrow(NotExistReplyCommentInterestException::new);
+        .orElseThrow(NotExistReplyInterestException::new);
 
     interest.changeCheck(modifyRequest.dislike());
     interest.changeDislike();

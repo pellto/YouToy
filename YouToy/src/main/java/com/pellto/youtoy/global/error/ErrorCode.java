@@ -16,13 +16,15 @@ public enum ErrorCode {
   NOT_EXIST_ADMIN(404, "CA001", "해당 어드민이 존재하지 않습니다."),
   // Community Post
   NOT_EXIST_COMMUNITY_POST_INTEREST(404, "CPI001", "해당 관심이 존재하지 않습니다."),
+  NOT_EXIST_POST(404, "P001", "해당 포스트가 존재하지 않습니다."),
 
   // Base
   NOT_EXIST_COMMENT(404, "CM001", "해당 댓글이 존재하지 않습니다."),
   NOT_EXIST_COMMENT_INTEREST(404, "RC001", "해당 관심이 존재하지 않습니다."),
-  NOT_EXIST_REPLY_COMMENT(404, "CR001", "해당 답글이 존재하지 않습니다."),
-  NOT_EXIST_REPLY_COMMENT_INTEREST(404, "CRI001", "해당 관심이 존재하지 않습니다."),
-  NOT_EXIST_CONTENTS_INTEREST(404, "CI001", "해당 관심이 존재하지 않습니다.");
+  NOT_EXIST_REPLY(404, "CR001", "해당 답글이 존재하지 않습니다."),
+  NOT_EXIST_REPLY_INTEREST(404, "CRI001", "해당 관심이 존재하지 않습니다."),
+  NOT_EXIST_CONTENTS_INTEREST(404, "CI001", "해당 관심이 존재하지 않습니다."),
+  UNSUPPORTED_INTEREST_CHANGE_EXCEPTION(406, "I001", "지원하지 않는 변경 유형입니다.");
 
   private final int status;
   private final String code;

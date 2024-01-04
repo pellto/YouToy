@@ -4,6 +4,7 @@ import com.pellto.youtoy.domain.base.application.ReadService;
 import com.pellto.youtoy.domain.post.domain.PostComment;
 import com.pellto.youtoy.domain.post.dto.PostCommentDto;
 import com.pellto.youtoy.domain.post.repository.PostCommentRepository;
+import com.pellto.youtoy.global.exception.NotExistCommentException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,9 @@ public class PostCommentReadService implements ReadService<PostComment, PostComm
 
   @Override
   public PostCommentDto findById(Long id) {
-    var nullableComment = postCommentRepository.findById(id);
-    if (nullableComment.isEmpty()) {
-      throw new UnsupportedOperationException("없음");
-    }
-    return toDto(nullableComment.get());
+    var comment = postCommentRepository.findById(id).orElseThrow(
+        NotExistCommentException::new);
+    return toDto(comment);
   }
 
   @Override

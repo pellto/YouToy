@@ -55,9 +55,9 @@ public class GlobalExceptionHandler {
   }
 
   // Reply Interest
-  @ExceptionHandler(NotExistReplyCommentInterestException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistReplyCommentInterestException(
-      NotExistReplyCommentInterestException ex
+  @ExceptionHandler(NotExistReplyInterestException.class)
+  public ResponseEntity<ErrorResponse> handleNotExistReplyInterestException(
+      NotExistReplyInterestException ex
   ) {
     return this.postProcess(ex);
   }
@@ -71,9 +71,9 @@ public class GlobalExceptionHandler {
   }
 
   // Comment
-  @ExceptionHandler(NotExistCommentException.class)
+  @ExceptionHandler(NotExistPostException.class)
   public ResponseEntity<ErrorResponse> handleNotExistCommentException(
-      NotExistCommentException ex
+      NotExistPostException ex
   ) {
     return this.postProcess(ex);
   }
@@ -90,6 +90,14 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(NotExistSubscriberChannelException.class)
   public ResponseEntity<ErrorResponse> handleNotExistSubscriberChannelException(
       NotExistSubscriberChannelException ex
+  ) {
+    return this.postProcess(ex);
+  }
+
+  // Interest
+  @ExceptionHandler(UnsupportedInterestChangeException.class)
+  public ResponseEntity<ErrorResponse> handleUnsupportedInterestChangeException(
+      UnsupportedInterestChangeException ex
   ) {
     return this.postProcess(ex);
   }

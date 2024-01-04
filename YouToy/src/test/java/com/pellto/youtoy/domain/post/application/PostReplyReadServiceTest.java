@@ -8,8 +8,8 @@ import static org.mockito.Mockito.times;
 import com.pellto.youtoy.domain.post.domain.PostReply;
 import com.pellto.youtoy.domain.post.dto.PostReplyDto;
 import com.pellto.youtoy.domain.post.repository.PostReplyRepository;
-import com.pellto.youtoy.domain.post.util.CommunityCommentFactory;
-import com.pellto.youtoy.domain.post.util.PostReplyCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostReplyFactory;
 import java.util.ArrayList;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -31,10 +31,10 @@ class PostReplyReadServiceTest {
   @Mock
   private PostCommentReadService parentCommentReadService;
 
-  @DisplayName("[postReplyCommentReadService: findAll: success] 답글 전체 조회 테스트")
+  @DisplayName("[postReplyReadService: findAll: success] 답글 전체 조회 테스트")
   @Test
   void findAllSuccessTest() {
-    var reply = PostReplyCommentFactory.createReplyComment();
+    var reply = PostReplyFactory.create();
     var replyList = new ArrayList<PostReply>();
     replyList.add(reply);
 
@@ -49,11 +49,11 @@ class PostReplyReadServiceTest {
     Assertions.assertThat(foundReplyList.get(0).getClass()).isEqualTo(PostReplyDto.class);
   }
 
-  @DisplayName("[postReplyCommentReadService: findAllByParentId: success] 댓글 parentId 조건 전체 조회 테스트")
+  @DisplayName("[postReplyReadService: findAllByParentId: success] 댓글 parentId 조건 전체 조회 테스트")
   @Test
   void findAllByParentIdSuccessTest() {
-    var parentComment = CommunityCommentFactory.createCommunityComment();
-    var reply = PostReplyCommentFactory.createReplyComment(parentComment);
+    var parentComment = PostCommentFactory.createCommunityComment();
+    var reply = PostReplyFactory.create(parentComment);
     var replyList = new ArrayList<PostReply>();
     replyList.add(reply);
 

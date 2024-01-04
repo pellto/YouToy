@@ -8,8 +8,8 @@ import static org.mockito.Mockito.times;
 import com.pellto.youtoy.domain.post.domain.PostCommentInterest;
 import com.pellto.youtoy.domain.post.dto.PostCommentInterestDto;
 import com.pellto.youtoy.domain.post.repository.PostCommentInterestRepository;
-import com.pellto.youtoy.domain.post.util.CommunityCommentFactory;
-import com.pellto.youtoy.domain.post.util.CommunityCommentInterestFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentFactory;
+import com.pellto.youtoy.domain.post.util.PostCommentInterestFactory;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import java.util.ArrayList;
 import org.assertj.core.api.Assertions;
@@ -36,10 +36,10 @@ class PostCommentInterestServiceTest {
   @DisplayName("[commentInterestService: interest: success] 댓글 관심 성공 테스트")
   @Test
   void interestSuccessTest() {
-    var req = CommunityCommentInterestFactory.createInterestRequest();
-    var comment = CommunityCommentFactory.createCommunityComment();
+    var req = PostCommentInterestFactory.createInterestRequest();
+    var comment = PostCommentFactory.createCommunityComment();
     var userUuid = new UserUUID(req.interestingUserUuid());
-    var commentInterest = CommunityCommentInterestFactory.createInterest(comment, userUuid);
+    var commentInterest = PostCommentInterestFactory.createInterest(comment, userUuid);
 
     given(commentReadService.getById(any())).willReturn(comment);
     given(commentInterestRepository.save(any())).willReturn(commentInterest);
@@ -56,8 +56,8 @@ class PostCommentInterestServiceTest {
   @DisplayName("[commentInterestService: findAll: success] 댓글 관심 전체 조회 성공 테스트")
   @Test
   void findAllByCommentIdSuccessTest() {
-    var comment = CommunityCommentFactory.createCommunityComment();
-    var commentInterest = CommunityCommentInterestFactory.createInterest(comment);
+    var comment = PostCommentFactory.createCommunityComment();
+    var commentInterest = PostCommentInterestFactory.createInterest(comment);
     var commentInterestList = new ArrayList<PostCommentInterest>();
     commentInterestList.add(commentInterest);
 
