@@ -3,8 +3,8 @@ package com.pellto.youtoy.domain.video.util;
 import com.pellto.youtoy.domain.base.dto.WriteCommentRequest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import com.pellto.youtoy.domain.video.domain.VideoComment;
-import com.pellto.youtoy.domain.video.domain.VideoReplyComment;
-import com.pellto.youtoy.domain.video.dto.VideoReplyCommentDto;
+import com.pellto.youtoy.domain.video.domain.VideoReply;
+import com.pellto.youtoy.domain.video.dto.VideoReplyDto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +19,10 @@ public class VideoReplyFactory {
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final boolean MODIFIED = false;
   private static final LocalDateTime MODIFIED_AT = CREATED_AT;
-  private static final List<VideoReplyComment> REPLIES = new ArrayList<>();
+  private static final List<VideoReply> REPLIES = new ArrayList<>();
 
-  public static VideoReplyComment create(WriteCommentRequest req) {
-    return VideoReplyComment.builder()
+  public static VideoReply create(WriteCommentRequest req) {
+    return VideoReply.builder()
         .id(ID)
         .parentComment(VideoCommentFactory.create(req.contentId()))
         .commenterUuid(new UserUUID(req.commenterUuid()))
@@ -33,8 +33,8 @@ public class VideoReplyFactory {
         .build();
   }
 
-  public static VideoReplyComment create(Long replyId) {
-    return VideoReplyComment.builder()
+  public static VideoReply create(Long replyId) {
+    return VideoReply.builder()
         .id(replyId)
         .parentComment(CONTENT)
         .commenterUuid(COMMENTER)
@@ -45,8 +45,8 @@ public class VideoReplyFactory {
         .build();
   }
 
-  public static VideoReplyComment create(VideoComment parentComment) {
-    return VideoReplyComment.builder()
+  public static VideoReply create(VideoComment parentComment) {
+    return VideoReply.builder()
         .id(ID)
         .parentComment(parentComment)
         .commenterUuid(COMMENTER)
@@ -57,13 +57,13 @@ public class VideoReplyFactory {
         .build();
   }
 
-  public static VideoReplyCommentDto createDto() {
-    return new VideoReplyCommentDto(ID, CONTENT.getId(), COMMENTER.getValue(), LIKE_COUNT,
+  public static VideoReplyDto createDto() {
+    return new VideoReplyDto(ID, CONTENT.getId(), COMMENTER.getValue(), LIKE_COUNT,
         COMMENT_CONTENT, MODIFIED, CREATED_AT);
   }
 
-  public static VideoReplyComment create() {
-    return VideoReplyComment.builder()
+  public static VideoReply create() {
+    return VideoReply.builder()
         .id(ID)
         .parentComment(CONTENT)
         .commenterUuid(COMMENTER)
@@ -74,24 +74,24 @@ public class VideoReplyFactory {
         .build();
   }
 
-  public static VideoReplyComment createBeforeSaved() {
-    return VideoReplyComment.builder()
+  public static VideoReply createBeforeSaved() {
+    return VideoReply.builder()
         .parentComment(CONTENT)
         .commenterUuid(COMMENTER)
         .content(COMMENT_CONTENT)
         .build();
   }
 
-  public static VideoReplyComment createBeforeSaved(VideoComment parentComment) {
-    return VideoReplyComment.builder()
+  public static VideoReply createBeforeSaved(VideoComment parentComment) {
+    return VideoReply.builder()
         .parentComment(parentComment)
         .commenterUuid(COMMENTER)
         .content(COMMENT_CONTENT)
         .build();
   }
 
-  public static VideoReplyCommentDto createDto(VideoReplyComment reply) {
-    return new VideoReplyCommentDto(reply.getId(), reply.getParentComment().getId(),
+  public static VideoReplyDto createDto(VideoReply reply) {
+    return new VideoReplyDto(reply.getId(), reply.getParentComment().getId(),
         reply.getCommenterUuid().getValue(), reply.getLikeCount(),
         reply.getCommentContent(), reply.isModified(),
         reply.getCreatedAt());

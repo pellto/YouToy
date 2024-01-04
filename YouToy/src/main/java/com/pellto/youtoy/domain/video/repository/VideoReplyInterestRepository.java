@@ -1,10 +1,10 @@
 package com.pellto.youtoy.domain.video.repository;
 
 import com.pellto.youtoy.domain.base.repository.ReplyInterestRepository;
-import com.pellto.youtoy.domain.video.domain.VideoReplyComment;
-import com.pellto.youtoy.domain.video.domain.VideoReplyCommentInterest;
+import com.pellto.youtoy.domain.video.domain.VideoReply;
+import com.pellto.youtoy.domain.video.domain.VideoReplyInterest;
 
 public interface VideoReplyInterestRepository extends
-    ReplyInterestRepository<VideoReplyCommentInterest, Long, VideoReplyComment> {
+    ReplyInterestRepository<VideoReplyInterest, Long, VideoReply> {
 
 }

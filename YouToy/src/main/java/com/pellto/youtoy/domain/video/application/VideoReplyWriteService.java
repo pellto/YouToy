@@ -4,9 +4,9 @@ import com.pellto.youtoy.domain.base.application.WriteUpdateDeleteService;
 import com.pellto.youtoy.domain.base.dto.ModifyCommentRequest;
 import com.pellto.youtoy.domain.base.dto.WriteCommentRequest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
-import com.pellto.youtoy.domain.video.domain.VideoReplyComment;
-import com.pellto.youtoy.domain.video.dto.VideoReplyCommentDto;
-import com.pellto.youtoy.domain.video.repository.VideoReplyCommentRepository;
+import com.pellto.youtoy.domain.video.domain.VideoReply;
+import com.pellto.youtoy.domain.video.dto.VideoReplyDto;
+import com.pellto.youtoy.domain.video.repository.VideoReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,32 +14,32 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class VideoReplyWriteService implements
-    WriteUpdateDeleteService<VideoReplyCommentDto, WriteCommentRequest, ModifyCommentRequest> {
+    WriteUpdateDeleteService<VideoReplyDto, WriteCommentRequest, ModifyCommentRequest> {
 
-  private final VideoReplyCommentRepository videoReplyCommentRepository;
+  private final VideoReplyRepository videoReplyRepository;
   private final VideoReplyReadService videoReplyReadService;
   private final VideoCommentReadService contentReadService;
 
   @Override
-  public VideoReplyCommentDto write(WriteCommentRequest writeRequest) {
+  public VideoReplyDto write(WriteCommentRequest writeRequest) {
     var parentComment = contentReadService.getById(writeRequest.contentId());
-    var reply = VideoReplyComment.builder()
+    var reply = VideoReply.builder()
         .parentComment(parentComment)
         .content(writeRequest.content())
         .commenterUuid(new UserUUID(writeRequest.commenterUuid()))
         .build();
-    return videoReplyReadService.toDto(videoReplyCommentRepository.save(reply));
+    return videoReplyReadService.toDto(videoReplyRepository.save(reply));
   }
 
   @Override
-  public VideoReplyCommentDto modify(ModifyCommentRequest modifyRequest) {
-    var reply = videoReplyCommentRepository.getReferenceById(modifyRequest.id());
+  public VideoReplyDto modify(ModifyCommentRequest modifyRequest) {
+    var reply = videoReplyRepository.getReferenceById(modifyRequest.id());
     reply.changeCommentContent(modifyRequest.content());
-    return videoReplyReadService.toDto(videoReplyCommentRepository.save(reply));
+    return videoReplyReadService.toDto(videoReplyRepository.save(reply));
   }
 
   @Override
   public void deleteById(Long id) {
-    videoReplyCommentRepository.deleteById(id);
+    videoReplyRepository.deleteById(id);
   }
 }

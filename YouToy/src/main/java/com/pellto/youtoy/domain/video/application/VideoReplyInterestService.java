@@ -5,7 +5,7 @@ import com.pellto.youtoy.domain.base.application.WriteUpdateDeleteService;
 import com.pellto.youtoy.domain.base.dto.ModifyInterestRequest;
 import com.pellto.youtoy.domain.base.dto.WriteInterestRequest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
-import com.pellto.youtoy.domain.video.domain.VideoReplyCommentInterest;
+import com.pellto.youtoy.domain.video.domain.VideoReplyInterest;
 import com.pellto.youtoy.domain.video.dto.VideoReplyInterestDto;
 import com.pellto.youtoy.domain.video.repository.VideoReplyInterestRepository;
 import com.pellto.youtoy.global.exception.NotExistReplyCommentInterestException;
@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VideoReplyInterestService implements
     WriteUpdateDeleteService<VideoReplyInterestDto, WriteInterestRequest, ModifyInterestRequest>,
-    ReadService<VideoReplyCommentInterest, VideoReplyInterestDto> {
+    ReadService<VideoReplyInterest, VideoReplyInterestDto> {
 
   private final VideoReplyInterestRepository videoReplyInterestRepository;
   private final VideoReplyReadService videoReplyReadService;
 
   public List<VideoReplyInterestDto> findAllByInterestedReplyId(Long replyId) {
     var reply = videoReplyReadService.getById(replyId);
-    return videoReplyInterestRepository.findAllByInterestedReplyComment(reply).stream()
+    return videoReplyInterestRepository.findAllByInterestedReply(reply).stream()
         .map(this::toDto).toList();
   }
 
@@ -41,15 +41,15 @@ public class VideoReplyInterestService implements
   }
 
   @Override
-  public VideoReplyCommentInterest getById(Long id) {
+  public VideoReplyInterest getById(Long id) {
     return videoReplyInterestRepository.getReferenceById(id);
   }
 
   @Override
-  public VideoReplyInterestDto toDto(VideoReplyCommentInterest entity) {
+  public VideoReplyInterestDto toDto(VideoReplyInterest entity) {
     return new VideoReplyInterestDto(
         entity.getId(),
-        entity.getInterestedReplyComment().getId(),
+        entity.getInterestedReply().getId(),
         entity.getInterestingUserUuid().getValue(),
         entity.isDislike()
     );
@@ -59,8 +59,8 @@ public class VideoReplyInterestService implements
   public VideoReplyInterestDto write(WriteInterestRequest writeRequest) {
     var reply = videoReplyReadService.getById(writeRequest.contentsId());
     var userUuid = new UserUUID(writeRequest.interestingUserUuid());
-    var interest = VideoReplyCommentInterest.builder()
-        .interestedReplyComment(reply)
+    var interest = VideoReplyInterest.builder()
+        .interestedReply(reply)
         .interestingUserUuid(userUuid)
         .dislike(writeRequest.dislike())
         .build();

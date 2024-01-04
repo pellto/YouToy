@@ -1,0 +1,49 @@
+package com.pellto.youtoy.domain.post.application;
+
+import com.pellto.youtoy.domain.base.application.ReadService;
+import com.pellto.youtoy.domain.post.domain.PostComment;
+import com.pellto.youtoy.domain.post.dto.PostCommentDto;
+import com.pellto.youtoy.domain.post.repository.PostCommentRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class PostCommentReadService implements ReadService<PostComment, PostCommentDto> {
+
+  private final PostCommentRepository postCommentRepository;
+
+  @Override
+  public List<PostCommentDto> findAll() {
+    return postCommentRepository.findAll().stream().map(this::toDto).toList();
+  }
+
+  @Override
+  public PostCommentDto findById(Long id) {
+    var nullableComment = postCommentRepository.findById(id);
+    if (nullableComment.isEmpty()) {
+      throw new UnsupportedOperationException("없음");
+    }
+    return toDto(nullableComment.get());
+  }
+
+  @Override
+  public PostComment getById(Long id) {
+    return postCommentRepository.getReferenceById(id);
+  }
+
+  @Override
+  public PostCommentDto toDto(PostComment comment) {
+    return new PostCommentDto(
+        comment.getId(),
+        comment.getContents().getId(),
+        comment.getCommenterUuid().getValue(),
+        comment.getLikeCount(),
+        comment.getCommentContent(),
+        comment.getReplies().size(),
+        comment.isModified(),
+        comment.getCreatedAt()
+    );
+  }
+}

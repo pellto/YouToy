@@ -2,8 +2,8 @@ package com.pellto.youtoy.domain.video.repository;
 
 import com.pellto.youtoy.domain.video.domain.Video;
 import com.pellto.youtoy.domain.video.domain.VideoComment;
-import com.pellto.youtoy.domain.video.domain.VideoReplyComment;
-import com.pellto.youtoy.domain.video.domain.VideoReplyCommentInterest;
+import com.pellto.youtoy.domain.video.domain.VideoReply;
+import com.pellto.youtoy.domain.video.domain.VideoReplyInterest;
 import com.pellto.youtoy.domain.video.util.VideoCommentFactory;
 import com.pellto.youtoy.domain.video.util.VideoFactory;
 import com.pellto.youtoy.domain.video.util.VideoReplyFactory;
@@ -29,7 +29,7 @@ class VideoReplyInterestRepositoryTest {
   private VideoReplyInterestRepository videoReplyInterestRepository;
 
   @Autowired
-  private VideoReplyCommentRepository contentsRepository;
+  private VideoReplyRepository contentsRepository;
 
   @Autowired
   private VideoRepository videoRepository;
@@ -47,17 +47,17 @@ class VideoReplyInterestRepositoryTest {
     return videoCommentRepository.save(comment);
   }
 
-  private VideoReplyComment contentsSetting() {
+  private VideoReply contentsSetting() {
     var contents = VideoReplyFactory.create();
     return contentsRepository.save(contents);
   }
 
-  private VideoReplyComment contentsSetting(VideoComment comment) {
+  private VideoReply contentsSetting(VideoComment comment) {
     var contents = VideoReplyFactory.create(comment);
     return contentsRepository.save(contents);
   }
 
-  private VideoReplyCommentInterest beforeSetting() {
+  private VideoReplyInterest beforeSetting() {
     var video = videoSetting();
     var parentComment = commentSetting(video);
     var content = contentsSetting(parentComment);
@@ -74,7 +74,7 @@ class VideoReplyInterestRepositoryTest {
 
     Assertions.assertThat(savedInterest).isNotNull();
     Assertions.assertThat(savedInterest.getId()).isNotNull();
-    Assertions.assertThat(savedInterest.getClass()).isEqualTo(VideoReplyCommentInterest.class);
+    Assertions.assertThat(savedInterest.getClass()).isEqualTo(VideoReplyInterest.class);
   }
 
   @DisplayName("[" + TEST_NAME + ": findAllByInterestedContents: success] 관심 contents id 조회 성공 테스트")
@@ -83,12 +83,12 @@ class VideoReplyInterestRepositoryTest {
     var interest = beforeSetting();
 
     var interestList = videoReplyInterestRepository
-        .findAllByInterestedReplyComment(interest.getInterestedReplyComment());
+        .findAllByInterestedReply(interest.getInterestedReply());
 
     Assertions.assertThat(interestList).isNotEmpty();
     Assertions.assertThat(interestList.size()).isEqualTo(1);
     Assertions.assertThat(interestList.get(0).getClass())
-        .isEqualTo(VideoReplyCommentInterest.class);
+        .isEqualTo(VideoReplyInterest.class);
   }
 
   @DisplayName("[" + TEST_NAME + ": deleteById: success] 관심 삭제 성공 테스트")

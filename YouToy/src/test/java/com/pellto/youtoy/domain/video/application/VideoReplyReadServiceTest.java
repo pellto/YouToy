@@ -5,9 +5,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-import com.pellto.youtoy.domain.video.domain.VideoReplyComment;
-import com.pellto.youtoy.domain.video.dto.VideoReplyCommentDto;
-import com.pellto.youtoy.domain.video.repository.VideoReplyCommentRepository;
+import com.pellto.youtoy.domain.video.domain.VideoReply;
+import com.pellto.youtoy.domain.video.dto.VideoReplyDto;
+import com.pellto.youtoy.domain.video.repository.VideoReplyRepository;
 import com.pellto.youtoy.domain.video.util.VideoReplyFactory;
 import java.util.ArrayList;
 import org.assertj.core.api.Assertions;
@@ -28,7 +28,7 @@ class VideoReplyReadServiceTest {
   private VideoReplyReadService videoReplyReadService;
 
   @Mock
-  private VideoReplyCommentRepository videoReplyCommentRepository;
+  private VideoReplyRepository videoReplyRepository;
   @Mock
   private VideoCommentReadService contentReadService;
 
@@ -36,20 +36,20 @@ class VideoReplyReadServiceTest {
   @Test
   void findAllSuccessTest() {
     var reply = VideoReplyFactory.create();
-    var replyList = new ArrayList<VideoReplyComment>();
+    var replyList = new ArrayList<VideoReply>();
     replyList.add(reply);
 
-    given(videoReplyCommentRepository.findAllByParentComment(any())).willReturn(replyList);
+    given(videoReplyRepository.findAllByParentComment(any())).willReturn(replyList);
     given(contentReadService.getById(any())).willReturn(reply.getParentComment());
 
     var foundReplyList = videoReplyReadService.findAllByParentId(
         reply.getParentComment().getId());
 
-    then(videoReplyCommentRepository).should(times(1)).findAllByParentComment(any());
+    then(videoReplyRepository).should(times(1)).findAllByParentComment(any());
     then(contentReadService).should(times(1)).getById(any());
     Assertions.assertThat(foundReplyList).isNotNull();
     Assertions.assertThat(foundReplyList).isNotEmpty();
     Assertions.assertThat(foundReplyList.size()).isEqualTo(replyList.size());
-    Assertions.assertThat(foundReplyList.get(0).getClass()).isEqualTo(VideoReplyCommentDto.class);
+    Assertions.assertThat(foundReplyList.get(0).getClass()).isEqualTo(VideoReplyDto.class);
   }
 }

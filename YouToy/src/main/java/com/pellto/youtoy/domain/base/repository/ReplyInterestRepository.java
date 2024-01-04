@@ -7,5 +7,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface ReplyInterestRepository<RCI, ID, RC> extends JpaRepository<RCI, ID> {
 
-  List<RCI> findAllByInterestedReplyComment(RC reply);
+  List<RCI> findAllByInterestedReply(RC reply);
 }

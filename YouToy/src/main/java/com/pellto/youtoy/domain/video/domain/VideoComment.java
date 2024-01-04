@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class VideoComment extends Comment<Video> {
 
   @OneToMany(mappedBy = "parentComment", cascade = CascadeType.REMOVE)
-  private final List<VideoReplyComment> replies = new ArrayList<>();
+  private final List<VideoReply> replies = new ArrayList<>();
   @OneToMany(mappedBy = "interestedComment", cascade = CascadeType.REMOVE)
   private final List<VideoCommentInterest> commentInterests = new ArrayList<>();
 

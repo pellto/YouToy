@@ -4,7 +4,7 @@ import com.pellto.youtoy.domain.base.dto.WriteCommentRequest;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import com.pellto.youtoy.domain.video.domain.Video;
 import com.pellto.youtoy.domain.video.domain.VideoComment;
-import com.pellto.youtoy.domain.video.domain.VideoReplyComment;
+import com.pellto.youtoy.domain.video.domain.VideoReply;
 import com.pellto.youtoy.domain.video.dto.VideoCommentDto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class VideoCommentFactory {
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final boolean MODIFIED = false;
   private static final LocalDateTime MODIFIED_AT = CREATED_AT;
-  private static final List<VideoReplyComment> REPLIES = new ArrayList<>();
+  private static final List<VideoReply> REPLIES = new ArrayList<>();
 
   public static VideoComment create(WriteCommentRequest req) {
     return VideoComment.builder()

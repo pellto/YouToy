@@ -3,7 +3,7 @@ package com.pellto.youtoy.global.exception;
 import com.pellto.youtoy.domain.channel.exception.NotExistChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscribedChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelException;
-import com.pellto.youtoy.domain.community.exception.NotExistPostInterestException;
+import com.pellto.youtoy.domain.post.exception.NotExistPostInterestException;
 import com.pellto.youtoy.domain.user.exception.WrongRepeatPasswordException;
 import com.pellto.youtoy.global.error.ErrorResponse;
 import java.util.HashMap;

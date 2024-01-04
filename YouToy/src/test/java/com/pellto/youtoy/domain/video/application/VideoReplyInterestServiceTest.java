@@ -6,7 +6,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
 import com.pellto.youtoy.domain.user.domain.UserUUID;
-import com.pellto.youtoy.domain.video.domain.VideoReplyCommentInterest;
+import com.pellto.youtoy.domain.video.domain.VideoReplyInterest;
 import com.pellto.youtoy.domain.video.dto.VideoReplyInterestDto;
 import com.pellto.youtoy.domain.video.repository.VideoReplyInterestRepository;
 import com.pellto.youtoy.domain.video.util.VideoReplyFactory;
@@ -61,19 +61,19 @@ class VideoReplyInterestServiceTest {
   void findAllByInterestedReplyIdSuccessTest() {
     var contents = VideoReplyFactory.create();
     var interest = VideoReplyInterestFactory.create(contents);
-    var videoInterestList = new ArrayList<VideoReplyCommentInterest>();
+    var videoInterestList = new ArrayList<VideoReplyInterest>();
     videoInterestList.add(interest);
 
     given(contentsReadService.getById(any())).willReturn(contents);
     given(
-        interestRepository.findAllByInterestedReplyComment(any())
+        interestRepository.findAllByInterestedReply(any())
     ).willReturn(videoInterestList);
 
     var foundInterestList = interestService
         .findAllByInterestedReplyId(contents.getId());
 
     then(contentsReadService).should(times(1)).getById(contents.getId());
-    then(interestRepository).should(times(1)).findAllByInterestedReplyComment(any());
+    then(interestRepository).should(times(1)).findAllByInterestedReply(any());
     Assertions.assertThat(foundInterestList).isNotEmpty();
     Assertions.assertThat(foundInterestList.get(0).getClass())
         .isEqualTo(VideoReplyInterestDto.class);

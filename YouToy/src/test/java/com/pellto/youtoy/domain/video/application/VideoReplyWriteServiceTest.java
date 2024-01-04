@@ -5,7 +5,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-import com.pellto.youtoy.domain.video.repository.VideoReplyCommentRepository;
+import com.pellto.youtoy.domain.video.repository.VideoReplyRepository;
 import com.pellto.youtoy.domain.video.util.VideoCommentFactory;
 import com.pellto.youtoy.domain.video.util.VideoReplyFactory;
 import org.assertj.core.api.Assertions;
@@ -26,7 +26,7 @@ class VideoReplyWriteServiceTest {
   private VideoReplyWriteService videoReplyWriteService;
 
   @Mock
-  private VideoReplyCommentRepository videoReplyCommentRepository;
+  private VideoReplyRepository videoReplyRepository;
   @Mock
   private VideoReplyReadService videoReplyReadService;
   @Mock
@@ -41,13 +41,13 @@ class VideoReplyWriteServiceTest {
     var replyDto = VideoReplyFactory.createDto(reply);
 
     given(contentReadService.getById(any())).willReturn(parentComment);
-    given(videoReplyCommentRepository.save(any())).willReturn(reply);
+    given(videoReplyRepository.save(any())).willReturn(reply);
     given(videoReplyReadService.toDto(reply)).willReturn(replyDto);
 
     var writtenReply = videoReplyWriteService.write(req);
 
     then(contentReadService).should(times(1)).getById(any());
-    then(videoReplyCommentRepository).should(times(1)).save(any());
+    then(videoReplyRepository).should(times(1)).save(any());
     then(videoReplyReadService).should(times(1)).toDto(reply);
     Assertions.assertThat(writtenReply).isEqualTo(replyDto);
   }

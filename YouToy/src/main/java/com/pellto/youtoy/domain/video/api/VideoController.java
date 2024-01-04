@@ -15,7 +15,7 @@ import com.pellto.youtoy.domain.video.dto.VideoCommentDto;
 import com.pellto.youtoy.domain.video.dto.VideoCommentInterestDto;
 import com.pellto.youtoy.domain.video.dto.VideoDto;
 import com.pellto.youtoy.domain.video.dto.VideoInterestDto;
-import com.pellto.youtoy.domain.video.dto.VideoReplyCommentDto;
+import com.pellto.youtoy.domain.video.dto.VideoReplyDto;
 import com.pellto.youtoy.domain.video.dto.VideoReplyInterestDto;
 import com.pellto.youtoy.domain.video.dto.VideoUploadRequest;
 import jakarta.validation.Valid;
@@ -70,12 +70,12 @@ public class VideoController {
   }
 
   @PostMapping("/comments/replies")
-  public VideoReplyCommentDto writeReply(@RequestBody @Valid WriteCommentRequest req) {
+  public VideoReplyDto writeReply(@RequestBody @Valid WriteCommentRequest req) {
     return videoReplyWriteService.write(req);
   }
 
   @GetMapping("/comments/{parentId}/replies")
-  public List<VideoReplyCommentDto> findAllRepliesByParentId(@PathVariable Long parentId) {
+  public List<VideoReplyDto> findAllRepliesByParentId(@PathVariable Long parentId) {
     return videoReplyReadService.findAllByParentId(parentId);
   }
 
