@@ -30,7 +30,7 @@ public abstract class BaseComment {
     this.modified = General.setNullInput(modified, false);
     this.commentContent = Objects.requireNonNull(commentContent);
     this.createdAt = Temporal.createdAt(createdAt);
-    this.modifiedAt = Temporal.createdAt(modifiedAt);
+    this.modifiedAt = General.setNullInput(modifiedAt, this.createdAt);
   }
 
   protected void changeCommentContent(String s) {
