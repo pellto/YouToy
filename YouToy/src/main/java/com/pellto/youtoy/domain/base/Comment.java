@@ -44,12 +44,12 @@ public abstract class Comment<C> extends BaseComment {
   })
   private UserUUID commenterUuid;
 
-  protected Comment(C contents, UserUUID commenterUuid, Long id, Long likeCount,
+  protected Comment(C contents, UserUUID commenterUuid, Long id,
       String commentContent,
       boolean modified,
       LocalDateTime createdAt,
       LocalDateTime modifiedAt) {
-    super(likeCount, commentContent, modified, createdAt, modifiedAt);
+    super(commentContent, modified, createdAt, modifiedAt);
     this.id = id;
     this.commenterUuid = Objects.requireNonNull(commenterUuid);
     this.contents = Objects.requireNonNull(contents);

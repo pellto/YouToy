@@ -33,7 +33,7 @@ public abstract class Comment {
     this.modified = General.setNullInput(modified, false);
     this.content = Objects.requireNonNull(content);
     this.createdAt = Temporal.createdAt(createdAt);
-    this.modifiedAt = Temporal.createdAt(modifiedAt);
+    this.modifiedAt = General.setNullInput(modifiedAt, this.createdAt);
   }
 
   protected String changeContent(String s) {

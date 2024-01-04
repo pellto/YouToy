@@ -6,7 +6,7 @@ public record VideoCommentDto(
     Long id,
     Long contentsId,
     String commenterUuid,
-    Long likeCount,
+    int likeCount,
     String commentContent,
     int replyCount,
     boolean modified,

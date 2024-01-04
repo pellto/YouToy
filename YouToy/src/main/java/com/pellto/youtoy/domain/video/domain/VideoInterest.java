@@ -27,4 +27,9 @@ public class VideoInterest extends ContentsInterest<Video> {
   public void changeDislike() {
     super.changeDislike();
   }
+
+  @Override
+  public void changeCheck(boolean b) {
+    super.changeCheck(b);
+  }
 }

@@ -68,10 +68,10 @@ public class VideoInterestService implements
   public VideoInterestDto modify(ModifyInterestRequest modifyRequest) {
     var interest = videoInterestRepository.findById(modifyRequest.id())
         .orElseThrow(NotExistContentsInterestException::new);
-    if (interest.isDislike() == modifyRequest.dislike()) {
-      throw new UnsupportedOperationException("허용안함");
-    }
+
+    interest.changeCheck(modifyRequest.dislike());
     interest.changeDislike();
+
     return toDto(interest);
   }
 

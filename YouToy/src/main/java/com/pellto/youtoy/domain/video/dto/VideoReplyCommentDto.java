@@ -6,7 +6,7 @@ public record VideoReplyCommentDto(
     Long id,
     Long parentCommentId,
     String commenterUuid,
-    Long likeCount,
+    int likeCount,
     String commentContent,
     boolean modified,
     LocalDateTime createdAt

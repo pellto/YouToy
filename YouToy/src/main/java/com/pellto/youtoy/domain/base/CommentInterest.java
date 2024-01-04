@@ -46,6 +46,7 @@ public abstract class CommentInterest<CM> extends Interest {
       boolean dislike,
       LocalDateTime createdAt) {
     super(dislike, createdAt);
+    this.id = id;
     this.interestedComment = Objects.requireNonNull(interestedComment);
     this.interestingUserUuid = Objects.requireNonNull(interestingUserUuid);
   }

@@ -16,7 +16,7 @@ public class VideoCommentFactory {
   private static final Video CONTENT = VideoFactory.create();
   private static final UserUUID COMMENTER = new UserUUID("test-commenter");
   private static final String COMMENT_CONTENT = "test-comment";
-  private static final Long LIKE_COUNT = 0L;
+  private static final int LIKE_COUNT = 0;
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final boolean MODIFIED = false;
   private static final LocalDateTime MODIFIED_AT = CREATED_AT;
@@ -28,7 +28,6 @@ public class VideoCommentFactory {
         .contents(VideoFactory.create(req.contentId()))
         .commenterUuid(new UserUUID(req.commenterUuid()))
         .commentContent(req.content())
-        .likeCount(LIKE_COUNT)
         .createdAt(CREATED_AT)
         .modified(MODIFIED)
         .modifiedAt(MODIFIED_AT)
@@ -41,7 +40,18 @@ public class VideoCommentFactory {
         .contents(CONTENT)
         .commenterUuid(COMMENTER)
         .commentContent(COMMENT_CONTENT)
-        .likeCount(LIKE_COUNT)
+        .createdAt(CREATED_AT)
+        .modified(MODIFIED)
+        .modifiedAt(MODIFIED_AT)
+        .build();
+  }
+
+  public static VideoComment create(Video video) {
+    return VideoComment.builder()
+        .id(ID)
+        .contents(video)
+        .commenterUuid(COMMENTER)
+        .commentContent(COMMENT_CONTENT)
         .createdAt(CREATED_AT)
         .modified(MODIFIED)
         .modifiedAt(MODIFIED_AT)
@@ -59,7 +69,6 @@ public class VideoCommentFactory {
         .contents(CONTENT)
         .commenterUuid(COMMENTER)
         .commentContent(COMMENT_CONTENT)
-        .likeCount(LIKE_COUNT)
         .createdAt(CREATED_AT)
         .modified(MODIFIED)
         .modifiedAt(MODIFIED_AT)

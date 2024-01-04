@@ -55,7 +55,7 @@ class VideoInterestServiceTest {
     Assertions.assertThat(savedInterest.getClass()).isEqualTo(VideoInterestDto.class);
   }
 
-  @DisplayName("[%s: findAllByContentsId: success] 관심 contents id 조건 전체 조회 성공 테스트")
+  @DisplayName("[" + TEST_NAME + ": findAllByContentsId: success] 관심 contents id 조건 전체 조회 성공 테스트")
   @Test
   void findAllByContentsIdSuccessTest() {
     var contents = VideoFactory.create();
@@ -77,7 +77,7 @@ class VideoInterestServiceTest {
     Assertions.assertThat(foundInterestList.get(0).getClass()).isEqualTo(VideoInterestDto.class);
   }
 
-  @DisplayName("[%s: deleteById: success] 관심 id 조건 삭제 성공 테스트")
+  @DisplayName("[" + TEST_NAME + ": deleteById: success] 관심 id 조건 삭제 성공 테스트")
   @Test
   void deleteByIdSuccessTest() {
     var id = 1L;

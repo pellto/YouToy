@@ -22,6 +22,12 @@ public abstract class Interest {
     this.dislike = !this.dislike;
   }
 
+  protected void changeCheck(boolean b) {
+    if (b == this.dislike) {
+      throw new UnsupportedOperationException("지원 안함");
+    }
+  }
+
   protected Interest(boolean dislike, LocalDateTime createdAt) {
     this.dislike = General.setNullInput(dislike, false);
     this.createdAt = Temporal.createdAt(createdAt);

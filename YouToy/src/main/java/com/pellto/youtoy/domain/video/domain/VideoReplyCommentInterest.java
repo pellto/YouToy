@@ -22,4 +22,14 @@ public class VideoReplyCommentInterest extends ReplyCommentInterest<VideoReplyCo
       LocalDateTime createdAt) {
     super(interestedReplyComment, interestingUserUuid, id, dislike, createdAt);
   }
+
+  @Override
+  public void changeDislike() {
+    super.changeDislike();
+  }
+
+  @Override
+  public void changeCheck(boolean b) {
+    super.changeCheck(b);
+  }
 }

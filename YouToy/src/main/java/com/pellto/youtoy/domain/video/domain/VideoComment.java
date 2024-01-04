@@ -28,12 +28,16 @@ public class VideoComment extends Comment<Video> {
 
   @Builder
   public VideoComment(Video contents, UserUUID commenterUuid, Long id,
-      Long likeCount, String commentContent, boolean modified, LocalDateTime createdAt,
+      String commentContent, boolean modified, LocalDateTime createdAt,
       LocalDateTime modifiedAt) {
-    super(contents, commenterUuid, id, likeCount, commentContent, modified, createdAt, modifiedAt);
+    super(contents, commenterUuid, id, commentContent, modified, createdAt, modifiedAt);
   }
 
   public int getReplyCount() {
     return replies.size();
+  }
+
+  public int getLikeCount() {
+    return (int) this.commentInterests.stream().filter((interest) -> !interest.isDislike()).count();
   }
 }
