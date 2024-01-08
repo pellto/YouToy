@@ -5,6 +5,7 @@ import com.pellto.youtoy.domain.user.domain.User;
 import com.pellto.youtoy.domain.user.domain.UserInfo;
 import com.pellto.youtoy.domain.user.domain.UserUUID;
 import com.pellto.youtoy.domain.user.dto.UserDto;
+import com.pellto.youtoy.domain.user.dto.UserSignInRequest;
 import com.pellto.youtoy.domain.user.dto.UserSignUpRequest;
 import com.pellto.youtoy.global.util.RandomString;
 import java.time.LocalDateTime;
@@ -23,6 +24,10 @@ public class UserUtil {
   private static final String REPEAT_PWD = "testPwd";
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final PremiumLevel PREMIUM_LEVEL = PremiumLevel.NORMAL;
+
+  public static UserSignInRequest createSignInRequest() {
+    return new UserSignInRequest(USER_INFO.getEmail(), USER_INFO.getPwd());
+  }
 
   public static User createTestBeforeSavedUser() {
     return User.builder()

@@ -1,6 +1,7 @@
 package com.pellto.youtoy.domain.user.application;
 
 import com.pellto.youtoy.domain.user.domain.User;
+import com.pellto.youtoy.domain.user.domain.UserUUID;
 import com.pellto.youtoy.domain.user.dto.UserDto;
 import com.pellto.youtoy.domain.user.repository.UserRepository;
 import java.util.List;
@@ -19,6 +20,10 @@ public class UserReadService {
 
   public UserDto findById(Long id) {
     return toDto(userRepository.findById(id).orElseThrow());
+  }
+
+  public UserDto findByUserUuid(String uuid) {
+    return toDto(userRepository.findByUuid(new UserUUID(uuid)).orElseThrow());
   }
 
   public UserDto toDto(User user) {

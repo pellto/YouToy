@@ -19,6 +19,7 @@ import com.pellto.youtoy.domain.post.dto.PostInterestDto;
 import com.pellto.youtoy.domain.post.dto.PostReplyDto;
 import com.pellto.youtoy.domain.post.dto.PostReplyInterestDto;
 import com.pellto.youtoy.domain.post.dto.PostWriteRequest;
+import com.pellto.youtoy.global.filter.auth.AdminAuthorize;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/posts")
 @RequiredArgsConstructor
 @RestController
+@AdminAuthorize
 public class PostController {
 
   private final PostCommentReadService commentReadService;

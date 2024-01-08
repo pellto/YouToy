@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Embeddable
 @Getter
@@ -37,5 +38,9 @@ public class UserInfo {
     this.pwd = Objects.requireNonNull(pwd);
     this.name = Objects.requireNonNull(name);
     this.birthDate = Temporal.createdAt(birthDate);
+  }
+
+  public void encodePwd(PasswordEncoder encoder) {
+    this.pwd = encoder.encode(this.pwd);
   }
 }

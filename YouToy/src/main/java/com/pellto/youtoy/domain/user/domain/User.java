@@ -1,5 +1,6 @@
 package com.pellto.youtoy.domain.user.domain;
 
+import com.pellto.youtoy.domain.user.dto.MemberType;
 import com.pellto.youtoy.global.util.General;
 import com.pellto.youtoy.global.util.RandomString;
 import com.pellto.youtoy.global.util.Temporal;
@@ -43,14 +44,21 @@ public class User {
   @Column(name = "premium_level")
   @Enumerated(EnumType.STRING)
   private PremiumLevel premiumLevel;
+  @Enumerated(EnumType.STRING)
+  @AttributeOverrides({
+      @AttributeOverride(name = "authority", column = @Column(name = "member_type"))
+  })
+  private MemberType memberType;
 
   @Builder
-  public User(Long id, UserInfo userInfo, LocalDateTime createdAt, PremiumLevel premiumLevel) {
+  public User(Long id, UserInfo userInfo, LocalDateTime createdAt, PremiumLevel premiumLevel,
+      MemberType memberType) {
     this.id = id;
     this.userInfo = Objects.requireNonNull(userInfo);
     this.uuid = generateUserUUID();
     this.createdAt = Temporal.createdAt(createdAt);
     this.premiumLevel = General.setNullInput(premiumLevel, PremiumLevel.NORMAL);
+    this.memberType = General.setNullInput(memberType, MemberType.USER);
   }
 
   public void changeUserInfo(UserInfo userInfo) {

@@ -4,6 +4,8 @@ import com.pellto.youtoy.domain.channel.exception.NotExistChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscribedChannelException;
 import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelException;
 import com.pellto.youtoy.domain.post.exception.NotExistPostInterestException;
+import com.pellto.youtoy.domain.user.exception.NotExistUserException;
+import com.pellto.youtoy.domain.user.exception.WrongPasswordException;
 import com.pellto.youtoy.domain.user.exception.WrongRepeatPasswordException;
 import com.pellto.youtoy.global.error.ErrorResponse;
 import java.util.HashMap;
@@ -79,9 +81,23 @@ public class GlobalExceptionHandler {
   }
 
   // User
+  @ExceptionHandler(WrongPasswordException.class)
+  public ResponseEntity<ErrorResponse> handleWrongPasswordException(
+      WrongPasswordException ex
+  ) {
+    return this.postProcess(ex);
+  }
+
   @ExceptionHandler(WrongRepeatPasswordException.class)
   public ResponseEntity<ErrorResponse> handleWrongRepeatPasswordException(
       WrongRepeatPasswordException ex
+  ) {
+    return this.postProcess(ex);
+  }
+
+  @ExceptionHandler(NotExistUserException.class)
+  public ResponseEntity<ErrorResponse> handleNotExistUserException(
+      NotExistUserException ex
   ) {
     return this.postProcess(ex);
   }

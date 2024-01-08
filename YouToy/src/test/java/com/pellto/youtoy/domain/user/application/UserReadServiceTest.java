@@ -61,4 +61,19 @@ class UserReadServiceTest {
     Assertions.assertNotNull(foundUser);
     Assertions.assertEquals(user.getUuid(), foundUser.uuid());
   }
+
+  @DisplayName("[userReadService: findByUserUuid: success] 유저 UUID 조건 찾기 테스트")
+  @Test
+  void findByUserUuidSuccess() {
+    var user = UserUtil.createTestUser();
+    var userUuid = user.getUuid().getValue();
+
+    given(userRepository.findByUuid(any())).willReturn(Optional.ofNullable(user));
+
+    var foundUser = userReadService.findByUserUuid(userUuid);
+
+    then(userRepository).should(times(1)).findByUuid(any());
+    Assertions.assertNotNull(foundUser);
+    Assertions.assertEquals(user.getUuid(), foundUser.uuid());
+  }
 }

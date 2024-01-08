@@ -47,6 +47,19 @@ class UserRepositoryTest {
     Assertions.assertThat(savedUser).isEqualTo(user);
   }
 
+  @DisplayName("[userRepository: findByUuid: success] UUID 조건 조회 잘 되는지 테스트")
+  @Test
+  void findByUuidTest() {
+    var user = createTestBeforeSavedUser();
+    user = userRepository.save(user);
+
+    Optional<User> nullableUser = userRepository.findByUuid(user.getUuid());
+
+    Assertions.assertThat(nullableUser).isNotEmpty();
+    User savedUser = nullableUser.get();
+    Assertions.assertThat(savedUser).isEqualTo(user);
+  }
+
   @DisplayName("[userRepository: findAll: success] 전체 조회 잘 되는지 테스트")
   @Test
   void findAllTest() {
