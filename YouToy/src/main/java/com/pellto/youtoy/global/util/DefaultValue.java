@@ -6,4 +6,5 @@ public class DefaultValue {
   public static final String CHANNEL_DESCRIPTION = "default description";
   public static final String CHANNEL_BANNER_PATH = "default banner path";
   public static final String CHANNEL_PROFILE_PATH = "default profile path";
+  public static final String ANONYMOUS_AUTH = "anonymous:anonymous:anonymous:anonymous:anonymous:anonymous";
 }
