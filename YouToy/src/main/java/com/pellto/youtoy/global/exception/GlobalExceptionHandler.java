@@ -1,12 +1,5 @@
 package com.pellto.youtoy.global.exception;
 
-import com.pellto.youtoy.domain.channel.exception.NotExistChannelException;
-import com.pellto.youtoy.domain.channel.exception.NotExistSubscribedChannelException;
-import com.pellto.youtoy.domain.channel.exception.NotExistSubscriberChannelException;
-import com.pellto.youtoy.domain.post.exception.NotExistPostInterestException;
-import com.pellto.youtoy.domain.user.exception.NotExistUserException;
-import com.pellto.youtoy.domain.user.exception.WrongPasswordException;
-import com.pellto.youtoy.domain.user.exception.WrongRepeatPasswordException;
 import com.pellto.youtoy.global.error.ErrorResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,95 +33,12 @@ public class GlobalExceptionHandler {
     return ResponseEntity.badRequest().body(errors);
   }
 
-  // Community Post Interest
-  @ExceptionHandler(NotExistPostInterestException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistPostInterestException(
-      NotExistPostInterestException ex
-  ) {
-    return this.postProcess(ex);
-  }
+//  // Community Post Interest
+//  @ExceptionHandler(NotExistPostInterestException.class)
+//  public ResponseEntity<ErrorResponse> handleNotExistPostInterestException(
+//      NotExistPostInterestException ex
+//  ) {
+//    return this.postProcess(ex);
+//  }
 
-  // Comment Interest
-  @ExceptionHandler(NotExistCommentInterestException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistCommentInterestException(
-      NotExistCommentInterestException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  // Reply Interest
-  @ExceptionHandler(NotExistReplyInterestException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistReplyInterestException(
-      NotExistReplyInterestException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  // Contents Interest
-  @ExceptionHandler(NotExistContentsInterestException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistContentsInterestException(
-      NotExistContentsInterestException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  // Comment
-  @ExceptionHandler(NotExistPostException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistCommentException(
-      NotExistPostException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  // User
-  @ExceptionHandler(WrongPasswordException.class)
-  public ResponseEntity<ErrorResponse> handleWrongPasswordException(
-      WrongPasswordException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  @ExceptionHandler(WrongRepeatPasswordException.class)
-  public ResponseEntity<ErrorResponse> handleWrongRepeatPasswordException(
-      WrongRepeatPasswordException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  @ExceptionHandler(NotExistUserException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistUserException(
-      NotExistUserException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  // Channel
-  @ExceptionHandler(NotExistSubscriberChannelException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistSubscriberChannelException(
-      NotExistSubscriberChannelException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  // Interest
-  @ExceptionHandler(UnsupportedInterestChangeException.class)
-  public ResponseEntity<ErrorResponse> handleUnsupportedInterestChangeException(
-      UnsupportedInterestChangeException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  @ExceptionHandler(NotExistSubscribedChannelException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistSubscribedChannelException(
-      NotExistSubscribedChannelException ex
-  ) {
-    return this.postProcess(ex);
-  }
-
-  @ExceptionHandler(NotExistChannelException.class)
-  public ResponseEntity<ErrorResponse> handleNotExistChannelException(
-      NotExistChannelException ex
-  ) {
-    return this.postProcess(ex);
-  }
 }
