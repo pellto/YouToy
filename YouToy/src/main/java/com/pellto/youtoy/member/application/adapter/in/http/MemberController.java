@@ -17,6 +17,6 @@ public class MemberController {
 
   @PostMapping
   public void signUp(@RequestBody MemberSignUpRequest req) {
-    signUpUsecase.RequestSignUp(req);
+    signUpUsecase.requestSignUp(req);
   }
 }

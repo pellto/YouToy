@@ -10,6 +10,7 @@ import lombok.ToString;
 public class SignedUpEvent {
 
   private Long memberId;
+  private String memberName;
   private String memberUuid;
   private Long membershipId;
 }

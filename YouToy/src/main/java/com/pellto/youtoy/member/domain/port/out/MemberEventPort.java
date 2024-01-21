@@ -7,6 +7,6 @@ public interface MemberEventPort {
 
   void requestedSignUpEvent(MemberInfoDto memberInfoDto, LocalDateTime requiredAt);
 
-  void signedUpEvent(Long memberId, String memberUuid, Long membershipId);
+  void signedUpEvent(Long memberId, String memberName, String memberUuid, Long membershipId);
 
 }

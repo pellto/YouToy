@@ -37,7 +37,7 @@ public class MemberWriteService implements MemberInfoUsecase, MemberSignUpUsecas
   }
 
   @Override
-  public void RequestSignUp(MemberSignUpRequest request) {
+  public void requestSignUp(MemberSignUpRequest request) {
     if (!request.memberInfoDto().pwd().equals(request.repeatPwd())) {
       throw new IllegalArgumentException();
     }
@@ -56,8 +56,12 @@ public class MemberWriteService implements MemberInfoUsecase, MemberSignUpUsecas
         .build();
 
     member = saveMemberPort.save(member);
-    memberEventPort.signedUpEvent(member.getId(), member.getUuid().value(),
-        member.getMembershipId());
+    memberEventPort.signedUpEvent(
+        member.getId(),
+        member.getMemberInfo().getName(),
+        member.getUuid().value(),
+        member.getMembershipId()
+    );
     return member;
   }
 

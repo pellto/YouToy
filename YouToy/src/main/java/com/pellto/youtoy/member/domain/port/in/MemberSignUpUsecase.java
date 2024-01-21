@@ -6,7 +6,7 @@ import com.pellto.youtoy.member.domain.model.Member;
 
 public interface MemberSignUpUsecase {
 
-  void RequestSignUp(MemberSignUpRequest request);
+  void requestSignUp(MemberSignUpRequest request);
 
   Member signUp(Long membershipId, MemberInfoDto memberInfoDto);
 

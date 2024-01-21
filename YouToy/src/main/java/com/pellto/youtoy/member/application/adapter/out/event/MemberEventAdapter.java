@@ -28,12 +28,13 @@ public class MemberEventAdapter implements MemberEventPort {
   }
 
   @Override
-  public void signedUpEvent(Long memberId, String memberUuid, Long membershipId) {
+  public void signedUpEvent(Long memberId, String memberName, String memberUuid,
+      Long membershipId) {
     log.info(
         String.format(
             "[MemberEventAdapter/signedUpEvent]: 회원가입 완료 {memberId: %s, memberUuid: %s, membershipId: %s}",
             memberId, memberUuid, membershipId));
-    var event = new SignedUpEvent(memberId, memberUuid, membershipId);
+    var event = new SignedUpEvent(memberId, memberName, memberUuid, membershipId);
     applicationEventPublisher.publishEvent(event);
   }
 }
