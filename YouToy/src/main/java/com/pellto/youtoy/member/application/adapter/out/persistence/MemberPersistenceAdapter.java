@@ -22,9 +22,21 @@ public class MemberPersistenceAdapter implements SaveMemberPort, LoadMemberPort 
   }
 
   @Override
+  public void delete(Member member) {
+    MemberEntity entity = memberMapper.toEntity(member);
+    jpaDataRepository.delete(entity);
+  }
+
+  @Override
   public Member save(Member member) {
     MemberEntity entity = memberMapper.toEntity(member);
     entity = jpaDataRepository.save(entity);
     return memberMapper.toDomain(entity);
+  }
+
+  @Override
+  public void update(Member member) {
+    MemberEntity entity = memberMapper.toEntity(member);
+    jpaDataRepository.save(entity);
   }
 }

@@ -24,6 +24,12 @@ public class ChannelPersistenceAdapter implements SaveChannelPort, LoadChannelPo
   }
 
   @Override
+  public void delete(Channel channel) {
+    ChannelEntity entity = channelMapper.toEntity(channel);
+    jpaDataRepository.delete(entity);
+  }
+
+  @Override
   public Channel save(Channel channel) {
     ChannelEntity entity = channelMapper.toEntity(channel);
     entity = jpaDataRepository.save(entity);

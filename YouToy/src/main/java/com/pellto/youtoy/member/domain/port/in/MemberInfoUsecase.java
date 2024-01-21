@@ -1,12 +1,14 @@
 package com.pellto.youtoy.member.domain.port.in;
 
+import com.pellto.youtoy.global.dto.member.request.MemberChangeNameRequest;
+import com.pellto.youtoy.global.dto.member.request.MemberChangePwdRequest;
 import com.pellto.youtoy.member.domain.model.MemberInfo;
 
 public interface MemberInfoUsecase {
 
   void changeInfo(MemberInfo memberInfo);
 
-  void changePwd(String pwd);
+  void changePwd(MemberChangePwdRequest req);
 
-  void changeName(String name);
+  void changeName(MemberChangeNameRequest req);
 }

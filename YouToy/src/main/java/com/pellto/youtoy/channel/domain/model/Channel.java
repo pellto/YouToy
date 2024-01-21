@@ -1,5 +1,7 @@
 package com.pellto.youtoy.channel.domain.model;
 
+import com.pellto.youtoy.global.dto.channel.ChannelDto;
+import com.pellto.youtoy.global.dto.channel.ChannelInfoDto;
 import com.pellto.youtoy.global.util.General;
 import com.pellto.youtoy.global.util.RandomString;
 import com.pellto.youtoy.global.util.Temporal;
@@ -32,6 +34,10 @@ public class Channel {
     return new ChannelHandle(handleValue);
   }
 
+  public ChannelInfoDto getChannelInfoDto() {
+    return this.channelInfo.toDto();
+  }
+
 
   public void changeInfo(ChannelInfo channelInfo) {
     this.channelInfo = channelInfo;
@@ -39,5 +45,15 @@ public class Channel {
 
   public void changeHandle(ChannelHandle handle) {
     this.handle = handle;
+  }
+
+
+  public ChannelDto toDto() {
+    return new ChannelDto(
+        this.id,
+        this.ownerId,
+        this.handle.value(),
+        this.channelInfo.toDto()
+    );
   }
 }

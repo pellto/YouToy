@@ -42,4 +42,8 @@ public class MemberInfo {
         .birthDate(dto.birthDate())
         .build();
   }
+
+  public MemberInfoDto toDto() {
+    return new MemberInfoDto(this.email, this.pwd, this.getName(), this.birthDate);
+  }
 }

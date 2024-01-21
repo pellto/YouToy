@@ -1,5 +1,6 @@
 package com.pellto.youtoy.membership.domain.model;
 
+import com.pellto.youtoy.global.dto.membership.MembershipDto;
 import com.pellto.youtoy.global.util.General;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -31,5 +32,15 @@ public class Membership {
 
   public void renew() {
     this.expectedExpiredAt = expectedExpiredAt.plusDays(30);
+  }
+
+  public MembershipDto toDto() {
+    return new MembershipDto(
+        this.id,
+        this.email,
+        this.startedAt,
+        this.expectedExpiredAt,
+        this.premium.getValue()
+    );
   }
 }

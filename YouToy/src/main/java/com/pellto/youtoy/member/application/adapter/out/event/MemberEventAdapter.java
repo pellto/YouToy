@@ -1,6 +1,8 @@
 package com.pellto.youtoy.member.application.adapter.out.event;
 
+import com.pellto.youtoy.global.dto.member.MemberDto;
 import com.pellto.youtoy.global.dto.member.MemberInfoDto;
+import com.pellto.youtoy.global.event.member.MemberDeletedEvent;
 import com.pellto.youtoy.global.event.member.RequestedSignUpEvent;
 import com.pellto.youtoy.global.event.member.SignedUpEvent;
 import com.pellto.youtoy.member.domain.port.out.MemberEventPort;
@@ -16,6 +18,16 @@ import org.springframework.stereotype.Component;
 public class MemberEventAdapter implements MemberEventPort {
 
   private final ApplicationEventPublisher applicationEventPublisher;
+
+  @Override
+  public void memberDeletedEvent(MemberDto dto) {
+    var publisher = "MemberEventAdapter/memberDeletedEvent";
+    log.info(String.format("[%s]: 회원 삭제 완료 {MemberDto: %s}",
+        publisher, dto));
+
+    var event = new MemberDeletedEvent(dto, publisher);
+    applicationEventPublisher.publishEvent(event);
+  }
 
   @Override
   public void requestedSignUpEvent(MemberInfoDto memberInfoDto, LocalDateTime requiredAt) {
@@ -36,5 +48,13 @@ public class MemberEventAdapter implements MemberEventPort {
             memberId, memberUuid, membershipId));
     var event = new SignedUpEvent(memberId, memberName, memberUuid, membershipId);
     applicationEventPublisher.publishEvent(event);
+  }
+
+  @Override
+  public void memberInfoChangedEvent(MemberInfoDto before, MemberInfoDto after) {
+    log.info(String.format(
+        "[MemberEventAdapter/memberInfoChangedEvent]: 회원 정보 변경 완료 {before: %s, after: %s}",
+        before, after));
+    // TODO: set event and publish
   }
 }

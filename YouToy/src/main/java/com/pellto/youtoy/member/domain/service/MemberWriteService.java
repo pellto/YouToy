@@ -1,9 +1,12 @@
 package com.pellto.youtoy.member.domain.service;
 
 import com.pellto.youtoy.global.dto.member.MemberInfoDto;
+import com.pellto.youtoy.global.dto.member.request.MemberChangeNameRequest;
+import com.pellto.youtoy.global.dto.member.request.MemberChangePwdRequest;
 import com.pellto.youtoy.global.dto.member.request.MemberSignUpRequest;
 import com.pellto.youtoy.member.domain.model.Member;
 import com.pellto.youtoy.member.domain.model.MemberInfo;
+import com.pellto.youtoy.member.domain.port.in.MemberDeleteUsecase;
 import com.pellto.youtoy.member.domain.port.in.MemberInfoUsecase;
 import com.pellto.youtoy.member.domain.port.in.MemberSignUpUsecase;
 import com.pellto.youtoy.member.domain.port.out.LoadMemberPort;
@@ -15,7 +18,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MemberWriteService implements MemberInfoUsecase, MemberSignUpUsecase {
+public class MemberWriteService implements MemberInfoUsecase, MemberSignUpUsecase,
+    MemberDeleteUsecase {
 
   private final LoadMemberPort loadMemberPort;
   private final SaveMemberPort saveMemberPort;
@@ -27,20 +31,45 @@ public class MemberWriteService implements MemberInfoUsecase, MemberSignUpUsecas
   }
 
   @Override
-  public void changePwd(String pwd) {
+  public void changePwd(MemberChangePwdRequest req) {
+    checkValidPwd(req.pwd(), req.repeatPwd());
 
+    var member = loadMemberPort.load(req.id());
+
+    MemberInfoDto before = member.getMemberInfoDto();
+    member.changeMemberPwd(req.pwd());
+    MemberInfoDto after = member.getMemberInfoDto();
+
+    saveMemberPort.update(member);
+
+    memberEventPort.memberInfoChangedEvent(before, after);
   }
 
   @Override
-  public void changeName(String name) {
+  public void changeName(MemberChangeNameRequest req) {
+    var member = loadMemberPort.load(req.id());
 
+    MemberInfoDto before = member.getMemberInfoDto();
+    member.changeMemberName(req.name());
+    MemberInfoDto after = member.getMemberInfoDto();
+
+    saveMemberPort.update(member);
+
+    memberEventPort.memberInfoChangedEvent(before, after);
+  }
+
+  @Override
+  public void delete(Long id) {
+    // TODO: check valid auth
+    var member = loadMemberPort.load(id);
+    saveMemberPort.delete(member);
+
+    memberEventPort.memberDeletedEvent(member.toDto());
   }
 
   @Override
   public void requestSignUp(MemberSignUpRequest request) {
-    if (!request.memberInfoDto().pwd().equals(request.repeatPwd())) {
-      throw new IllegalArgumentException();
-    }
+    checkValidPwd(request.memberInfoDto().pwd(), request.repeatPwd());
 
     memberEventPort.requestedSignUpEvent(
         request.memberInfoDto(),
@@ -65,4 +94,9 @@ public class MemberWriteService implements MemberInfoUsecase, MemberSignUpUsecas
     return member;
   }
 
+  private void checkValidPwd(String pwd, String repeatPwd) {
+    if (!pwd.equals(repeatPwd)) {
+      throw new IllegalArgumentException();
+    }
+  }
 }

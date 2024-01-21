@@ -16,7 +16,8 @@ public class PublishedInitMembershipEventHandler {
 
   @EventListener
   public void signUp(PublishedInitMembershipEvent event) throws InterruptedException {
-    log.info(String.format("[PublishedInitMembershipHandler/signUp]: 회원 가입 시작 {event: %s}", event));
+    log.info(String.format("[PublishedInitMembershipHandler/signUp]: 회원 가입 시작(by %s) {event: %s}",
+        event.getPublisher(), event));
     memberSignUpUsecase.signUp(event.getMembershipId(), event.getMemberInfo());
   }
 }
