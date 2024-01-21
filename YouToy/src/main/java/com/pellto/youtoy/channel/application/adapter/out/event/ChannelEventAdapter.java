@@ -3,12 +3,12 @@ package com.pellto.youtoy.channel.application.adapter.out.event;
 import com.pellto.youtoy.channel.domain.port.out.ChannelEventPort;
 import com.pellto.youtoy.global.dto.channel.ChannelDto;
 import com.pellto.youtoy.global.event.channel.ChannelDeletedEvent;
+import com.pellto.youtoy.global.interfaces.OutboundEventAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
 
-@Component
+@OutboundEventAdapter
 @RequiredArgsConstructor
 @Slf4j
 public class ChannelEventAdapter implements ChannelEventPort {

@@ -3,11 +3,11 @@ package com.pellto.youtoy.channel.application.adapter.out.persistence;
 import com.pellto.youtoy.channel.domain.model.Channel;
 import com.pellto.youtoy.channel.domain.port.out.LoadChannelPort;
 import com.pellto.youtoy.channel.domain.port.out.SaveChannelPort;
+import com.pellto.youtoy.global.interfaces.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 
-@Repository
+@PersistenceAdapter
 @RequiredArgsConstructor
 public class ChannelPersistenceAdapter implements SaveChannelPort, LoadChannelPort {
 

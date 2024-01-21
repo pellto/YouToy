@@ -5,14 +5,14 @@ import com.pellto.youtoy.global.dto.member.MemberInfoDto;
 import com.pellto.youtoy.global.event.member.MemberDeletedEvent;
 import com.pellto.youtoy.global.event.member.RequestedSignUpEvent;
 import com.pellto.youtoy.global.event.member.SignedUpEvent;
+import com.pellto.youtoy.global.interfaces.OutboundEventAdapter;
 import com.pellto.youtoy.member.domain.port.out.MemberEventPort;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
 
-@Component
+@OutboundEventAdapter
 @RequiredArgsConstructor
 @Slf4j
 public class MemberEventAdapter implements MemberEventPort {

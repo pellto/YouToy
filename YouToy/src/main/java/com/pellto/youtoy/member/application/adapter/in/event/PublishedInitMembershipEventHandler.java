@@ -1,13 +1,13 @@
 package com.pellto.youtoy.member.application.adapter.in.event;
 
 import com.pellto.youtoy.global.event.membership.PublishedInitMembershipEvent;
+import com.pellto.youtoy.global.interfaces.InboundEventAdapter;
 import com.pellto.youtoy.member.domain.port.in.MemberSignUpUsecase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
 
-@Component
+@InboundEventAdapter
 @RequiredArgsConstructor
 @Slf4j
 public class PublishedInitMembershipEventHandler {

@@ -2,12 +2,12 @@ package com.pellto.youtoy.channel.application.adapter.in.event;
 
 import com.pellto.youtoy.channel.domain.port.in.ChannelCreateUsecase;
 import com.pellto.youtoy.global.event.member.SignedUpEvent;
+import com.pellto.youtoy.global.interfaces.InboundEventAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
 
-@Component
+@InboundEventAdapter
 @RequiredArgsConstructor
 @Slf4j
 public class SignedUpMemberEventHandler {

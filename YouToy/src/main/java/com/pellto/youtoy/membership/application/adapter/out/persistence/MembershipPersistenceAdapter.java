@@ -1,12 +1,12 @@
 package com.pellto.youtoy.membership.application.adapter.out.persistence;
 
+import com.pellto.youtoy.global.interfaces.PersistenceAdapter;
 import com.pellto.youtoy.membership.domain.model.Membership;
 import com.pellto.youtoy.membership.domain.port.out.LoadMembershipPort;
 import com.pellto.youtoy.membership.domain.port.out.SaveMembershipPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-@Repository
+@PersistenceAdapter
 @RequiredArgsConstructor
 public class MembershipPersistenceAdapter implements SaveMembershipPort, LoadMembershipPort {
 
