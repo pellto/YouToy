@@ -5,5 +5,5 @@ import java.time.LocalDateTime;
 
 public interface PublishInitMembershipUsecase {
 
-  void publish(MemberInfoDto memberInfoDto, LocalDateTime requiredAt);
+  void publish(MemberInfoDto memberInfoDto, LocalDateTime requestedAt);
 }

@@ -12,5 +12,5 @@ import lombok.ToString;
 public class RequestedSignUpEvent {
 
   private MemberInfoDto memberInfoDto;
-  private LocalDateTime requiredAt;
+  private LocalDateTime requestedAt;
 }

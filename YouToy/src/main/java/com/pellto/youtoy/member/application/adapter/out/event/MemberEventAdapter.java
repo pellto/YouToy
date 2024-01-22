@@ -30,12 +30,12 @@ public class MemberEventAdapter implements MemberEventPort {
   }
 
   @Override
-  public void requestedSignUpEvent(MemberInfoDto memberInfoDto, LocalDateTime requiredAt) {
+  public void requestedSignUpEvent(MemberInfoDto memberInfoDto, LocalDateTime requestedAt) {
     log.info(String.format(
-        "[MemberEventAdapter/requestedSignUpEvent]: 회원가입 요청 완료 {memberInfoDto: %s | requiredAt: %s}",
-        memberInfoDto, requiredAt
+        "[MemberEventAdapter/requestedSignUpEvent]: 회원가입 요청 완료 {memberInfoDto: %s | requestedAt: %s}",
+        memberInfoDto, requestedAt
     ));
-    var event = new RequestedSignUpEvent(memberInfoDto, requiredAt);
+    var event = new RequestedSignUpEvent(memberInfoDto, requestedAt);
     applicationEventPublisher.publishEvent(event);
   }
 

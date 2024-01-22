@@ -20,6 +20,6 @@ public class RequestedSignUpEventHandler {
         "[RequestedSignUpEventHandler/renewInitMembership]: 최초 멤버십 갱신 완료 {event: %s}",
         event));
 
-    publishInitMembershipUsecase.publish(event.getMemberInfoDto(), event.getRequiredAt());
+    publishInitMembershipUsecase.publish(event.getMemberInfoDto(), event.getRequestedAt());
   }
 }

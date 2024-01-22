@@ -23,11 +23,11 @@ public class MembershipPublishService implements PublishInitMembershipUsecase,
 
 
   @Override
-  public void publish(MemberInfoDto memberInfoDto, LocalDateTime requiredAt) {
+  public void publish(MemberInfoDto memberInfoDto, LocalDateTime requestedAt) {
 
     var membership = Membership.builder()
         .email(memberInfoDto.email())
-        .startedAt(requiredAt)
+        .startedAt(requestedAt)
         .build();
     membership = saveMembershipPort.save(membership);
 
@@ -38,7 +38,7 @@ public class MembershipPublishService implements PublishInitMembershipUsecase,
   @Override
   public void remove(MemberDto dto) {
     var membership = loadMembershipPort.load(dto.membershipId());
-    
+
     saveMembershipPort.delete(membership);
 
     membershipEventPort.membershipRemovedEvent(membership.toDto());

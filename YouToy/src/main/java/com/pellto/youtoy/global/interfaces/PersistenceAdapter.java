@@ -7,14 +7,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.springframework.core.annotation.AliasFor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Repository
+@Component
 public @interface PersistenceAdapter {
 
-  @AliasFor(annotation = Repository.class)
+  @AliasFor(annotation = Component.class)
   String value() default "";
 }

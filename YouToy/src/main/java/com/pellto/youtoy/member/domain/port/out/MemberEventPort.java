@@ -8,7 +8,7 @@ public interface MemberEventPort {
 
   void memberDeletedEvent(MemberDto dto);
 
-  void requestedSignUpEvent(MemberInfoDto memberInfoDto, LocalDateTime requiredAt);
+  void requestedSignUpEvent(MemberInfoDto memberInfoDto, LocalDateTime requestedAt);
 
   void signedUpEvent(Long memberId, String memberName, String memberUuid, Long membershipId);
 
