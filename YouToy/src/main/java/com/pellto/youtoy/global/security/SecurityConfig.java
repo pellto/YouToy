@@ -19,7 +19,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 
-  private final String[] allowedUrls = {"/", "/swagger-ui/**", "/v3/**", "/members/**"};
+  // FIXME: `/subscribes/**` to auth check
+  private final String[] allowedUrls = {"/", "/swagger-ui/**", "/v3/**", "/members/**",
+      "/subscribes/**"};
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
