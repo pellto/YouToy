@@ -21,7 +21,7 @@ public class SecurityConfig {
 
   // FIXME: `/subscribes/**` to auth check
   private final String[] allowedUrls = {"/", "/swagger-ui/**", "/v3/**", "/members/**",
-      "/subscribes/**"};
+      "/subscribes/**", "/channels/**"};
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

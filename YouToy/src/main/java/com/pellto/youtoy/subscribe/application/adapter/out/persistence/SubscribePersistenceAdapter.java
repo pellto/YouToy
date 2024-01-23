@@ -4,6 +4,7 @@ import com.pellto.youtoy.global.interfaces.PersistenceAdapter;
 import com.pellto.youtoy.subscribe.domain.model.Subscribe;
 import com.pellto.youtoy.subscribe.domain.port.out.LoadSubscribePort;
 import com.pellto.youtoy.subscribe.domain.port.out.SaveSubscribePort;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 
@@ -28,6 +29,12 @@ public class SubscribePersistenceAdapter implements SaveSubscribePort, LoadSubsc
             subscriberId, subscribedChannelId)
         .orElseThrow(() -> new IllegalArgumentException("변경 예정"));
     return subscribeMapper.toDomain(subscribe);
+  }
+
+  @Override
+  public List<Subscribe> loadsBySubscriberId(Long subscriberId) {
+    var subscribes = jpaDataRepository.findAllBySubscriberId(subscriberId);
+    return subscribes.stream().map(subscribeMapper::toDomain).toList();
   }
 
   @Override

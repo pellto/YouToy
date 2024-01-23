@@ -1,5 +1,6 @@
 package com.pellto.youtoy.subscribe.application.adapter.out.persistence;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,5 +10,7 @@ public interface SubscribeJpaDataRepository extends JpaRepository<SubscribeEntit
       Long subscriberId,
       Long subscribedChannelId
   );
+
+  List<SubscribeEntity> findAllBySubscriberId(Long subscriberId);
 
 }

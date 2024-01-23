@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class SubscribeService implements SubscribeUsecase, UnsubscribeUsecase,
+public class SubscribeWriteService implements SubscribeUsecase, UnsubscribeUsecase,
     ChangeSubscribeLevelUsecase {
 
   private final LoadSubscribePort loadSubscribePort;

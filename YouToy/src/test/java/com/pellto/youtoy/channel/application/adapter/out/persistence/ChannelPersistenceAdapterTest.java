@@ -64,7 +64,7 @@ class ChannelPersistenceAdapterTest {
     Assertions.assertThat(loadedChannel).usingRecursiveComparison().isEqualTo(savedChannel);
   }
 
-  @DisplayName("[" + ADAPTER_NAME + "/delete] 읽기 성공 테스트")
+  @DisplayName("[" + ADAPTER_NAME + "/delete] 삭제 성공 테스트")
   @Test
   void deleteSuccessTest() {
     var info = ChannelInfo.builder()

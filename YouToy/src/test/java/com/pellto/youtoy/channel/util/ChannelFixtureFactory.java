@@ -23,6 +23,17 @@ public class ChannelFixtureFactory {
         .build();
   }
 
+  public static Channel createWithSubscriberCount(Long subscriberCount) {
+    return Channel.builder()
+        .id(ID)
+        .ownerId(OWNER_ID)
+        .createdAt(CREATED_AT)
+        .channelInfo(CHANNEL_INFO)
+        .handle(CHANNEL_HANDLE)
+        .subscriberCount(subscriberCount)
+        .build();
+  }
+
   public static Channel createBeforeSaved() {
     return Channel.builder()
         .ownerId(OWNER_ID)
