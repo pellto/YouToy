@@ -10,8 +10,10 @@ import com.pellto.youtoy.subscribe.domain.port.in.SubscribeUsecase;
 import com.pellto.youtoy.subscribe.domain.port.in.UnsubscribeUsecase;
 import com.pellto.youtoy.subscribe.domain.port.out.LoadSubscribePort;
 import com.pellto.youtoy.subscribe.domain.port.out.SaveSubscribePort;
+import com.pellto.youtoy.subscribe.domain.port.out.SubscribeEventPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,7 @@ public class SubscribeService implements SubscribeUsecase, UnsubscribeUsecase,
 
   private final LoadSubscribePort loadSubscribePort;
   private final SaveSubscribePort saveSubscribePort;
+  private final SubscribeEventPort subscribeEventPort;
 
   @Override
   public void changeLevel(ChangeSubscribeLevelRequest request) {
@@ -31,25 +34,27 @@ public class SubscribeService implements SubscribeUsecase, UnsubscribeUsecase,
   }
 
   @Override
+  @Transactional
   public SubscribeDto subscribe(SubscribeRequest request) {
-    System.out.println(11);
     var subscribe = Subscribe.builder()
         .subscriberId(request.subscriberId())
         .subscribedChannelId(request.subscribedChannelId())
         .build();
 
-    System.out.println(22);
-
     subscribe = saveSubscribePort.save(subscribe);
-    System.out.println(33);
-    return subscribe.toDto();
+
+    var dto = subscribe.toDto();
+    subscribeEventPort.subscribedChannel(dto);
+    return dto;
   }
 
   @Override
+  @Transactional
   public void unsubscribe(UnsubscribeRequest request) {
     var subscribe = loadSubscribePort.loadBySubscriberIdAndSubscribedChannelId(
         request.subscriberId(), request.subscribedChannelId());
 
     saveSubscribePort.delete(subscribe);
+    subscribeEventPort.unsubscribedChannel(subscribe.toDto());
   }
 }

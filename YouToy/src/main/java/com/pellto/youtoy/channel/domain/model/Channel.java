@@ -18,15 +18,17 @@ public class Channel {
   private final LocalDateTime createdAt;
   private ChannelInfo channelInfo;
   private ChannelHandle handle;
+  private Long subscriberCount;
 
   @Builder
   public Channel(Long id, Long ownerId, ChannelHandle handle, LocalDateTime createdAt,
-      ChannelInfo channelInfo) {
+      ChannelInfo channelInfo, Long subscriberCount) {
     this.id = id;
     this.ownerId = Objects.requireNonNull(ownerId);
     this.handle = General.setNullInput(handle, this.createInitHandle());
     this.createdAt = Temporal.createdAt(createdAt);
     this.channelInfo = Objects.requireNonNull(channelInfo);
+    this.subscriberCount = General.setNullInput(subscriberCount, 0L);
   }
 
   private ChannelHandle createInitHandle() {
@@ -47,13 +49,25 @@ public class Channel {
     this.handle = handle;
   }
 
+  public void increaseSubscriber() {
+    this.subscriberCount += 1;
+  }
+
+  public void decreaseSubscriber() {
+    if (this.subscriberCount - 1 < 0) {
+      throw new IllegalArgumentException();
+    }
+    this.subscriberCount -= 1;
+  }
+
 
   public ChannelDto toDto() {
     return new ChannelDto(
         this.id,
         this.ownerId,
         this.handle.value(),
-        this.channelInfo.toDto()
+        this.channelInfo.toDto(),
+        this.subscriberCount
     );
   }
 }

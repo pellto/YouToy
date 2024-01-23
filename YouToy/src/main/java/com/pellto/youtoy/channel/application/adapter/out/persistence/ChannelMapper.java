@@ -21,6 +21,7 @@ class ChannelMapper {
         .channelInfo(info)
         .handle(handle)
         .createdAt(entity.getCreatedAt())
+        .subscriberCount(entity.getSubscriberCount())
         .build();
   }
 
@@ -33,6 +34,7 @@ class ChannelMapper {
         .bannerPath(channel.getChannelInfo().getBannerPath())
         .profilePath(channel.getChannelInfo().getProfilePath())
         .handle(channel.getHandle().value())
+        .subscriberCount(channel.getSubscriberCount())
         .createdAt(channel.getCreatedAt())
         .build();
   }

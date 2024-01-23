@@ -26,7 +26,6 @@ public class SubscribeController {
 
   @PostMapping
   public SubscribeDto subscribe(@RequestBody SubscribeRequest request) {
-    System.out.println("request = " + request);
     return subscribeUsecase.subscribe(request);
   }
 

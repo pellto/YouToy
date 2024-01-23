@@ -30,5 +30,6 @@ public class ChannelEntity {
   private String profilePath;
   private String handle;
   private LocalDateTime createdAt;
+  private Long subscriberCount;
 
 }

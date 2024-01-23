@@ -4,7 +4,8 @@ public record ChannelDto(
     Long id,
     Long ownerId,
     String handle,
-    ChannelInfoDto info
+    ChannelInfoDto info,
+    Long subscriberCount
 ) {
 
 }
