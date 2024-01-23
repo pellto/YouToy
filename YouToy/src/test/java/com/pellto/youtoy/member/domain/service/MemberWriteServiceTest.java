@@ -27,7 +27,7 @@ class MemberWriteServiceTest {
   private static final String SERVICE_NAME = "MemberWriteService";
 
   @InjectMocks
-  private MemberWriteService memberWriteService;
+  private ChangeMemberWriteService memberWriteService;
   @Mock
   private LoadMemberPort loadMemberPort;
   @Mock

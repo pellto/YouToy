@@ -40,8 +40,6 @@ class MembershipPublishServiceTest {
   void publishSuccessTest() {
     var memberInfoDto = MemberInfoFixtureFactory.create().toDto();
     var requestedAt = LocalDateTime.now();
-    var beforePublishedMembership = MembershipFixtureFactory.createBeforePublished(memberInfoDto,
-        requestedAt);
     var membership = MembershipFixtureFactory.create();
 
     given(saveMembershipPort.save(any())).willReturn(membership);

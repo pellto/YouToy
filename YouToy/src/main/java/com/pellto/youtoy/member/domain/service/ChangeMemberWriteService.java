@@ -6,8 +6,8 @@ import com.pellto.youtoy.global.dto.member.request.MemberChangePwdRequest;
 import com.pellto.youtoy.global.dto.member.request.MemberSignUpRequest;
 import com.pellto.youtoy.member.domain.model.Member;
 import com.pellto.youtoy.member.domain.model.MemberInfo;
+import com.pellto.youtoy.member.domain.port.in.ChangeMemberInfoUsecase;
 import com.pellto.youtoy.member.domain.port.in.MemberDeleteUsecase;
-import com.pellto.youtoy.member.domain.port.in.MemberInfoUsecase;
 import com.pellto.youtoy.member.domain.port.in.MemberSignUpUsecase;
 import com.pellto.youtoy.member.domain.port.out.LoadMemberPort;
 import com.pellto.youtoy.member.domain.port.out.MemberEventPort;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MemberWriteService implements MemberInfoUsecase, MemberSignUpUsecase,
+public class ChangeMemberWriteService implements ChangeMemberInfoUsecase, MemberSignUpUsecase,
     MemberDeleteUsecase {
 
   private final LoadMemberPort loadMemberPort;

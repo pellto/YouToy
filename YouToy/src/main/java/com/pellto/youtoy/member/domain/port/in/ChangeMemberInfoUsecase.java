@@ -4,7 +4,7 @@ import com.pellto.youtoy.global.dto.member.request.MemberChangeNameRequest;
 import com.pellto.youtoy.global.dto.member.request.MemberChangePwdRequest;
 import com.pellto.youtoy.member.domain.model.MemberInfo;
 
-public interface MemberInfoUsecase {
+public interface ChangeMemberInfoUsecase {
 
   void changeInfo(MemberInfo memberInfo);
 
