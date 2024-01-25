@@ -24,7 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
-class ChannelWriteServiceTest {
+class ChannelManagementWriteServiceTest {
 
   private static final String SERVICE_NAME = "ChannelWriteService";
 

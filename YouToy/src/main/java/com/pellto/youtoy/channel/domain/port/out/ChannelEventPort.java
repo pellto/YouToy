@@ -5,4 +5,6 @@ import com.pellto.youtoy.global.dto.channel.ChannelDto;
 public interface ChannelEventPort {
 
   void channelDeletedEvent(ChannelDto dto);
+
+  void channelCreatedEvent(ChannelDto dto);
 }

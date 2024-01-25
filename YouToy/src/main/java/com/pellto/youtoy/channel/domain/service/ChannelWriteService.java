@@ -30,8 +30,7 @@ public class ChannelWriteService implements ChannelCreateUsecase, ChannelDeleteU
         .build();
 
     channel = saveChannelPort.save(channel);
-
-    // TODO: Publish Channel Created Event
+    channelEventPort.channelCreatedEvent(channel.toDto());
     return channel;
 
   }
