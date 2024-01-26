@@ -22,6 +22,14 @@ public class MemberPersistenceAdapter implements SaveMemberPort, LoadMemberPort 
   }
 
   @Override
+  public Member loadByEmail(String email) {
+    MemberEntity entity = jpaDataRepository.findByEmail(email).orElseThrow(
+        () -> new IllegalArgumentException("변경 예정")
+    );
+    return memberMapper.toDomain(entity);
+  }
+
+  @Override
   public void delete(Member member) {
     MemberEntity entity = memberMapper.toEntity(member);
     jpaDataRepository.delete(entity);

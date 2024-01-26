@@ -1,5 +1,6 @@
 package com.pellto.youtoy.member.application.adapter.in.http;
 
+import com.pellto.youtoy.global.dto.member.MemberInfoDto;
 import com.pellto.youtoy.global.dto.member.request.MemberChangeNameRequest;
 import com.pellto.youtoy.global.dto.member.request.MemberChangePwdRequest;
 import com.pellto.youtoy.global.dto.member.request.MemberSignUpRequest;
@@ -36,6 +37,11 @@ public class MemberController {
   @GetMapping("/details/{id}")
   public GetMemberResponse getMemberDetail(@PathVariable Long id) {
     return getMemberDetailUsecase.getMemberDetail(id);
+  }
+
+  @GetMapping("/info/{email}")
+  public MemberInfoDto getMemberInfo(@PathVariable String email) {
+    return getMemberDetailUsecase.getMemberInfoByEmail(email);
   }
 
   @PatchMapping("/name")

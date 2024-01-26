@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class MembershipAdapter implements MembershipHandlePort {
 
+  // TODO: change restTemplate to feignClient
   @Override
   public MembershipDto getMembershipInfo(Long id) {
     String url = String.format("http://127.0.0.1:8080/memberships/%s", id);
