@@ -121,7 +121,8 @@ class MemberWriteServiceTest {
 
     given(saveMemberPort.save(any())).willReturn(member);
 
-    var signedUpMember = memberWriteService.signUp(member.getMembershipId(), memberInfo.toDto());
+    var signedUpMember = memberWriteService.signUp(member.getMembershipId(),
+        memberInfo.toDto(member.getId()));
 
     then(saveMemberPort).should(times(1)).save(any());
     then(memberEventPort).should(times(1)).signedUpEvent(any(), any(), any(), any());

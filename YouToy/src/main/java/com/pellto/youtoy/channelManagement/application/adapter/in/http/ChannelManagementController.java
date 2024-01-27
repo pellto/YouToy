@@ -2,12 +2,16 @@ package com.pellto.youtoy.channelManagement.application.adapter.in.http;
 
 import com.pellto.youtoy.channelManagement.domain.port.in.ChangeManagementUsecase;
 import com.pellto.youtoy.channelManagement.domain.port.in.CreateManagementUsecase;
+import com.pellto.youtoy.channelManagement.domain.port.in.GetChannelManagementUsecase;
 import com.pellto.youtoy.global.dto.channelManagement.ChannelManagementDto;
 import com.pellto.youtoy.global.dto.channelManagement.request.ChangeChannelManagementRequest;
 import com.pellto.youtoy.global.dto.channelManagement.request.CreateChannelManagementRequest;
 import com.pellto.youtoy.global.dto.channelManagement.response.ChangeChannelManagementResponse;
+import com.pellto.youtoy.global.dto.channelManagement.response.GetChannelManagementByMemberIdResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +24,7 @@ public class ChannelManagementController {
 
   private final CreateManagementUsecase createManagementUsecase;
   private final ChangeManagementUsecase changeManagementUsecase;
+  private final GetChannelManagementUsecase getChannelManagementUsecase;
 
   // TODO: Check auth token with correct channel authorization
   @PostMapping("/invite")
@@ -32,5 +37,10 @@ public class ChannelManagementController {
       @RequestBody ChangeChannelManagementRequest request) {
     return changeManagementUsecase.changeLevel(request.channelId(), request.memberId(),
         request.level());
+  }
+
+  @GetMapping("/member/{memberId}")
+  public GetChannelManagementByMemberIdResponse getChannelManagement(@PathVariable Long memberId) {
+    return getChannelManagementUsecase.getByMemberId(memberId);
   }
 }

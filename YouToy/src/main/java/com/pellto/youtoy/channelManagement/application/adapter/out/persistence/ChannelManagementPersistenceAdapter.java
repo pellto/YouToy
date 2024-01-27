@@ -4,6 +4,7 @@ import com.pellto.youtoy.channelManagement.domain.model.ChannelManagement;
 import com.pellto.youtoy.channelManagement.domain.port.out.LoadChannelManagementPort;
 import com.pellto.youtoy.channelManagement.domain.port.out.SaveChannelManagementPort;
 import com.pellto.youtoy.global.interfaces.PersistenceAdapter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
@@ -24,6 +25,12 @@ public class ChannelManagementPersistenceAdapter implements SaveChannelManagemen
     var entity = jpaDataRepository.findByChannelIdAndMemberId(channelId, memberId)
         .orElseThrow(() -> new IllegalArgumentException("변경 예정"));
     return channelManagementMapper.toDomain(entity);
+  }
+
+  @Override
+  public List<ChannelManagement> loadByMemberId(Long memberId) {
+    var entities = jpaDataRepository.findAllByMemberId(memberId);
+    return entities.stream().map(channelManagementMapper::toDomain).toList();
   }
 
   @Override

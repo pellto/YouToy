@@ -43,7 +43,7 @@ public class MemberInfo {
         .build();
   }
 
-  public MemberInfoDto toDto() {
-    return new MemberInfoDto(this.email, this.pwd, this.getName(), this.birthDate);
+  public MemberInfoDto toDto(Long id) {
+    return new MemberInfoDto(id, this.email, this.pwd, this.getName(), this.birthDate);
   }
 }

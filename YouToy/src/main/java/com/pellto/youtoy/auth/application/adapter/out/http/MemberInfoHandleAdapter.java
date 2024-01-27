@@ -1,6 +1,6 @@
 package com.pellto.youtoy.auth.application.adapter.out.http;
 
-import com.pellto.youtoy.auth.domain.port.out.MemberInfoHandleUsecase;
+import com.pellto.youtoy.auth.domain.port.out.MemberInfoHandlePort;
 import com.pellto.youtoy.global.dto.member.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @RequiredArgsConstructor
-public class MemberInfoHandleAdapter implements MemberInfoHandleUsecase {
+public class MemberInfoHandleAdapter implements MemberInfoHandlePort {
 
   private static final String DOMAIN = "http://127.0.0.1";
   private static final String PORT = "8080";

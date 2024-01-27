@@ -27,11 +27,11 @@ public class MemberFixtureFactory {
   }
 
   public static MemberSignUpRequest createSignUpRequest() {
-    return new MemberSignUpRequest(MEMBER_INFO.toDto(), MEMBER_INFO.getPwd());
+    return new MemberSignUpRequest(MEMBER_INFO.toDto(ID), MEMBER_INFO.getPwd());
   }
 
   public static MemberSignUpRequest createSignUpWrongPwdRequest() {
-    return new MemberSignUpRequest(MEMBER_INFO.toDto(), "WRONG_PWD");
+    return new MemberSignUpRequest(MEMBER_INFO.toDto(ID), "WRONG_PWD");
   }
 
   public static MemberChangePwdRequest createChangePwdRequest() {

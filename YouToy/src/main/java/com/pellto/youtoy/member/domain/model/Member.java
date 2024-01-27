@@ -62,7 +62,7 @@ public class Member {
   }
 
   public MemberInfoDto getMemberInfoDto() {
-    return this.memberInfo.toDto();
+    return this.memberInfo.toDto(this.id);
   }
 
   public MemberDto toDto() {
@@ -70,7 +70,7 @@ public class Member {
         this.id,
         this.uuid.value(),
         this.createdAt,
-        this.memberInfo.toDto(),
+        this.memberInfo.toDto(this.id),
         this.membershipId
     );
   }
