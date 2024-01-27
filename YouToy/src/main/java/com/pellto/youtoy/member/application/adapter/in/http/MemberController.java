@@ -1,9 +1,9 @@
 package com.pellto.youtoy.member.application.adapter.in.http;
 
-import com.pellto.youtoy.global.dto.member.MemberInfoDto;
 import com.pellto.youtoy.global.dto.member.request.MemberChangeNameRequest;
 import com.pellto.youtoy.global.dto.member.request.MemberChangePwdRequest;
 import com.pellto.youtoy.global.dto.member.request.MemberSignUpRequest;
+import com.pellto.youtoy.global.dto.member.response.GetMemberInfoResponse;
 import com.pellto.youtoy.global.dto.member.response.GetMemberResponse;
 import com.pellto.youtoy.member.domain.port.in.ChangeMemberInfoUsecase;
 import com.pellto.youtoy.member.domain.port.in.GetMemberDetailUsecase;
@@ -40,7 +40,7 @@ public class MemberController {
   }
 
   @GetMapping("/info/{email}")
-  public MemberInfoDto getMemberInfo(@PathVariable String email) {
+  public GetMemberInfoResponse getMemberInfo(@PathVariable String email) {
     return getMemberDetailUsecase.getMemberInfoByEmail(email);
   }
 

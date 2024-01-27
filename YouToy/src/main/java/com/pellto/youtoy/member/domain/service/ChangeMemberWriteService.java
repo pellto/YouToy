@@ -69,10 +69,10 @@ public class ChangeMemberWriteService implements ChangeMemberInfoUsecase, Member
 
   @Override
   public void requestSignUp(MemberSignUpRequest request) {
-    checkValidPwd(request.memberInfoDto().pwd(), request.repeatPwd());
+    checkValidPwd(request.memberInfo().pwd(), request.repeatPwd());
 
     memberEventPort.requestedSignUpEvent(
-        request.memberInfoDto(),
+        request.memberInfo(),
         LocalDateTime.now()
     );
   }

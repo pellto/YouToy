@@ -1,7 +1,7 @@
 package com.pellto.youtoy.auth.application.adapter.out.http;
 
 import com.pellto.youtoy.auth.domain.port.out.MemberInfoHandlePort;
-import com.pellto.youtoy.global.dto.member.MemberInfoDto;
+import com.pellto.youtoy.global.dto.member.response.GetMemberInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -16,9 +16,9 @@ public class MemberInfoHandleAdapter implements MemberInfoHandlePort {
 
   // TODO: change restTemplate to feignClient
   @Override
-  public MemberInfoDto getMemberInfo(String email) {
+  public GetMemberInfoResponse getMemberInfo(String email) {
     String url = String.format("%s:%s/%s/info/%s", DOMAIN, PORT, ROOT_ROUTE, email);
     var restTemplate = new RestTemplate();
-    return restTemplate.getForObject(url, MemberInfoDto.class);
+    return restTemplate.getForObject(url, GetMemberInfoResponse.class);
   }
 }

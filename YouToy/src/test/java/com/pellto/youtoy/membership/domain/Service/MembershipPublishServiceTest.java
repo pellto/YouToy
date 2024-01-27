@@ -38,10 +38,7 @@ class MembershipPublishServiceTest {
   @DisplayName("[" + SERVICE_NAME + "/publish] publish 성공 테스트")
   @Test
   void publishSuccessTest() {
-    var memberInfo = MemberInfoFixtureFactory.create();
-    var member = MemberFixtureFactory.create(memberInfo);
-    var memberInfoDto = memberInfo.toDto(member.getId());
-
+    var memberInfoDto = MemberInfoFixtureFactory.create().toDto();
     var requestedAt = LocalDateTime.now();
     var membership = MembershipFixtureFactory.create();
 

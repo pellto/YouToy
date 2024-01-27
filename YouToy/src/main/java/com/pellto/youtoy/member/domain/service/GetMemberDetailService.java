@@ -1,6 +1,6 @@
 package com.pellto.youtoy.member.domain.service;
 
-import com.pellto.youtoy.global.dto.member.MemberInfoDto;
+import com.pellto.youtoy.global.dto.member.response.GetMemberInfoResponse;
 import com.pellto.youtoy.global.dto.member.response.GetMemberResponse;
 import com.pellto.youtoy.member.domain.port.in.GetMemberDetailUsecase;
 import com.pellto.youtoy.member.domain.port.out.LoadMemberPort;
@@ -30,8 +30,14 @@ public class GetMemberDetailService implements GetMemberDetailUsecase {
   }
 
   @Override
-  public MemberInfoDto getMemberInfoByEmail(String email) {
+  public GetMemberInfoResponse getMemberInfoByEmail(String email) {
     var member = loadMemberPort.loadByEmail(email);
-    return member.getMemberInfoDto();
+    return new GetMemberInfoResponse(
+        member.getId(),
+        member.getMemberInfo().getEmail(),
+        member.getMemberInfo().getPwd(),
+        member.getMemberInfo().getName(),
+        member.getMemberInfo().getBirthDate()
+    );
   }
 }

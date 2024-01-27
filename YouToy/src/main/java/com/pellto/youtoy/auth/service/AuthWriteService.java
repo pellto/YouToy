@@ -21,13 +21,14 @@ public class AuthWriteService implements AuthTokenIssueUsecase {
 
   @Override
   public LoginResponse issue(String email, String pwd) {
-    var memberInfo = memberInfoHandlePort.getMemberInfo(email);
-    if (!memberInfo.pwd().equals(pwd)) {
+    var memberInfoResponse = memberInfoHandlePort.getMemberInfo(email);
+    if (!memberInfoResponse.pwd().equals(pwd)) {
       throw new IllegalArgumentException("id, pwd 틀림");
     }
-    var memberRoles = MemberRoles.fromMemberInfo(memberInfo);
+    var memberRoles = MemberRoles.fromMemberInfo(memberInfoResponse.toMemberInfoDto());
 
-    var channelManagement = channelManageMentHandlePort.getChannelManagement(memberInfo.memberId());
+    var channelManagement = channelManageMentHandlePort.getChannelManagement(
+        memberInfoResponse.memberId());
     var channelRoles = ChannelRoles.fromManagement(channelManagement);
 
     var auth = Auth.builder()

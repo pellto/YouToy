@@ -1,8 +1,8 @@
 package com.pellto.youtoy.auth.domain.port.out;
 
-import com.pellto.youtoy.global.dto.member.MemberInfoDto;
+import com.pellto.youtoy.global.dto.member.response.GetMemberInfoResponse;
 
 public interface MemberInfoHandlePort {
 
-  MemberInfoDto getMemberInfo(String email);
+  GetMemberInfoResponse getMemberInfo(String email);
 }
