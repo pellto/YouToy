@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ChannelManagementLevel {
-  VIEWER("VIEWER"), CO_WORKER("CO-WORKER"), OWNER("OWNER");
+  VIEWER("VIEWER"), CO_WORKER("CO_WORKER"), OWNER("OWNER");
   private final String level;
 
   ChannelManagementLevel(String level) {
@@ -16,7 +16,7 @@ public enum ChannelManagementLevel {
       case ("VIEWER") -> {
         return ChannelManagementLevel.VIEWER;
       }
-      case ("CO-WORKER") -> {
+      case ("CO_WORKER") -> {
         return ChannelManagementLevel.CO_WORKER;
       }
       case ("OWNER") -> {
@@ -27,6 +27,6 @@ public enum ChannelManagementLevel {
       }
     }
   }
-  
+
 
 }
