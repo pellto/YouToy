@@ -10,13 +10,16 @@ import lombok.Getter;
 @Getter
 public class Auth {
 
+  private final Long memberId;
   private final String email;
   private final ChannelRoles channelRoles;
   private final MemberRoles memberRoles;
   private final String token;
 
   @Builder
-  public Auth(String email, ChannelRoles channelRoles, MemberRoles memberRoles, String token) {
+  public Auth(Long memberId, String email, ChannelRoles channelRoles, MemberRoles memberRoles,
+      String token) {
+    this.memberId = Objects.requireNonNull(memberId);
     this.email = Objects.requireNonNull(email);
     this.channelRoles = Objects.requireNonNull(channelRoles);
     this.memberRoles = Objects.requireNonNull(memberRoles);
@@ -24,6 +27,6 @@ public class Auth {
   }
 
   public AuthDto toDto() {
-    return new AuthDto(email, channelRoles.getRoles(), memberRoles.getRoles(), token);
+    return new AuthDto(memberId, email, channelRoles.getRoles(), memberRoles.getRoles(), token);
   }
 }

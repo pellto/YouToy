@@ -32,6 +32,7 @@ public class AuthWriteService implements AuthTokenIssueUsecase {
     var channelRoles = ChannelRoles.fromManagement(channelManagement);
 
     var auth = Auth.builder()
+        .memberId(memberInfoResponse.memberId())
         .email(email)
         .channelRoles(channelRoles)
         .memberRoles(memberRoles)

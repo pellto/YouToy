@@ -3,11 +3,14 @@ package com.pellto.youtoy.auth.application.adapter.out.jwt;
 import com.pellto.youtoy.auth.domain.port.out.TokenServicePort;
 import com.pellto.youtoy.global.dto.auth.AuthDto;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.Jwts.SIG;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -29,6 +32,10 @@ public class JwtTokenAdapter implements TokenServicePort {
 
   @Override
   public String generateToken(AuthDto authDto) {
+    SecretKey key = new SecretKeySpec(
+        SECRET_KEY.getBytes(StandardCharsets.UTF_8),
+        SIG.HS256.key().build().getAlgorithm()
+    );
     var now = LocalDateTime.now();
     var expiryDate = now.plus(EXPIRATION_TIME, ChronoUnit.MILLIS);
 
@@ -36,7 +43,7 @@ public class JwtTokenAdapter implements TokenServicePort {
         .claim("email", authDto.email())
         .issuedAt(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()))
         .expiration(Date.from(expiryDate.atZone(ZoneId.systemDefault()).toInstant()))
-        .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+        .signWith(key)
         .compact();
   }
 
