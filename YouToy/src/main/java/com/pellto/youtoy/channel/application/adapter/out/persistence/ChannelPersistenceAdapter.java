@@ -15,6 +15,11 @@ public class ChannelPersistenceAdapter implements SaveChannelPort, LoadChannelPo
   private final ChannelJpaDataRepository jpaDataRepository;
 
   @Override
+  public boolean existById(Long channelId) {
+    return jpaDataRepository.existsById(channelId);
+  }
+
+  @Override
   public Channel load(Long channelId) {
     ChannelEntity entity = jpaDataRepository.findById(channelId).orElseThrow(
         () -> new IllegalArgumentException("변경 예정")

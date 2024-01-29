@@ -33,6 +33,16 @@ public class GlobalExceptionHandler {
     return ResponseEntity.badRequest().body(errors);
   }
 
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<Map<String, String>> handleIllegalArgumentException(
+      IllegalArgumentException ex
+  ) {
+    log.error(ex.getMessage(), ex);
+    Map<String, String> errors = new HashMap<>();
+    errors.put("message", ex.getMessage());
+    return ResponseEntity.badRequest().body(errors);
+  }
+
 //  // Community Post Interest
 //  @ExceptionHandler(NotExistPostInterestException.class)
 //  public ResponseEntity<ErrorResponse> handleNotExistPostInterestException(

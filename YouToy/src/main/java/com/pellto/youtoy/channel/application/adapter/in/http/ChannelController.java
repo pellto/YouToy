@@ -1,5 +1,6 @@
 package com.pellto.youtoy.channel.application.adapter.in.http;
 
+import com.pellto.youtoy.channel.domain.port.in.ExistChannelUsecase;
 import com.pellto.youtoy.channel.domain.port.in.GetChannelInfoUsecase;
 import com.pellto.youtoy.global.dto.channel.ChannelDto;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChannelController {
 
   private final GetChannelInfoUsecase getChannelInfoUsecase;
+  private final ExistChannelUsecase existChannelUsecase;
 
   @GetMapping("/{channelId}")
   public ChannelDto getChannel(@PathVariable Long channelId) {
     return getChannelInfoUsecase.getChannelById(channelId);
+  }
+
+  @GetMapping("/exist/{channelId}")
+  public boolean existChannel(@PathVariable Long channelId) {
+    return existChannelUsecase.existById(channelId);
   }
 }

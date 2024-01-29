@@ -4,6 +4,8 @@ import com.pellto.youtoy.channel.domain.model.Channel;
 
 public interface LoadChannelPort {
 
+  boolean existById(Long channelId);
+
   Channel load(Long channelId);
 
 }
