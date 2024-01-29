@@ -1,4 +1,4 @@
-package com.pellto.youtoy.membership.domain.Service;
+package com.pellto.youtoy.membership.domain.service;
 
 import com.pellto.youtoy.global.dto.membership.MembershipDto;
 import com.pellto.youtoy.membership.domain.port.in.GetMembershipUsecase;
