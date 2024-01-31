@@ -8,42 +8,42 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 
-@InboundEventAdapter("InterestEventHandlerInPost")
+@InboundEventAdapter("InterestEventListenerInPost")
 @RequiredArgsConstructor
 @Slf4j
-public class InterestEventHandler {
+public class InterestEventListener {
 
-  private static final String HANDLER = "InterestEventHandler";
+  private static final String LISTENER = "InterestEventListener";
   private final InterestActionUsecase interestActionUsecase;
 
   @EventListener
   public void increaseLikeCount(LikeEvent event) throws InterruptedException {
-    if (!event.getDto().contentsType().equals("POST")) {
+    if (!event.getDto().interestContentsType().equals("POST")) {
       return;
     }
     log.info(
-        String.format("[%s/increaseLikeCount]: 포스트 좋아요 증가 시작(by %s) {dto: %s}", HANDLER,
+        String.format("[%s/increaseLikeCount]: 포스트 좋아요 증가 시작(by %s) {dto: %s}", LISTENER,
             event.getPublisher(), event.getPublisher())
     );
     interestActionUsecase.increaseLikeCount(event.getDto().contentsId());
     log.info(
-        String.format("[%s/increaseLikeCount]: 포스트 좋아요 증가 완료(by %s) {dto: %s}", HANDLER,
+        String.format("[%s/increaseLikeCount]: 포스트 좋아요 증가 완료(by %s) {dto: %s}", LISTENER,
             event.getPublisher(), event.getPublisher())
     );
   }
 
   @EventListener
   public void decreaseLikeCount(DeletedLikeEvent event) throws InterruptedException {
-    if (!event.getDto().contentsType().equals("POST")) {
+    if (!event.getDto().interestContentsType().equals("POST")) {
       return;
     }
     log.info(
-        String.format("[%s/increaseLikeCount]: 포스트 좋아요 감소 시작(by %s) {dto: %s}", HANDLER,
+        String.format("[%s/increaseLikeCount]: 포스트 좋아요 감소 시작(by %s) {dto: %s}", LISTENER,
             event.getPublisher(), event.getPublisher())
     );
     interestActionUsecase.decreaseLikeCount(event.getDto().contentsId());
     log.info(
-        String.format("[%s/increaseLikeCount]: 포스트 좋아요 감소 완료(by %s) {dto: %s}", HANDLER,
+        String.format("[%s/increaseLikeCount]: 포스트 좋아요 감소 완료(by %s) {dto: %s}", LISTENER,
             event.getPublisher(), event.getPublisher())
     );
   }

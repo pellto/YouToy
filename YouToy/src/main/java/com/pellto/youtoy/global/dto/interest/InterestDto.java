@@ -8,7 +8,7 @@ public record InterestDto(
     Long id,
     Long memberId,
     Long contentsId,
-    String contentsType,
+    String interestContentsType,
     LocalDateTime createdAt,
     boolean isLike
 ) {

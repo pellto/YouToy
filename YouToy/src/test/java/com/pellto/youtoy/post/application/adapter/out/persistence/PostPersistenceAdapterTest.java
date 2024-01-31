@@ -73,4 +73,23 @@ class PostPersistenceAdapterTest {
     Assertions.assertThat(changedPost.getPostContent().getContent()).isNotEqualTo(alreadyContent);
     Assertions.assertThat(changedPost.getUpdatedAt()).isNotEqualTo(alreadyUpdatedAt);
   }
+
+  @DisplayName("[" + ADAPTER_NAME + "/isExistById] 존재 여부 true 성공 테스트")
+  @Test
+  void isExistByIdTrueSuccessTest() {
+    var beforeSaved = PostFixtureFactory.createBeforeSaved();
+    var savedPost = postPersistenceAdapter.save(beforeSaved);
+
+    var isExist = postPersistenceAdapter.isExistById(savedPost.getId());
+
+    Assertions.assertThat(isExist).isTrue();
+  }
+
+  @DisplayName("[" + ADAPTER_NAME + "/isExistById] 존재 여부 false 성공 테스트")
+  @Test
+  void isExistByIdFalseSuccessTest() {
+    var isExist = postPersistenceAdapter.isExistById(-1L);
+
+    Assertions.assertThat(isExist).isFalse();
+  }
 }

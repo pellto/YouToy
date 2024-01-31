@@ -24,7 +24,7 @@ public class SecurityConfig {
   // FIXME: `/channelManagements/**` to auth check
   private final String[] allowedUrls = {"/", "/swagger-ui/**", "/v3/**", "/members/**",
       "/subscribes/**", "/channels/**", "/memberships/**", "/channelManagements/**", "/auth/**",
-      "/posts/**", "/interests/**"
+      "/posts/**", "/interests/**", "/comments/**"
   };
 
   @Bean

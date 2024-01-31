@@ -3,6 +3,7 @@ package com.pellto.youtoy.channel.application.adapter.in.http;
 import com.pellto.youtoy.channel.domain.port.in.ExistChannelUsecase;
 import com.pellto.youtoy.channel.domain.port.in.GetChannelInfoUsecase;
 import com.pellto.youtoy.global.dto.channel.ChannelDto;
+import com.pellto.youtoy.global.dto.channel.response.GetCommenterChannelInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,5 +26,10 @@ public class ChannelController {
   @GetMapping("/exist/{channelId}")
   public boolean existChannel(@PathVariable Long channelId) {
     return existChannelUsecase.existById(channelId);
+  }
+
+  @GetMapping("/info/{channelId}")
+  public GetCommenterChannelInfoResponse getChannelInfo(@PathVariable Long channelId) {
+    return getChannelInfoUsecase.getCommenterChannelInfoById(channelId);
   }
 }

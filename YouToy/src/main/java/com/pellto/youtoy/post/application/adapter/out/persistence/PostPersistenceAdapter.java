@@ -23,6 +23,11 @@ public class PostPersistenceAdapter implements LoadPostPort, SavePostPort {
   }
 
   @Override
+  public boolean isExistById(Long id) {
+    return jpaDataRepository.existsById(id);
+  }
+
+  @Override
   public Post save(Post post) {
     var entity = postMapper.toEntity(post);
     return postMapper.toDomain(jpaDataRepository.save(entity));

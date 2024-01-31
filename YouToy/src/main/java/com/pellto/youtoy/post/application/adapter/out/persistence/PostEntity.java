@@ -29,6 +29,7 @@ public class PostEntity {
   private String title;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
+  private Long commentCount;
   private Long viewCount;
   private Long likeCount;
 }

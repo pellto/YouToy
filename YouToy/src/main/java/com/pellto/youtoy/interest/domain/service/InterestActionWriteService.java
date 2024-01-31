@@ -24,7 +24,7 @@ public class InterestActionWriteService implements InterestActionUsecase {
     var interest = Interest.builder()
         .memberId(request.memberId())
         .contentsId(request.contentsId())
-        .contentsType(request.contentsType())
+        .interestContentsType(request.interestContentsType())
         .isLike(true)
         .build();
 
@@ -38,7 +38,7 @@ public class InterestActionWriteService implements InterestActionUsecase {
     var interest = Interest.builder()
         .memberId(request.memberId())
         .contentsId(request.contentsId())
-        .contentsType(request.contentsType())
+        .interestContentsType(request.interestContentsType())
         .isLike(false)
         .build();
 

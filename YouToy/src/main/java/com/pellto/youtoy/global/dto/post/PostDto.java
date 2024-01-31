@@ -12,6 +12,7 @@ public record PostDto(
     LocalDateTime createdAt,
     Long viewCount,
     Long likeCount,
+    Long commentCount,
     LocalDateTime updatedAt
 ) {
 

@@ -3,6 +3,7 @@ package com.pellto.youtoy.channel.util;
 import com.pellto.youtoy.channel.domain.model.Channel;
 import com.pellto.youtoy.channel.domain.model.ChannelHandle;
 import com.pellto.youtoy.channel.domain.model.ChannelInfo;
+import com.pellto.youtoy.comment.domain.model.CommenterInfo;
 import java.time.LocalDateTime;
 
 public class ChannelFixtureFactory {
@@ -20,6 +21,15 @@ public class ChannelFixtureFactory {
         .createdAt(CREATED_AT)
         .channelInfo(CHANNEL_INFO)
         .handle(CHANNEL_HANDLE)
+        .build();
+  }
+
+  public static CommenterInfo createCommenterInfo() {
+    return CommenterInfo.builder()
+        .commenterId(ID)
+        .commenterHandle(CHANNEL_HANDLE.value())
+        .displayName(CHANNEL_INFO.getDisplayName())
+        .profilePath(CHANNEL_INFO.getProfilePath())
         .build();
   }
 

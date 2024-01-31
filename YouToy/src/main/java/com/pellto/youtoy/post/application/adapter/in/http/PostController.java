@@ -4,8 +4,10 @@ import com.pellto.youtoy.global.dto.post.PostDto;
 import com.pellto.youtoy.global.dto.post.request.ChangePostRequest;
 import com.pellto.youtoy.global.dto.post.request.WritePostRequest;
 import com.pellto.youtoy.post.domain.port.in.ChangePostContentUsecase;
+import com.pellto.youtoy.post.domain.port.in.ReadPostUsecase;
 import com.pellto.youtoy.post.domain.port.in.WritePostUsecase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
   private final WritePostUsecase writePostUsecase;
+  private final ReadPostUsecase readPostUsecase;
   private final ChangePostContentUsecase changePostContentUsecase;
+
+  @GetMapping("/exist/{postId}")
+  public boolean isExistPost(@PathVariable Long postId) {
+    return readPostUsecase.isExistPost(postId);
+  }
 
   @PostMapping
   public PostDto writePost(@RequestBody WritePostRequest request) {

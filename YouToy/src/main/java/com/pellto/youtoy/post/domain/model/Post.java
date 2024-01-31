@@ -17,18 +17,28 @@ public class Post {
   private PostContent postContent;
   private Long viewCount;
   private Long likeCount;
+  private Long commentCount;
   private LocalDateTime updatedAt;
 
   @Builder
   public Post(Long id, Long channelId, LocalDateTime createdAt, PostContent postContent,
-      Long viewCount, Long likeCount, LocalDateTime updatedAt) {
+      Long viewCount, Long likeCount, LocalDateTime updatedAt, Long commentCount) {
     this.id = id;
     this.channelId = Objects.requireNonNull(channelId);
     this.postContent = Objects.requireNonNull(postContent);
     this.createdAt = Temporal.createdAt(createdAt);
     this.viewCount = General.setNullInput(viewCount, 0L);
     this.likeCount = General.setNullInput(likeCount, 0L);
+    this.commentCount = General.setNullInput(commentCount, 0L);
     this.updatedAt = General.setNullInput(updatedAt, createdAt);
+  }
+
+  public void increaseCommentCount() {
+    this.commentCount += 1;
+  }
+
+  public void decreaseCommentCount() {
+    this.commentCount -= 1;
   }
 
   public void increaseLikeCount() {
@@ -76,6 +86,7 @@ public class Post {
         .createdAt(createdAt)
         .updatedAt(updatedAt)
         .viewCount(viewCount)
+        .commentCount(commentCount)
         .likeCount(likeCount)
         .build();
   }

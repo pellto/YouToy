@@ -6,4 +6,6 @@ public interface LoadPostPort {
 
   Post load(Long id);
 
+  boolean isExistById(Long id);
+
 }

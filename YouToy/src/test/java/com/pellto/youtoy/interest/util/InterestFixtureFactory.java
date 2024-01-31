@@ -2,8 +2,8 @@ package com.pellto.youtoy.interest.util;
 
 import com.pellto.youtoy.global.dto.interest.request.DisLikeRequest;
 import com.pellto.youtoy.global.dto.interest.request.LikeRequest;
-import com.pellto.youtoy.interest.domain.model.ContentsType;
 import com.pellto.youtoy.interest.domain.model.Interest;
+import com.pellto.youtoy.interest.domain.model.InterestContentsType;
 import java.time.LocalDateTime;
 
 public class InterestFixtureFactory {
@@ -11,7 +11,7 @@ public class InterestFixtureFactory {
   private static final Long ID = 1L;
   private static final Long MEMBER_ID = 1L;
   private static final Long CONTENTS_ID = 1L;
-  private static final ContentsType CONTENTS_TYPE = ContentsType.POST;
+  private static final InterestContentsType CONTENTS_TYPE = InterestContentsType.POST;
   private static final LocalDateTime CREATED_AT = LocalDateTime.now();
   private static final boolean IS_LIKE = true;
 
@@ -20,7 +20,7 @@ public class InterestFixtureFactory {
         .id(ID)
         .memberId(beforeSaved.getMemberId())
         .contentsId(beforeSaved.getContentsId())
-        .contentsType(beforeSaved.getContentsType().getType())
+        .interestContentsType(beforeSaved.getInterestContentsType().getType())
         .isLike(beforeSaved.isLike())
         .createdAt(beforeSaved.getCreatedAt())
         .build();
@@ -31,7 +31,7 @@ public class InterestFixtureFactory {
         .id(ID)
         .memberId(MEMBER_ID)
         .contentsId(CONTENTS_ID)
-        .contentsType(CONTENTS_TYPE.getType())
+        .interestContentsType(CONTENTS_TYPE.getType())
         .isLike(isLike)
         .createdAt(CREATED_AT)
         .build();
@@ -41,7 +41,7 @@ public class InterestFixtureFactory {
     return Interest.builder()
         .memberId(MEMBER_ID)
         .contentsId(CONTENTS_ID)
-        .contentsType(CONTENTS_TYPE.getType())
+        .interestContentsType(CONTENTS_TYPE.getType())
         .isLike(IS_LIKE)
         .build();
   }
@@ -51,7 +51,7 @@ public class InterestFixtureFactory {
         .id(ID)
         .memberId(MEMBER_ID)
         .contentsId(CONTENTS_ID)
-        .contentsType(CONTENTS_TYPE.getType())
+        .interestContentsType(CONTENTS_TYPE.getType())
         .isLike(IS_LIKE)
         .createdAt(CREATED_AT)
         .build();
@@ -61,7 +61,7 @@ public class InterestFixtureFactory {
     return Interest.builder()
         .memberId(request.memberId())
         .contentsId(request.contentsId())
-        .contentsType(request.contentsType())
+        .interestContentsType(request.interestContentsType())
         .isLike(IS_LIKE)
         .build();
   }
@@ -70,7 +70,7 @@ public class InterestFixtureFactory {
     return Interest.builder()
         .memberId(request.memberId())
         .contentsId(request.contentsId())
-        .contentsType(request.contentsType())
+        .interestContentsType(request.interestContentsType())
         .isLike(false)
         .build();
   }

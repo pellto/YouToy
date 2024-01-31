@@ -11,7 +11,7 @@ public class InterestMapper {
         .id(entity.getId())
         .memberId(entity.getMemberId())
         .contentsId(entity.getContentsId())
-        .contentsType(entity.getContentsType())
+        .interestContentsType(entity.getContentsType())
         .createdAt(entity.getCreatedAt())
         .isLike(entity.isLike())
         .build();
@@ -22,7 +22,7 @@ public class InterestMapper {
         .id(interest.getId())
         .memberId(interest.getMemberId())
         .contentsId(interest.getContentsId())
-        .contentsType(interest.getContentsType().getType())
+        .contentsType(interest.getInterestContentsType().getType())
         .createdAt(interest.getCreatedAt())
         .isLike(interest.isLike())
         .build();

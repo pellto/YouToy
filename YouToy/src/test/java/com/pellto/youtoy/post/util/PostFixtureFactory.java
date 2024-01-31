@@ -1,6 +1,8 @@
 package com.pellto.youtoy.post.util;
 
+import com.pellto.youtoy.global.dto.comment.CommentDto;
 import com.pellto.youtoy.global.dto.post.request.WritePostRequest;
+import com.pellto.youtoy.global.event.comment.CommentWrittenEvent;
 import com.pellto.youtoy.post.domain.model.Post;
 import com.pellto.youtoy.post.domain.model.PostContent;
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ public class PostFixtureFactory {
   private static final PostContent POST_CONTENT = new PostContent(TITLE, CONTENT);
   private static final Long VIEW_COUNT = 0L;
   private static final Long LIKE_COUNT = 0L;
+  private static final Long COMMENT_COUNT = 0L;
   private static final LocalDateTime UPDATED_AT = CREATED_AT;
 
   public static Post create(Post beforeSaved) {
@@ -51,6 +54,7 @@ public class PostFixtureFactory {
         .createdAt(CREATED_AT)
         .viewCount(VIEW_COUNT)
         .likeCount(LIKE_COUNT)
+        .commentCount(COMMENT_COUNT)
         .updatedAt(UPDATED_AT)
         .build();
   }
@@ -75,5 +79,9 @@ public class PostFixtureFactory {
 
   public static PostContent createNewPostContent(String newTitle, String newContent) {
     return new PostContent(newTitle, newContent);
+  }
+
+  public static CommentWrittenEvent createCommentWrittenEvent(CommentDto dto, String publisher) {
+    return new CommentWrittenEvent(dto, publisher);
   }
 }

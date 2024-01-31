@@ -13,37 +13,37 @@ public class Interest {
   private final Long id;
   private final Long memberId;
   private final Long contentsId;
-  private final ContentsType contentsType;
+  private final InterestContentsType interestContentsType;
   private final LocalDateTime createdAt;
   private final boolean isLike;
 
   @Builder
-  public Interest(Long id, Long memberId, Long contentsId, String contentsType,
+  public Interest(Long id, Long memberId, Long contentsId, String interestContentsType,
       LocalDateTime createdAt, boolean isLike) {
     this.id = id;
     this.memberId = Objects.requireNonNull(memberId);
     this.contentsId = Objects.requireNonNull(contentsId);
-    this.contentsType = contentsTypeFromString(contentsType);
+    this.interestContentsType = interestContentsTypeFromString(interestContentsType);
     this.createdAt = Temporal.createdAt(createdAt);
     this.isLike = isLike;
   }
 
-  private ContentsType contentsTypeFromString(String contentsType) {
-    switch (contentsType) {
+  private InterestContentsType interestContentsTypeFromString(String interestContentsType) {
+    switch (interestContentsType) {
       case ("POST") -> {
-        return ContentsType.POST;
+        return InterestContentsType.POST;
       }
       case ("COMMENT") -> {
-        return ContentsType.COMMENT;
+        return InterestContentsType.COMMENT;
       }
       case ("REPLIED") -> {
-        return ContentsType.REPLIED;
+        return InterestContentsType.REPLIED;
       }
       case ("VIDEO") -> {
-        return ContentsType.VIDEO;
+        return InterestContentsType.VIDEO;
       }
       case ("SHORTS") -> {
-        return ContentsType.SHORTS;
+        return InterestContentsType.SHORTS;
       }
       default -> {
         throw new IllegalArgumentException("invalid contents type");
@@ -59,7 +59,7 @@ public class Interest {
         .id(id)
         .memberId(memberId)
         .contentsId(contentsId)
-        .contentsType(contentsType.getType())
+        .interestContentsType(interestContentsType.getType())
         .createdAt(createdAt)
         .isLike(isLike)
         .build();

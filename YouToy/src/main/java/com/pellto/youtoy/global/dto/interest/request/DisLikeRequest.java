@@ -4,7 +4,7 @@ public record DisLikeRequest(
     Long memberId,
     Long contentsId,
     // TODO: Fix to ContentsType
-    String contentsType
+    String interestContentsType
 ) {
 
 }

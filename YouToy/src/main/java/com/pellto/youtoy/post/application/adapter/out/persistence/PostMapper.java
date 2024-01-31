@@ -18,6 +18,7 @@ public class PostMapper {
         .postContent(postContent)
         .createdAt(entity.getCreatedAt())
         .updatedAt(entity.getUpdatedAt())
+        .commentCount(entity.getCommentCount())
         .viewCount(entity.getViewCount())
         .likeCount(entity.getLikeCount())
         .build();
@@ -31,6 +32,7 @@ public class PostMapper {
         .title(post.getPostContent().getTitle())
         .createdAt(post.getCreatedAt())
         .updatedAt(post.getUpdatedAt())
+        .commentCount(post.getCommentCount())
         .viewCount(post.getViewCount())
         .likeCount(post.getLikeCount())
         .build();
