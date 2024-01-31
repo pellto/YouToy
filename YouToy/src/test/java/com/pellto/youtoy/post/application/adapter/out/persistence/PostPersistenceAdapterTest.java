@@ -31,7 +31,7 @@ class PostPersistenceAdapterTest {
     Assertions.assertThat(savedPost.getId()).isNotNull();
     Assertions.assertThat(savedPost.getCreatedAt()).isNotNull();
     Assertions.assertThat(savedPost).usingRecursiveComparison()
-        .ignoringFields("createdAt", "updatedAt").isEqualTo(post);
+        .ignoringFields("id", "createdAt", "updatedAt").isEqualTo(post);
   }
 
   @DisplayName("[" + ADAPTER_NAME + "/load] 읽기 성공 테스트")

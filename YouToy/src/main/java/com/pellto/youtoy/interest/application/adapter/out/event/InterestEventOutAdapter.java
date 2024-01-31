@@ -1,6 +1,8 @@
 package com.pellto.youtoy.interest.application.adapter.out.event;
 
 import com.pellto.youtoy.global.dto.interest.InterestDto;
+import com.pellto.youtoy.global.event.interest.DeletedDislikeEvent;
+import com.pellto.youtoy.global.event.interest.DeletedLikeEvent;
 import com.pellto.youtoy.global.event.interest.DislikeEvent;
 import com.pellto.youtoy.global.event.interest.LikeEvent;
 import com.pellto.youtoy.global.interfaces.OutboundEventAdapter;
@@ -17,6 +19,24 @@ public class InterestEventOutAdapter implements InterestEventPort {
 
   private static final String PUBLISHER = "InterestEventOutAdapter";
   private final ApplicationEventPublisher applicationEventPublisher;
+
+  @Override
+  public void deletedDislikeEvent(InterestDto dto) {
+    var publisher = PUBLISHER + "/deletedDislikeEvent";
+    log.info(String.format("[%s]: 싫어요 삭제 완료 {dto: %s}", publisher, dto));
+
+    var event = new DeletedDislikeEvent(dto, publisher);
+    applicationEventPublisher.publishEvent(event);
+  }
+
+  @Override
+  public void deletedLikeEvent(InterestDto dto) {
+    var publisher = PUBLISHER + "/deletedLikeEvent";
+    log.info(String.format("[%s]: 좋아요 삭제 완료 {dto: %s}", publisher, dto));
+
+    var event = new DeletedLikeEvent(dto, publisher);
+    applicationEventPublisher.publishEvent(event);
+  }
 
   @Override
   public void likeEvent(InterestDto dto) {

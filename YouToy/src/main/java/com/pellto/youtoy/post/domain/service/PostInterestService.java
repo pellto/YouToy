@@ -19,4 +19,11 @@ public class PostInterestService implements InterestActionUsecase {
     post.increaseLikeCount();
     savePostPort.save(post);
   }
+
+  @Override
+  public void decreaseLikeCount(Long postId) {
+    var post = loadPostPort.load(postId);
+    post.decreaseLikeCount();
+    savePostPort.save(post);
+  }
 }

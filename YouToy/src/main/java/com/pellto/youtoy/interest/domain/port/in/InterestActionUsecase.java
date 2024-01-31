@@ -10,4 +10,6 @@ public interface InterestActionUsecase {
 
   InterestDto disLike(DisLikeRequest request);
 
+  void deleteInterest(Long interestId);
+
 }

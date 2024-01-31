@@ -16,7 +16,8 @@ public class InterestPersistenceAdapter implements LoadInterestPort, SaveInteres
 
   @Override
   public void delete(Interest interest) {
-
+    var entity = interestMapper.toEntity(interest);
+    jpaDataRepository.delete(entity);
   }
 
   @Override
@@ -27,6 +28,9 @@ public class InterestPersistenceAdapter implements LoadInterestPort, SaveInteres
 
   @Override
   public Interest load(Long id) {
-    return null;
+    var entity = jpaDataRepository.findById(id).orElseThrow(
+        () -> new IllegalArgumentException("interest 없음")
+    );
+    return interestMapper.toDomain(entity);
   }
 }
