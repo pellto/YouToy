@@ -8,4 +8,6 @@ public interface LoadReplyPort {
   Reply load(Long replyId);
 
   List<Reply> loadAllByParentCommentId(Long parentCommentId);
+
+  List<Long> loadAllIdsByParentCommentId(Long parentCommentId);
 }

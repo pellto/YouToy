@@ -104,4 +104,20 @@ class ReplyPersistenceAdapterTest {
     Assertions.assertThat(loadedReplies.size()).isEqualTo(replies.size());
     Assertions.assertThat(loadedReplies).usingRecursiveComparison().isEqualTo(replies);
   }
+
+  @DisplayName("[" + ADAPTER_NAME + "/loadAllIdsByParentCommentId] parentId 조건 전체 id 조회 성공 테스트")
+  @Test
+  void loadAllIdsByParentCommentIdSuccessTest() {
+    var saved1 = preSetting();
+    var saved2 = preSetting();
+    var replyIds = new ArrayList<Long>();
+    replyIds.add(saved1.getId());
+    replyIds.add(saved2.getId());
+
+    var loadedReplyIds = replyPersistenceAdapter.loadAllIdsByParentCommentId(
+        saved1.getParentCommentId());
+
+    Assertions.assertThat(loadedReplyIds.size()).isEqualTo(replyIds.size());
+    Assertions.assertThat(loadedReplyIds).usingRecursiveComparison().isEqualTo(replyIds);
+  }
 }

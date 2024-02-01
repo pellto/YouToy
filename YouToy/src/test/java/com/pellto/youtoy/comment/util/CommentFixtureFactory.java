@@ -126,6 +126,21 @@ public class CommentFixtureFactory {
     return new ChangeCommentRequest(ID, CHANGED_CONTENT);
   }
 
+  public static Comment createWithReplyCount(Long replyCount) {
+    return Comment.builder()
+        .id(ID)
+        .contentsId(CONTENTS_ID)
+        .commentContentsType(COMMENT_CONTENTS_TYPE)
+        .createdAt(CREATED_AT)
+        .commenterInfo(COMMENTER_INFO)
+        .content(CONTENT)
+        .ownerLike(OWNER_LIKE)
+        .replyCount(replyCount)
+        .likeCount(LIKE_COUNT)
+        .updatedAt(UPDATED_AT)
+        .build();
+  }
+
   public static WriteCommentRequest createWriteCommentRequest() {
     return new WriteCommentRequest(1L, 1L, COMMENT_CONTENTS_TYPE, CONTENT);
   }

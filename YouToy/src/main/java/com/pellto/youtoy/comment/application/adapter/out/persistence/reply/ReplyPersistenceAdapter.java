@@ -44,4 +44,9 @@ public class ReplyPersistenceAdapter implements LoadReplyPort, SaveReplyPort {
     var entities = jpaDataRepository.findAllByParentCommentId(parentCommentId);
     return entities.stream().map(replyMapper::toDomain).toList();
   }
+
+  @Override
+  public List<Long> loadAllIdsByParentCommentId(Long parentCommentId) {
+    return jpaDataRepository.findAllIdsByParentCommentId(parentCommentId);
+  }
 }
