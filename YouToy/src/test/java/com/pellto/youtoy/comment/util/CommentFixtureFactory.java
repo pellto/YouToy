@@ -53,6 +53,21 @@ public class CommentFixtureFactory {
         .build();
   }
 
+  public static Comment createWithLikeCount(Long likeCount) {
+    return Comment.builder()
+        .id(ID)
+        .contentsId(CONTENTS_ID)
+        .commentContentsType(COMMENT_CONTENTS_TYPE)
+        .createdAt(CREATED_AT)
+        .commenterInfo(COMMENTER_INFO)
+        .content(CONTENT)
+        .ownerLike(OWNER_LIKE)
+        .replyCount(REPLY_COUNT)
+        .likeCount(likeCount)
+        .updatedAt(UPDATED_AT)
+        .build();
+  }
+
   public static Comment createBeforeSaved() {
     return Comment.builder()
         .contentsId(CONTENTS_ID)

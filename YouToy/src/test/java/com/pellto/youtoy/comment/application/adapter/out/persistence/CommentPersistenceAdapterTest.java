@@ -113,4 +113,54 @@ class CommentPersistenceAdapterTest {
     Assertions.assertThatThrownBy(() -> commentPersistenceAdapter.load(saved2.getId()))
         .isInstanceOf(IllegalArgumentException.class).hasMessage("댓글 없음");
   }
+
+  @DisplayName("[" + ADAPTER_NAME + "/isExistById] id 조건 존재 true 성공 테스트")
+  @Test
+  void isExistByIdTrueSuccessTest() {
+    var beforeSaved = CommentFixtureFactory.createBeforeSaved();
+    var saved = commentPersistenceAdapter.save(beforeSaved);
+
+    var isExist = commentPersistenceAdapter.isExistById(saved.getId());
+
+    Assertions.assertThat(isExist).isTrue();
+  }
+
+  @DisplayName("[" + ADAPTER_NAME + "/isExistById] id 조건 존재 false 성공 테스트")
+  @Test
+  void isExistByIdFalseSuccessTest() {
+    var isExist = commentPersistenceAdapter.isExistById(-1L);
+
+    Assertions.assertThat(isExist).isFalse();
+  }
+
+  @DisplayName("[" + ADAPTER_NAME
+      + "/loadAllIdsByContentsTypeAndContentsId] contentsType and contentsId 조건 조회 성공 테스트")
+  @Test
+  void loadAllIdsByContentsTypeAndContentsIdSuccessTest() {
+    var beforeSaved = CommentFixtureFactory.createBeforeSaved();
+    var saved1 = commentPersistenceAdapter.save(beforeSaved);
+    var saved2 = commentPersistenceAdapter.save(beforeSaved);
+    var commentIds = new ArrayList<Long>();
+    commentIds.add(saved1.getId());
+    commentIds.add(saved2.getId());
+
+    var loadedIds = commentPersistenceAdapter.loadAllIdsByContentsTypeAndContentsId(
+        beforeSaved.getCommentContentsType().getType(), beforeSaved.getContentsId());
+
+    Assertions.assertThat(loadedIds.size()).isEqualTo(commentIds.size());
+    Assertions.assertThat(loadedIds).usingRecursiveComparison().isEqualTo(commentIds);
+  }
+
+  @DisplayName("[" + ADAPTER_NAME + "/deleteById] id 조건 삭제 성공 테스트")
+  @Test
+  void deleteByIdSuccessTest() {
+    var beforeSaved = CommentFixtureFactory.createBeforeSaved();
+    var saved = commentPersistenceAdapter.save(beforeSaved);
+    var id = saved.getId();
+
+    commentPersistenceAdapter.deleteById(id);
+
+    Assertions.assertThatThrownBy(() -> commentPersistenceAdapter.load(id))
+        .isInstanceOf(IllegalArgumentException.class).hasMessage("댓글 없음");
+  }
 }

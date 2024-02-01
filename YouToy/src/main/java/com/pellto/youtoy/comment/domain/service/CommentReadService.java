@@ -18,6 +18,11 @@ public class CommentReadService implements ReadCommentUsecase {
   private final ContentsExistHandlePort contentsExistHandlePort;
 
   @Override
+  public boolean isExistCommentById(Long commentId) {
+    return loadCommentPort.isExistById(commentId);
+  }
+
+  @Override
   public List<CommentDto> readAllByContentsTypeAndContentsId(String contentsType, Long contentsId) {
     if (!contentsExistHandlePort.isExistContents(contentsType, contentsId)) {
       throw new IllegalArgumentException("해당 컨텐츠가 존재하지 않습니다.");

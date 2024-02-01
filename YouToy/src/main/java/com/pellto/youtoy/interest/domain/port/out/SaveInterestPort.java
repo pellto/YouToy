@@ -6,5 +6,7 @@ public interface SaveInterestPort {
 
   void delete(Interest interest);
 
+  void deleteAllByContentsIdAndContentsType(Long contentsId, String interestContentsType);
+
   Interest save(Interest interest);
 }

@@ -6,7 +6,7 @@ public interface CommentEventPort {
 
   void commentWrittenEvent(CommentDto dto);
 
-  void commentRemovedEvent(CommentDto dto);
+  void commentRemovedEvent(Long id);
 
   void commentChangedEvent(CommentDto before, CommentDto after);
 }

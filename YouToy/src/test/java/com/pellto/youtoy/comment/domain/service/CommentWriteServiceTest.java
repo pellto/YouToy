@@ -101,4 +101,15 @@ class CommentWriteServiceTest {
     then(saveCommentPort).should(times(1)).update(any());
     then(commentEventPort).should(times(1)).commentChangedEvent(any(), any());
   }
+
+
+  @DisplayName("[" + SERVICE_NAME + "/remove] remove 성공 테스트")
+  @Test
+  void removeSuccessTest() {
+    var id = 1L;
+    commentWriteService.remove(id);
+
+    then(saveCommentPort).should(times(1)).deleteById(id);
+    then(commentEventPort).should(times(1)).commentRemovedEvent(id);
+  }
 }

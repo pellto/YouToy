@@ -62,4 +62,10 @@ public class CommentWriteService implements WriteCommentUsecase, ChangeCommentCo
     commentEventPort.commentWrittenEvent(dto);
     return dto;
   }
+
+  @Override
+  public void remove(Long id) {
+    saveCommentPort.deleteById(id);
+    commentEventPort.commentRemovedEvent(id);
+  }
 }

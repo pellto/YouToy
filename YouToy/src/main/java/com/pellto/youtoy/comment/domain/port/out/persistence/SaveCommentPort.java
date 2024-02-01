@@ -5,6 +5,8 @@ import com.pellto.youtoy.comment.domain.model.CommentContentsType;
 
 public interface SaveCommentPort {
 
+  void deleteById(Long commentId);
+
   Comment save(Comment comment);
 
   void update(Comment comment);

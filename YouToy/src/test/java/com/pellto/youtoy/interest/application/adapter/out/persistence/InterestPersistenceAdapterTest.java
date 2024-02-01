@@ -61,4 +61,22 @@ class InterestPersistenceAdapterTest {
         .isInstanceOf(
             IllegalArgumentException.class).hasMessage("interest 없음");
   }
+
+
+  @DisplayName("[" + ADAPTER_NAME
+      + "/deleteAllByContentsIdAndContentsType] contentsId and contentsType 조건 삭제 성공 테스트")
+  @Test
+  void deleteAllByContentsIdAndContentsTypeSuccessTest() {
+    var beforeSaved = InterestFixtureFactory.createBeforeSaved();
+    var saved1 = interestPersistenceAdapter.save(beforeSaved);
+    var saved2 = interestPersistenceAdapter.save(beforeSaved);
+
+    interestPersistenceAdapter.deleteAllByContentsIdAndContentsType(
+        beforeSaved.getContentsId(), beforeSaved.getInterestContentsType().getType());
+
+    Assertions.assertThatThrownBy(() -> interestPersistenceAdapter.load(saved1.getId()))
+        .isInstanceOf(IllegalArgumentException.class).hasMessage("interest 없음");
+    Assertions.assertThatThrownBy(() -> interestPersistenceAdapter.load(saved2.getId()))
+        .isInstanceOf(IllegalArgumentException.class).hasMessage("interest 없음");
+  }
 }

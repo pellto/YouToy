@@ -77,4 +77,26 @@ class CommentReadServiceTest {
     then(loadCommentPort).should(times(0))
         .loadAllByContentsTypeAndContentsId(any(), any());
   }
+
+  @DisplayName("[" + SERVICE_NAME + "/isExistCommentById] isExistCommentById true 성공 테스트")
+  @Test
+  void isExistCommentByIdTrueSuccessTest() {
+    given(loadCommentPort.isExistById(1L)).willReturn(true);
+
+    var isExist = commentReadService.isExistCommentById(1L);
+
+    Assertions.assertThat(isExist).isTrue();
+    then(loadCommentPort).should(times(1)).isExistById(1L);
+  }
+
+  @DisplayName("[" + SERVICE_NAME + "/isExistCommentById] isExistCommentById false 성공 테스트")
+  @Test
+  void isExistCommentByIdFalseSuccessTest() {
+    given(loadCommentPort.isExistById(1L)).willReturn(false);
+
+    var isExist = commentReadService.isExistCommentById(1L);
+
+    Assertions.assertThat(isExist).isFalse();
+    then(loadCommentPort).should(times(1)).isExistById(1L);
+  }
 }

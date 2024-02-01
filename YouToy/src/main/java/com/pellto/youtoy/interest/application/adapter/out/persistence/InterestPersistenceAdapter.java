@@ -21,6 +21,12 @@ public class InterestPersistenceAdapter implements LoadInterestPort, SaveInteres
   }
 
   @Override
+  public void deleteAllByContentsIdAndContentsType(Long contentsId, String interestContentsType) {
+    // TODO: Change deleteAll*InBatch
+    jpaDataRepository.deleteAllByContentsIdAndContentsType(contentsId, interestContentsType);
+  }
+
+  @Override
   public Interest save(Interest interest) {
     var entity = interestMapper.toEntity(interest);
     return interestMapper.toDomain(jpaDataRepository.save(entity));

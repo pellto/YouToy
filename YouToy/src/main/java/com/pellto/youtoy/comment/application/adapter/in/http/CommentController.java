@@ -8,6 +8,7 @@ import com.pellto.youtoy.global.dto.comment.request.ChangeCommentRequest;
 import com.pellto.youtoy.global.dto.comment.request.WriteCommentRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,5 +39,15 @@ public class CommentController {
   @GetMapping("/post/{contentsId}")
   public List<CommentDto> readPostComments(@PathVariable Long contentsId) {
     return readCommentUsecase.readAllByContentsTypeAndContentsId("POST", contentsId);
+  }
+
+  @GetMapping("/exist/{commentId}")
+  public boolean isExistComment(@PathVariable Long commentId) {
+    return readCommentUsecase.isExistCommentById(commentId);
+  }
+
+  @DeleteMapping("/{commentId}")
+  public void removeById(@PathVariable Long commentId) {
+    writeCommentUsecase.remove(commentId);
   }
 }

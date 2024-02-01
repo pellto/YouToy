@@ -5,8 +5,12 @@ import java.util.List;
 
 public interface LoadCommentPort {
 
+  boolean isExistById(Long commentId);
+
   Comment load(Long commentId);
 
   List<Comment> loadAllByContentsTypeAndContentsId(
       String commentContentsType, Long contentsId);
+
+  List<Long> loadAllIdsByContentsTypeAndContentsId(String commentContentsType, Long contentsId);
 }

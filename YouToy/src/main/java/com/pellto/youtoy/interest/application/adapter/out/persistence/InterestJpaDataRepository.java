@@ -4,4 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InterestJpaDataRepository extends JpaRepository<InterestEntity, Long> {
 
+  void deleteAllByContentsIdAndContentsType(Long contentsId, String interestContentsType);
 }

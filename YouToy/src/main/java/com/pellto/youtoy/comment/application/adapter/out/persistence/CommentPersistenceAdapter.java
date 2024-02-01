@@ -15,6 +15,10 @@ public class CommentPersistenceAdapter implements LoadCommentPort, SaveCommentPo
   private final CommentJpaDataRepository jpaDataRepository;
   private final CommentMapper commentMapper;
 
+  @Override
+  public boolean isExistById(Long commentId) {
+    return jpaDataRepository.existsById(commentId);
+  }
 
   @Override
   public Comment load(Long commentId) {
@@ -30,6 +34,17 @@ public class CommentPersistenceAdapter implements LoadCommentPort, SaveCommentPo
     var commentEntities = jpaDataRepository.findAllByCommentContentsTypeAndContentsId(
         commentContentsType, contentsId);
     return commentEntities.stream().map(commentMapper::toDomain).toList();
+  }
+
+  @Override
+  public List<Long> loadAllIdsByContentsTypeAndContentsId(String commentContentsType,
+      Long contentsId) {
+    return jpaDataRepository.findAllIdsByContentsTypeAndContentsId(commentContentsType, contentsId);
+  }
+
+  @Override
+  public void deleteById(Long commentId) {
+    jpaDataRepository.deleteById(commentId);
   }
 
   @Override

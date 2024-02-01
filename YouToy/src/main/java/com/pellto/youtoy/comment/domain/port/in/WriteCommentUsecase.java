@@ -6,4 +6,6 @@ import com.pellto.youtoy.global.dto.comment.request.WriteCommentRequest;
 public interface WriteCommentUsecase {
 
   CommentDto write(WriteCommentRequest request);
+
+  void remove(Long id);
 }

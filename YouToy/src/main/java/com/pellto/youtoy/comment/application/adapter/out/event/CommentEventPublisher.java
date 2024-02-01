@@ -3,6 +3,7 @@ package com.pellto.youtoy.comment.application.adapter.out.event;
 import com.pellto.youtoy.comment.domain.port.out.event.CommentEventPort;
 import com.pellto.youtoy.global.dto.comment.CommentDto;
 import com.pellto.youtoy.global.event.comment.CommentChangedEvent;
+import com.pellto.youtoy.global.event.comment.CommentRemovedEvent;
 import com.pellto.youtoy.global.event.comment.CommentWrittenEvent;
 import com.pellto.youtoy.global.interfaces.OutboundEventAdapter;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,12 @@ public class CommentEventPublisher implements CommentEventPort {
   }
 
   @Override
-  public void commentRemovedEvent(CommentDto dto) {
+  public void commentRemovedEvent(Long commentId) {
+    var publisher = PUBLISHER + "/commentRemovedEvent";
+    log.info(String.format("[%s]: 댓글 삭제 완료 {commentId: %s}", publisher, commentId));
 
+    var event = new CommentRemovedEvent(commentId, publisher);
+    applicationEventPublisher.publishEvent(event);
   }
 
   @Override

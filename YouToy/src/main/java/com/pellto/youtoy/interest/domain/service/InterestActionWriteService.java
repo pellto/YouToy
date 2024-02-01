@@ -8,6 +8,7 @@ import com.pellto.youtoy.interest.domain.port.in.InterestActionUsecase;
 import com.pellto.youtoy.interest.domain.port.out.InterestEventPort;
 import com.pellto.youtoy.interest.domain.port.out.LoadInterestPort;
 import com.pellto.youtoy.interest.domain.port.out.SaveInterestPort;
+import com.pellto.youtoy.interest.domain.port.out.http.InterestContentsExistHandlePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,14 @@ public class InterestActionWriteService implements InterestActionUsecase {
   private final SaveInterestPort saveInterestPort;
   private final LoadInterestPort loadInterestPort;
   private final InterestEventPort interestEventPort;
+  private final InterestContentsExistHandlePort interestContentsExistHandlePort;
 
   @Override
   public InterestDto like(LikeRequest request) {
+    if (!isExistContents(request.interestContentsType(), request.contentsId())) {
+      throw new IllegalArgumentException("해당 컨텐츠가 없습니다.");
+    }
+
     var interest = Interest.builder()
         .memberId(request.memberId())
         .contentsId(request.contentsId())
@@ -35,6 +41,10 @@ public class InterestActionWriteService implements InterestActionUsecase {
 
   @Override
   public InterestDto disLike(DisLikeRequest request) {
+    if (!isExistContents(request.interestContentsType(), request.contentsId())) {
+      throw new IllegalArgumentException("해당 컨텐츠가 없습니다.");
+    }
+
     var interest = Interest.builder()
         .memberId(request.memberId())
         .contentsId(request.contentsId())
@@ -57,5 +67,9 @@ public class InterestActionWriteService implements InterestActionUsecase {
     } else {
       interestEventPort.deletedDislikeEvent(dto);
     }
+  }
+
+  private boolean isExistContents(String interestContentsType, Long contentsId) {
+    return interestContentsExistHandlePort.isExistContents(interestContentsType, contentsId);
   }
 }

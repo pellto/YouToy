@@ -5,5 +5,7 @@ import java.util.List;
 
 public interface ReadCommentUsecase {
 
+  boolean isExistCommentById(Long commentId);
+
   List<CommentDto> readAllByContentsTypeAndContentsId(String contentsType, Long contentsId);
 }
