@@ -1,6 +1,8 @@
 package com.pellto.youtoy.comment.application.adapter.out.persistence;
 
+import com.pellto.youtoy.comment.domain.model.Comment;
 import com.pellto.youtoy.comment.util.CommentFixtureFactory;
+import java.util.ArrayList;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -13,7 +15,6 @@ import org.springframework.context.annotation.Import;
 @Import({CommentPersistenceAdapter.class, CommentMapper.class})
 @Tag("persistenceAdapter")
 class CommentPersistenceAdapterTest {
-
 
   private static final String ADAPTER_NAME = "CommentPersistenceAdapter";
 
@@ -77,5 +78,39 @@ class CommentPersistenceAdapterTest {
     Assertions.assertThat(changedComment.getContent())
         .isNotEqualTo(beforeContent);
     Assertions.assertThat(changedComment.getUpdatedAt()).isNotEqualTo(beforeUpdatedAt);
+  }
+
+  @DisplayName("[" + ADAPTER_NAME
+      + "/loadAllByContentsTypeAndContentsId] contentsType and contentsId 조건 조회 성공 테스트")
+  @Test
+  void loadAllByContentsTypeAndContentsIdSuccessTest() {
+    var beforeSaved = CommentFixtureFactory.createBeforeSaved();
+    var savedComment1 = commentPersistenceAdapter.save(beforeSaved);
+    var savedComment2 = commentPersistenceAdapter.save(beforeSaved);
+    var savedComments = new ArrayList<Comment>();
+    savedComments.add(savedComment1);
+    savedComments.add(savedComment2);
+
+    var loadedComments = commentPersistenceAdapter.loadAllByContentsTypeAndContentsId(
+        savedComment1.getCommentContentsType().getType(), savedComment1.getContentsId());
+
+    Assertions.assertThat(loadedComments).usingRecursiveComparison().isEqualTo(savedComments);
+  }
+
+  @DisplayName("[" + ADAPTER_NAME
+      + "/deleteAllByContentsIdAndContentsType] contentsType and contentsId 조건 삭제 성공 테스트")
+  @Test
+  void deleteAllByContentsIdAndContentsTypeSuccessTest() {
+    var beforeSaved = CommentFixtureFactory.createBeforeSaved();
+    var saved1 = commentPersistenceAdapter.save(beforeSaved);
+    var saved2 = commentPersistenceAdapter.save(beforeSaved);
+
+    commentPersistenceAdapter.deleteAllByContentsIdAndContentsType(beforeSaved.getContentsId(),
+        beforeSaved.getCommentContentsType());
+
+    Assertions.assertThatThrownBy(() -> commentPersistenceAdapter.load(saved1.getId()))
+        .isInstanceOf(IllegalArgumentException.class).hasMessage("댓글 없음");
+    Assertions.assertThatThrownBy(() -> commentPersistenceAdapter.load(saved2.getId()))
+        .isInstanceOf(IllegalArgumentException.class).hasMessage("댓글 없음");
   }
 }

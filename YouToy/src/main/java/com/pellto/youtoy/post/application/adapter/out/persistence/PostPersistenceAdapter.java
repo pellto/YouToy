@@ -28,6 +28,11 @@ public class PostPersistenceAdapter implements LoadPostPort, SavePostPort {
   }
 
   @Override
+  public void deleteById(Long postId) {
+    jpaDataRepository.deleteById(postId);
+  }
+
+  @Override
   public Post save(Post post) {
     var entity = postMapper.toEntity(post);
     return postMapper.toDomain(jpaDataRepository.save(entity));

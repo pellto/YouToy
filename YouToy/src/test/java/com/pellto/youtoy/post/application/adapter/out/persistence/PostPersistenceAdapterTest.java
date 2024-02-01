@@ -92,4 +92,17 @@ class PostPersistenceAdapterTest {
 
     Assertions.assertThat(isExist).isFalse();
   }
+
+  @DisplayName("[" + ADAPTER_NAME + "/deleteById] 삭제 성공 테스트")
+  @Test
+  void deleteByIdFalseSuccessTest() {
+    var beforeSaved = PostFixtureFactory.createBeforeSaved();
+    var savedPost = postPersistenceAdapter.save(beforeSaved);
+
+    postPersistenceAdapter.deleteById(savedPost.getId());
+
+    var isExist = postPersistenceAdapter.isExistById(savedPost.getId());
+
+    Assertions.assertThat(isExist).isFalse();
+  }
 }

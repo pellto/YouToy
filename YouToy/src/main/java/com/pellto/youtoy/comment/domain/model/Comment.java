@@ -30,7 +30,7 @@ public class Comment {
     this.id = id;
     this.commenterInfo = Objects.requireNonNull(commenterInfo);
     this.contentsId = Objects.requireNonNull(contentsId);
-    this.commentContentsType = commentContentsTypeFromString(
+    this.commentContentsType = CommentContentsType.fromString(
         Objects.requireNonNull(commentContentsType));
     this.createdAt = Temporal.createdAt(createdAt);
     this.content = Objects.requireNonNull(content);
@@ -67,23 +67,6 @@ public class Comment {
 
   public void decreaseReplyCount() {
     this.replyCount -= 1;
-  }
-
-  private CommentContentsType commentContentsTypeFromString(String commentContentsType) {
-    switch (commentContentsType) {
-      case ("POST") -> {
-        return CommentContentsType.POST;
-      }
-      case ("VIDEO") -> {
-        return CommentContentsType.VIDEO;
-      }
-      case ("SHORTS") -> {
-        return CommentContentsType.SHORTS;
-      }
-      default -> {
-        throw new IllegalArgumentException("invalid contents type");
-      }
-    }
   }
 
   public CommentDto toDto() {

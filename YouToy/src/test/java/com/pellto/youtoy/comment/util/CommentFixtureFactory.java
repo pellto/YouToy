@@ -77,6 +77,36 @@ public class CommentFixtureFactory {
         .build();
   }
 
+  public static Comment create(String commentContentsType) {
+    return Comment.builder()
+        .id(ID)
+        .contentsId(CONTENTS_ID)
+        .commentContentsType(commentContentsType)
+        .createdAt(CREATED_AT)
+        .commenterInfo(COMMENTER_INFO)
+        .content(CONTENT)
+        .ownerLike(OWNER_LIKE)
+        .replyCount(REPLY_COUNT)
+        .likeCount(LIKE_COUNT)
+        .updatedAt(UPDATED_AT)
+        .build();
+  }
+
+  public static Comment create(String commentContentsType, Long id) {
+    return Comment.builder()
+        .id(id)
+        .contentsId(CONTENTS_ID)
+        .commentContentsType(commentContentsType)
+        .createdAt(CREATED_AT)
+        .commenterInfo(COMMENTER_INFO)
+        .content(CONTENT)
+        .ownerLike(OWNER_LIKE)
+        .replyCount(REPLY_COUNT)
+        .likeCount(LIKE_COUNT)
+        .updatedAt(UPDATED_AT)
+        .build();
+  }
+
   public static ChangeCommentRequest createChangeCommentRequest() {
     return new ChangeCommentRequest(ID, CHANGED_CONTENT);
   }

@@ -5,20 +5,25 @@ import com.pellto.youtoy.global.dto.post.request.WritePostRequest;
 import com.pellto.youtoy.post.domain.model.Post;
 import com.pellto.youtoy.post.domain.model.PostContent;
 import com.pellto.youtoy.post.domain.port.in.ChangePostContentUsecase;
+import com.pellto.youtoy.post.domain.port.in.RemovePostUsecase;
 import com.pellto.youtoy.post.domain.port.in.WritePostUsecase;
 import com.pellto.youtoy.post.domain.port.out.ChannelHandlePort;
 import com.pellto.youtoy.post.domain.port.out.LoadPostPort;
+import com.pellto.youtoy.post.domain.port.out.PostEventPort;
 import com.pellto.youtoy.post.domain.port.out.SavePostPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class PostWriteService implements WritePostUsecase, ChangePostContentUsecase {
+public class PostWriteService implements WritePostUsecase, ChangePostContentUsecase,
+    RemovePostUsecase {
 
   private final LoadPostPort loadPostPort;
   private final SavePostPort savePostPort;
   private final ChannelHandlePort channelHandlePort;
+  private final PostEventPort postEventPort;
 
   @Override
   public PostDto changePostTitle(Long id, String title) {
@@ -42,6 +47,13 @@ public class PostWriteService implements WritePostUsecase, ChangePostContentUsec
     post.changePost(postContent);
     savePostPort.update(post);
     return post.toDto();
+  }
+
+  @Override
+  @Transactional
+  public void remove(Long postId) {
+    savePostPort.deleteById(postId);
+    postEventPort.postRemovedEvent(postId);
   }
 
   @Override

@@ -9,6 +9,7 @@ import static org.mockito.Mockito.times;
 import com.pellto.youtoy.global.dto.post.PostDto;
 import com.pellto.youtoy.post.domain.port.out.ChannelHandlePort;
 import com.pellto.youtoy.post.domain.port.out.LoadPostPort;
+import com.pellto.youtoy.post.domain.port.out.PostEventPort;
 import com.pellto.youtoy.post.domain.port.out.SavePostPort;
 import com.pellto.youtoy.post.util.PostFixtureFactory;
 import org.assertj.core.api.Assertions;
@@ -35,6 +36,8 @@ class PostWriteServiceTest {
   private SavePostPort savePostPort;
   @Mock
   private ChannelHandlePort channelHandlePort;
+  @Mock
+  private PostEventPort postEventPort;
 
   @DisplayName("[" + SERVICE_NAME + "/write] write 성공 테스트")
   @Test
@@ -122,5 +125,14 @@ class PostWriteServiceTest {
     Assertions.assertThat(changedPost.updatedAt()).isNotEqualTo(post.getUpdatedAt());
     then(loadPostPort).should(times(1)).load(alreadyExistPost.getId());
     then(savePostPort).should(times(1)).update(any());
+  }
+
+  @DisplayName("[" + SERVICE_NAME + "/remove] remove 성공 테스트")
+  @Test
+  void removeSuccessTest() {
+    postWriteService.remove(1L);
+
+    then(savePostPort).should(times(1)).deleteById(1L);
+    then(postEventPort).should(times(1)).postRemovedEvent(1L);
   }
 }

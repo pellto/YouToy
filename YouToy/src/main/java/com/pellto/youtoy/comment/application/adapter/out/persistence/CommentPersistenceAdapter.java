@@ -1,9 +1,11 @@
 package com.pellto.youtoy.comment.application.adapter.out.persistence;
 
 import com.pellto.youtoy.comment.domain.model.Comment;
+import com.pellto.youtoy.comment.domain.model.CommentContentsType;
 import com.pellto.youtoy.comment.domain.port.out.persistence.LoadCommentPort;
 import com.pellto.youtoy.comment.domain.port.out.persistence.SaveCommentPort;
 import com.pellto.youtoy.global.interfaces.PersistenceAdapter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
@@ -23,6 +25,14 @@ public class CommentPersistenceAdapter implements LoadCommentPort, SaveCommentPo
   }
 
   @Override
+  public List<Comment> loadAllByContentsTypeAndContentsId(
+      String commentContentsType, Long contentsId) {
+    var commentEntities = jpaDataRepository.findAllByCommentContentsTypeAndContentsId(
+        commentContentsType, contentsId);
+    return commentEntities.stream().map(commentMapper::toDomain).toList();
+  }
+
+  @Override
   public Comment save(Comment comment) {
     var entity = commentMapper.toEntity(comment);
     entity = jpaDataRepository.save(entity);
@@ -33,5 +43,13 @@ public class CommentPersistenceAdapter implements LoadCommentPort, SaveCommentPo
   public void update(Comment comment) {
     var entity = commentMapper.toEntity(comment);
     jpaDataRepository.save(entity);
+  }
+
+  @Override
+  public void deleteAllByContentsIdAndContentsType(
+      Long contentsId, CommentContentsType commentContentsType) {
+    // TODO: change deleteAll*InBatch
+    jpaDataRepository.deleteAllByContentsIdAndCommentContentsType(contentsId,
+        commentContentsType.getType());
   }
 }
