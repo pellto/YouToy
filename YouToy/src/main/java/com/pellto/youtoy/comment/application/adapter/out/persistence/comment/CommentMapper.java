@@ -1,4 +1,4 @@
-package com.pellto.youtoy.comment.application.adapter.out.persistence;
+package com.pellto.youtoy.comment.application.adapter.out.persistence.comment;
 
 import com.pellto.youtoy.comment.domain.model.Comment;
 import com.pellto.youtoy.comment.domain.model.CommenterInfo;

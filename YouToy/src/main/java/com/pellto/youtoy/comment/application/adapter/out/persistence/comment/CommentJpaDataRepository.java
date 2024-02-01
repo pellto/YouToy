@@ -1,4 +1,4 @@
-package com.pellto.youtoy.comment.application.adapter.out.persistence;
+package com.pellto.youtoy.comment.application.adapter.out.persistence.comment;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

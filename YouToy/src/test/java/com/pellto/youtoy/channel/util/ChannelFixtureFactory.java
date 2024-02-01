@@ -33,6 +33,15 @@ public class ChannelFixtureFactory {
         .build();
   }
 
+  public static CommenterInfo createCommenterInfo(Long commenterId) {
+    return CommenterInfo.builder()
+        .commenterId(commenterId)
+        .commenterHandle(CHANNEL_HANDLE.value())
+        .displayName(CHANNEL_INFO.getDisplayName())
+        .profilePath(CHANNEL_INFO.getProfilePath())
+        .build();
+  }
+
   public static Channel createWithSubscriberCount(Long subscriberCount) {
     return Channel.builder()
         .id(ID)
