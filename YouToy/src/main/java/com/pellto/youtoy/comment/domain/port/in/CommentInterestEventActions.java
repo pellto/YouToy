@@ -1,6 +1,6 @@
 package com.pellto.youtoy.comment.domain.port.in;
 
-public interface InterestEventActions {
+public interface CommentInterestEventActions {
 
   void increaseLikeCount(Long commentId);
 

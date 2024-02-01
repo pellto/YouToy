@@ -82,6 +82,19 @@ public class ReplyFixtureFactory {
     );
   }
 
+  public static Reply createWithLikeCount(Long likeCount) {
+    return Reply.builder()
+        .id(ID)
+        .parentCommentId(PARENT_COMMENT_ID)
+        .createdAt(CREATED_AT)
+        .replierInfo(REPLIER_INFO)
+        .content(CONTENT)
+        .likeCount(likeCount)
+        .ownerLike(OWNER_LIKE)
+        .updatedAt(UPDATED_AT)
+        .build();
+  }
+
   public static WriteReplyRequest createWriteReplyRequest() {
     return new WriteReplyRequest(REPLIER_INFO.commenterId(), PARENT_COMMENT_ID, CONTENT);
   }

@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum InterestContentsType {
-  POST("POST"), COMMENT("COMMENT"), REPLIED("REPLIED"), VIDEO("VIDEO"), SHORTS("SHORTS");
+  POST("POST"), COMMENT("COMMENT"), REPLY("REPLY"), VIDEO("VIDEO"), SHORTS("SHORTS");
   private final String type;
 
   InterestContentsType(String type) {

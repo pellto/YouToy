@@ -36,8 +36,8 @@ public class Interest {
       case ("COMMENT") -> {
         return InterestContentsType.COMMENT;
       }
-      case ("REPLIED") -> {
-        return InterestContentsType.REPLIED;
+      case ("REPLY") -> {
+        return InterestContentsType.REPLY;
       }
       case ("VIDEO") -> {
         return InterestContentsType.VIDEO;
