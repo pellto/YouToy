@@ -5,11 +5,15 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
+import java.util.ArrayList;
+
+import com.pellto.youtoy.comment.domain.model.CommentContentsType;
 import com.pellto.youtoy.comment.domain.port.out.event.CommentEventPort;
 import com.pellto.youtoy.comment.domain.port.out.http.ChannelHandlePort;
 import com.pellto.youtoy.comment.domain.port.out.http.ContentsExistHandlePort;
 import com.pellto.youtoy.comment.domain.port.out.persistence.LoadCommentPort;
 import com.pellto.youtoy.comment.domain.port.out.persistence.SaveCommentPort;
+import com.pellto.youtoy.comment.domain.port.out.persistence.SaveReplyPort;
 import com.pellto.youtoy.comment.util.CommentFixtureFactory;
 import com.pellto.youtoy.global.dto.comment.CommentDto;
 import org.assertj.core.api.Assertions;
@@ -34,6 +38,8 @@ class CommentWriteServiceTest {
   private LoadCommentPort loadCommentPort;
   @Mock
   private SaveCommentPort saveCommentPort;
+  @Mock
+  private SaveReplyPort saveReplyPort;
   @Mock
   private CommentEventPort commentEventPort;
   @Mock
@@ -110,6 +116,30 @@ class CommentWriteServiceTest {
     commentWriteService.remove(id);
 
     then(saveCommentPort).should(times(1)).deleteById(id);
+    then(saveReplyPort).should(times(1)).deleteAllByParentCommentId(id);
     then(commentEventPort).should(times(1)).commentRemovedEvent(id);
+  }
+
+  @DisplayName("[" + SERVICE_NAME + "/removeAllByPostId] removeAllByPostId 성공 테스트")
+  @Test
+  void removeAllByPostIdSuccessTest() {
+    var contentsType = CommentContentsType.POST;
+    var postId = 1L;
+    var willRemoveCommentIds = new ArrayList<Long>();
+    willRemoveCommentIds.add(1L);
+    willRemoveCommentIds.add(2L);
+
+    given(loadCommentPort.loadAllIdsByContentsTypeAndContentsId(contentsType.getType(),
+        postId)).willReturn(willRemoveCommentIds);
+
+    commentWriteService.removeAllByPostId(postId);
+
+    then(loadCommentPort).should(times(1))
+        .loadAllIdsByContentsTypeAndContentsId(contentsType.getType(), postId);
+    then(saveCommentPort).should(times(1))
+        .deleteAllByContentsIdAndContentsType(postId, contentsType);
+    then(saveReplyPort).should(times(1))
+    .deleteAllByParentCommentIdIn(willRemoveCommentIds);
+    then(commentEventPort).should(times(willRemoveCommentIds.size())).commentRemovedEvent(any());
   }
 }

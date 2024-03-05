@@ -6,7 +6,7 @@ public interface ReplyEventPort {
 
   void replyWrittenEvent(ReplyDto dto);
 
-  void replyRemovedEvent(Long id);
+  void replyRemovedEvent(Long replyId, Long parentCommentId);
 
   void replyChangedEvent(ReplyDto before, ReplyDto after);
 }

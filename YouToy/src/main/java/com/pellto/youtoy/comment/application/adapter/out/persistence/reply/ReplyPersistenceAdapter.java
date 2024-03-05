@@ -49,4 +49,14 @@ public class ReplyPersistenceAdapter implements LoadReplyPort, SaveReplyPort {
   public List<Long> loadAllIdsByParentCommentId(Long parentCommentId) {
     return jpaDataRepository.findAllIdsByParentCommentId(parentCommentId);
   }
+
+  @Override
+  public void deleteAllByParentCommentId(Long parentCommentId) {
+    jpaDataRepository.deleteByParentCommentId(parentCommentId);
+  }
+
+  @Override
+  public void deleteAllByParentCommentIdIn(List<Long> parentCommentIds) {
+    jpaDataRepository.deleteByParentCommentsIdIn(parentCommentIds);
+  }
 }

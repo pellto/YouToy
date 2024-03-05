@@ -10,6 +10,7 @@ import lombok.ToString;
 public class ReplyRemovedEvent {
 
   private Long replyId;
+  private Long parentCommentId;
   private String publisher;
 
 }
